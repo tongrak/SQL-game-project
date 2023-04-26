@@ -65,4 +65,17 @@ public class SQLReceiverTest
         Assert.AreEqual(true, sqlRe.haveBannedWord("InSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country) VALUES('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway'); "));
         Assert.AreEqual(true, sqlRe.haveBannedWord("INTO INSERT Customers (CustomerName, ContactName, Address, City, PostalCode, Country) VALUES('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway'); "));
     }
+
+    [Test]
+    public void UseBannedWord_DROP()
+    {
+        SQLReceiver sqlRe = new SQLReceiver();
+
+        // Assert
+        Assert.AreEqual(true, sqlRe.haveBannedWord("DROP DATABASE testDB;"));
+        Assert.AreEqual(true, sqlRe.haveBannedWord("SELECT * FROM Worms WHERE color = 'Red';DROP DATABASE testDB;"));
+        Assert.AreEqual(true, sqlRe.haveBannedWord("DRoP DATABASE testDB;"));
+        Assert.AreEqual(true, sqlRe.haveBannedWord("DATABASE DROP testDB;"));
+        
+    }
 }
