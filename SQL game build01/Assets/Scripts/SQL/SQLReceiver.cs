@@ -15,7 +15,7 @@ public class SQLReceiver
 
     public bool haveBannedWord(string sqlCommand)
     {
-        string[] sqlWords = sqlCommand.ToLower().Split(' ');
+        string[] sqlWords = sqlCommand.ToLower().Split(' ', ';');
 
         foreach(string word in sqlWords)
         {
