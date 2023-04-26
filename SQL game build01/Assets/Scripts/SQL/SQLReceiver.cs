@@ -21,7 +21,18 @@ public class SQLReceiver
         {
             if (bannedWord.Contains(word))
             {
-                Debug.Log("You don't have permission to use this command: \"Create\", \"Insert\", \"Update\", \"Delete\"");
+                string warningWord = "You don't have permission to use this command:";
+
+                for (int i = 0; i < bannedWord.Length; i++)
+                {
+                    warningWord += " \"" + bannedWord[i] + "\"";
+                    if(i < bannedWord.Length - 1)
+                    {
+                        warningWord += ",";
+                    }
+                }
+
+                Debug.Log(warningWord);
                 return true;
             }
         }
