@@ -14,6 +14,8 @@ public class SQLReceiverTest
 
         //Assert
         Assert.AreEqual(false, sqlRe.haveBannedWord("SELECT * FROM Worms WHERE color = 'Red'"));
+        Assert.AreEqual(false, sqlRe.haveBannedWord("CREATES TABLE Persons PersonID int, LastName varchar(255), FirstName varchar(255), Address varchar(255), City varchar(255)"));
+        Assert.AreEqual(false, sqlRe.haveBannedWord("UPDATES Customers SET ContactName = 'Alfred Schmidt', City = 'Frankfurt' WHERE CustomerID = 1; "));
     }
 
     [Test]
