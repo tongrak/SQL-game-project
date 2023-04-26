@@ -4,19 +4,13 @@ using UnityEngine;
 using System.Linq;
 using System;
 
-public class SQLReceiver : MonoBehaviour
+public class SQLReceiver
 {
     private string[] bannedWord = {"create", "update", "delete", "insert", "drop", "alter", "truncate", "grant", "revoke", "commit", "rollback", "savepoint"};
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public SQLReceiver()
     {
-        
+
     }
 
     public bool haveBannedWord(string sqlCommand)
