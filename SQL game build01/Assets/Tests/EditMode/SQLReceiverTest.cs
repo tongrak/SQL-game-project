@@ -41,4 +41,16 @@ public class SQLReceiverTest
         Assert.AreEqual(true, sqlRe.haveBannedWord("upDate Customers SET ContactName = 'Alfred Schmidt', City = 'Frankfurt' WHERE CustomerID = 1; "));
         Assert.AreEqual(true, sqlRe.haveBannedWord("Customers UPDATE SET ContactName = 'Alfred Schmidt', City = 'Frankfurt' WHERE CustomerID = 1; "));
     }
+
+    [Test]
+    public void UseBannedWord_DELETE()
+    {
+        SQLReceiver sqlRe = new SQLReceiver();
+
+        // Assert
+        Assert.AreEqual(true, sqlRe.haveBannedWord("DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste';"));
+        Assert.AreEqual(true, sqlRe.haveBannedWord("SELECT * FROM Worms WHERE color = 'Red';DELETE"));
+        Assert.AreEqual(true, sqlRe.haveBannedWord("DELeTE FROM Customers WHERE CustomerName='Alfreds Futterkiste';"));
+        Assert.AreEqual(true, sqlRe.haveBannedWord("FROM DELETE Customers WHERE CustomerName='Alfreds Futterkiste';"));
+    }
 }
