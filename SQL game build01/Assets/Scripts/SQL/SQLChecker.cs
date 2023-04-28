@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Mono.Data.Sqlite; // 1
+using System;
 using System.Data; // 1
 using UnityEngine;
 
@@ -15,7 +14,25 @@ public class SQLChecker
 
     public bool CheckAnswer(string pQuery, string anQuery)
     {
-        //return GetQueryResult(pQuery).Equals(GetQueryResult(anQuery));
+        // get result from answer's query
+        try
+        {
+
+        }
+        catch (SqliteException e)
+        {
+            throw new ArgumentException("Answer's query:" + e.Message.ToString());
+        }
+
+        // get result from player's query
+        try
+        {
+
+        }
+        catch (SqliteException e)
+        {
+
+        }
         return true;
     }
 
@@ -32,34 +49,53 @@ public class SQLChecker
     // return result from query in json form.
     public string GetQueryResult(string query)
     {
-        //string result;
-        try
+        string result = "";
+        // Connect to database
+        using (SqliteConnection connection = new SqliteConnection(dbPath))
         {
-            // Connect to database
-            using (SqliteConnection connection = new SqliteConnection(dbPath))
+            connection.Open();
+            // Query to database
+            using (SqliteCommand command = new SqliteCommand(query, connection))
             {
-                connection.Open();
-                // Query to database
-                using (SqliteCommand command = new SqliteCommand(query, connection))
+                // Read data from query
+                using (IDataReader reader = command.ExecuteReader())
                 {
-                    // Read data from query
-                    using (IDataReader reader = command.ExecuteReader())
+                    string[] jsonResult = new string[reader.FieldCount];
+                    result += "{";
+                    // set header in json
+                    for (int i = 0; i < reader.FieldCount; i++)
                     {
-                        while (reader.Read())
+                        jsonResult[i] += "\""+reader.GetName(i)+"\": {";
+                    }
+                    // fill value for each header from each row in table
+                    while (reader.Read())
+                    {
+                        for (int j = 0; j < reader.FieldCount; j++)
                         {
-                            Debug.Log(reader.GetValue(1).ToString());
+                            jsonResult[j] += reader.GetValue(j).ToString();
+                            jsonResult[j] += ",";
                         }
                     }
+                    // fill last element of each header with '}' and ',' to close header
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        jsonResult[i] = jsonResult[i].Remove(jsonResult[i].Length - 1, 1);
+                        if(i < reader.FieldCount - 1)
+                        {
+                            jsonResult[i] += "},";
+                        }
+                        else
+                        {
+                            jsonResult[i] += "}";
+                        }
+                        result += jsonResult[i];
+                    }
+                    result += "}";
                 }
-                connection.Close();
             }
+            connection.Close();
         }
-        catch (SqliteException e)
-        {
-            Debug.Log(e.Message);
-            return e.Message;
-        }
-        return "";
+        return result;
     }
 
 }

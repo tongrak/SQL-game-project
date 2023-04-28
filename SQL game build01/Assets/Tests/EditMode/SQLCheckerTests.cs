@@ -11,7 +11,7 @@ public class SQLCheckerTests
     public void SQLCheckerTestsSimplePasses()
     {
         string path = "URI=file:" + Application.dataPath + "/Database/DemoDatabase.db";
-        string query = "SELECT";
+        string query = "SELECT * FROM Worm";
         SQLChecker sqlCh = new SQLChecker(path);
 
         Assert.AreEqual("", sqlCh.GetQueryResult(query));
