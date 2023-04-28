@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class PuzzleConsoleScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    private string _CurrInputString;
+
+    #region Input Box
+    public void UpdateCurrInput(string s)
     {
-        
+        _CurrInputString = s;
     }
 
-    // Update is called once per frame
-    void Update()
+    #endregion
+
+    #region Execution Button
+    public void ExecuteInput()
     {
-        
+        Debug.Log(_CurrInputString);
     }
+    #endregion
 }
