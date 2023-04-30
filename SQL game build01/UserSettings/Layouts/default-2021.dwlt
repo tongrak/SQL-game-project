@@ -17,9 +17,9 @@ MonoBehaviour:
     x: 0
     y: 43.2
     width: 1536
-    height: 780.8
+    height: 772.8
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Console
   m_RootView: {fileID: 8}
   m_MinSize: {x: 875, y: 371}
   m_MaxSize: {x: 10000, y: 10000}
@@ -40,11 +40,11 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 315.2
+    y: 312
     width: 431.19995
-    height: 415.59998
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+    height: 410.8
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -70,11 +70,11 @@ MonoBehaviour:
     x: 1104.8
     y: 0
     width: 431.19995
-    height: 730.8
+    height: 722.8
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 1228
+  controlID: 18
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -95,11 +95,11 @@ MonoBehaviour:
     x: 0
     y: 30
     width: 1536
-    height: 730.8
+    height: 722.8
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 37
+  controlID: 17
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -118,9 +118,9 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 431.19995
-    height: 315.2
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+    height: 312
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -144,7 +144,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 264
-    height: 432.8
+    height: 428
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
@@ -162,23 +162,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 432.8
+    y: 428
     width: 1104.8
-    height: 298
-  m_MinSize: {x: 231, y: 271}
-  m_MaxSize: {x: 10001, y: 10021}
-  m_ActualView: {fileID: 15}
+    height: 294.8
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 15}
   - {fileID: 20}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -200,7 +200,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1536
-    height: 780.8
+    height: 772.8
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 760.8
+    y: 752.8
     width: 1536
     height: 20
   m_MinSize: {x: 0, y: 0}
@@ -270,11 +270,11 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1104.8
-    height: 730.8
+    height: 722.8
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 38
+  controlID: 66
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -295,11 +295,11 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1104.8
-    height: 432.8
+    height: 428
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 27
+  controlID: 54
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -318,7 +318,7 @@ MonoBehaviour:
     x: 264
     y: 0
     width: 840.80005
-    height: 432.8
+    height: 428
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 18}
@@ -348,21 +348,21 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 1104.8
-    y: 388.80002
+    y: 385.6
     width: 430.19995
-    height: 394.59998
+    height: 389.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 1244
+    ID: 136
     splitterInitialOffset: 229.8
     currentActiveSplitter: -1
     realSizes:
-    - 161
-    - 163
+    - 159.2
+    - 160.8
     relativeSizes:
     - 0.49691358
     - 0.50308645
@@ -372,7 +372,7 @@ MonoBehaviour:
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 324
+    lastTotalSize: 320
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -424,7 +424,7 @@ MonoBehaviour:
       name: SQL game build01
       fullName: SQL game build01
       resultStatus: 2
-      duration: 0.1124899
+      duration: 0.1650465
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -436,12 +436,11 @@ MonoBehaviour:
       parentId: 
       parentUniqueId: 
     - id: 1011
-      uniqueId: '[EditModeTests][D:/code/year3/project_survey/SQL-game-project/SQL
-        game build01/Library/ScriptAssemblies/EditModeTests.dll][suite]'
+      uniqueId: '[EditModeTests][D:/SQL-game-project/SQL game build01/Library/ScriptAssemblies/EditModeTests.dll][suite]'
       name: EditModeTests.dll
-      fullName: D:/code/year3/project_survey/SQL-game-project/SQL game build01/Library/ScriptAssemblies/EditModeTests.dll
+      fullName: D:/SQL-game-project/SQL game build01/Library/ScriptAssemblies/EditModeTests.dll
       resultStatus: 2
-      duration: 0.0778427
+      duration: 0.1350795
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -457,7 +456,7 @@ MonoBehaviour:
       name: SQLCheckerTests
       fullName: SQLCheckerTests
       resultStatus: 2
-      duration: 0.0746516
+      duration: 0.0939365
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -474,17 +473,13 @@ MonoBehaviour:
       name: SQLCheckerTestsSimplePasses
       fullName: SQLCheckerTests.SQLCheckerTestsSimplePasses
       resultStatus: 2
-      duration: 0.0527297
-      messages: "  Expected string length 0 but was 30. Strings differ at index 0.\r\n 
-        Expected: <string.Empty>\r\n  But was:  \"SQLite error\\r\\nincomplete input\"\r\n 
-        -----------^\r\n"
-      output: 'SQLite error
-
-        incomplete input
-
-'
+      duration: 0.0812901
+      messages: "  Expected string length 0 but was 116. Strings differ at index
+        0.\r\n  Expected: <string.Empty>\r\n  But was:  \"{\"ID\": {1,2,3,4,5,6,7},\"Name\":
+        {O,P,Q,R,S,T,U},\"HP\": {2,3,4,2...\"\r\n  -----------^\r\n"
+      output: 
       stacktrace: 'at SQLCheckerTests.SQLCheckerTestsSimplePasses () [0x00020] in
-        D:\code\year3\project_survey\SQL-game-project\SQL game build01\Assets\Tests\EditMode\SQLCheckerTests.cs:17
+        D:\SQL-game-project\SQL game build01\Assets\Tests\EditMode\SQLCheckerTests.cs:17
 
 '
       notRunnable: 0
@@ -500,7 +495,7 @@ MonoBehaviour:
       name: SQLReceiverTest
       fullName: SQLReceiverTest
       resultStatus: 1
-      duration: 0.0422244
+      duration: 0.039703
       messages: 
       output: 
       stacktrace: 
@@ -517,7 +512,7 @@ MonoBehaviour:
       name: NotUseBannedWord
       fullName: SQLReceiverTest.NotUseBannedWord
       resultStatus: 1
-      duration: 0.0157746
+      duration: 0.0048031
       messages: 
       output: 
       stacktrace: 
@@ -534,19 +529,19 @@ MonoBehaviour:
       name: UseBannedWord_ALTER
       fullName: SQLReceiverTest.UseBannedWord_ALTER
       resultStatus: 1
-      duration: 0.0043033
+      duration: 0.0061152
       messages: 
       output: 'You don''t have permission to use this command: "create", "update",
         "delete", "insert", "drop", "alter", "truncate", "grant", "revoke", "commit",
         "rollback", "savepoint"
 
-        You don''t have permission to use this
-        command: "create", "update", "delete", "insert", "drop", "alter", "truncate",
-        "grant", "revoke", "commit", "rollback", "savepoint"
+        You don''t have permission to use this command:
+        "create", "update", "delete", "insert", "drop", "alter", "truncate", "grant",
+        "revoke", "commit", "rollback", "savepoint"
 
-        You don''t
-        have permission to use this command: "create", "update", "delete", "insert",
-        "drop", "alter", "truncate", "grant", "revoke", "commit", "rollback", "savepoint"
+        You don''t have permission
+        to use this command: "create", "update", "delete", "insert", "drop", "alter",
+        "truncate", "grant", "revoke", "commit", "rollback", "savepoint"
 
         You
         don''t have permission to use this command: "create", "update", "delete",
@@ -568,19 +563,19 @@ MonoBehaviour:
       name: UseBannedWord_CREATE
       fullName: SQLReceiverTest.UseBannedWord_CREATE
       resultStatus: 1
-      duration: 0.0029097
+      duration: 0.0026351
       messages: 
       output: 'You don''t have permission to use this command: "create", "update",
         "delete", "insert", "drop", "alter", "truncate", "grant", "revoke", "commit",
         "rollback", "savepoint"
 
-        You don''t have permission to use this
-        command: "create", "update", "delete", "insert", "drop", "alter", "truncate",
-        "grant", "revoke", "commit", "rollback", "savepoint"
+        You don''t have permission to use this command:
+        "create", "update", "delete", "insert", "drop", "alter", "truncate", "grant",
+        "revoke", "commit", "rollback", "savepoint"
 
-        You don''t
-        have permission to use this command: "create", "update", "delete", "insert",
-        "drop", "alter", "truncate", "grant", "revoke", "commit", "rollback", "savepoint"
+        You don''t have permission
+        to use this command: "create", "update", "delete", "insert", "drop", "alter",
+        "truncate", "grant", "revoke", "commit", "rollback", "savepoint"
 
         You
         don''t have permission to use this command: "create", "update", "delete",
@@ -606,19 +601,19 @@ MonoBehaviour:
       name: UseBannedWord_DELETE
       fullName: SQLReceiverTest.UseBannedWord_DELETE
       resultStatus: 1
-      duration: 0.0022901
+      duration: 0.0020434
       messages: 
       output: 'You don''t have permission to use this command: "create", "update",
         "delete", "insert", "drop", "alter", "truncate", "grant", "revoke", "commit",
         "rollback", "savepoint"
 
-        You don''t have permission to use this
-        command: "create", "update", "delete", "insert", "drop", "alter", "truncate",
-        "grant", "revoke", "commit", "rollback", "savepoint"
+        You don''t have permission to use this command:
+        "create", "update", "delete", "insert", "drop", "alter", "truncate", "grant",
+        "revoke", "commit", "rollback", "savepoint"
 
-        You don''t
-        have permission to use this command: "create", "update", "delete", "insert",
-        "drop", "alter", "truncate", "grant", "revoke", "commit", "rollback", "savepoint"
+        You don''t have permission
+        to use this command: "create", "update", "delete", "insert", "drop", "alter",
+        "truncate", "grant", "revoke", "commit", "rollback", "savepoint"
 
         You
         don''t have permission to use this command: "create", "update", "delete",
@@ -640,19 +635,19 @@ MonoBehaviour:
       name: UseBannedWord_DROP
       fullName: SQLReceiverTest.UseBannedWord_DROP
       resultStatus: 1
-      duration: 0.0023158
+      duration: 0.0021104
       messages: 
       output: 'You don''t have permission to use this command: "create", "update",
         "delete", "insert", "drop", "alter", "truncate", "grant", "revoke", "commit",
         "rollback", "savepoint"
 
-        You don''t have permission to use this
-        command: "create", "update", "delete", "insert", "drop", "alter", "truncate",
-        "grant", "revoke", "commit", "rollback", "savepoint"
+        You don''t have permission to use this command:
+        "create", "update", "delete", "insert", "drop", "alter", "truncate", "grant",
+        "revoke", "commit", "rollback", "savepoint"
 
-        You don''t
-        have permission to use this command: "create", "update", "delete", "insert",
-        "drop", "alter", "truncate", "grant", "revoke", "commit", "rollback", "savepoint"
+        You don''t have permission
+        to use this command: "create", "update", "delete", "insert", "drop", "alter",
+        "truncate", "grant", "revoke", "commit", "rollback", "savepoint"
 
         You
         don''t have permission to use this command: "create", "update", "delete",
@@ -674,19 +669,19 @@ MonoBehaviour:
       name: UseBannedWord_INSERT
       fullName: SQLReceiverTest.UseBannedWord_INSERT
       resultStatus: 1
-      duration: 0.0024276
+      duration: 0.0102245
       messages: 
       output: 'You don''t have permission to use this command: "create", "update",
         "delete", "insert", "drop", "alter", "truncate", "grant", "revoke", "commit",
         "rollback", "savepoint"
 
-        You don''t have permission to use this
-        command: "create", "update", "delete", "insert", "drop", "alter", "truncate",
-        "grant", "revoke", "commit", "rollback", "savepoint"
+        You don''t have permission to use this command:
+        "create", "update", "delete", "insert", "drop", "alter", "truncate", "grant",
+        "revoke", "commit", "rollback", "savepoint"
 
-        You don''t
-        have permission to use this command: "create", "update", "delete", "insert",
-        "drop", "alter", "truncate", "grant", "revoke", "commit", "rollback", "savepoint"
+        You don''t have permission
+        to use this command: "create", "update", "delete", "insert", "drop", "alter",
+        "truncate", "grant", "revoke", "commit", "rollback", "savepoint"
 
         You
         don''t have permission to use this command: "create", "update", "delete",
@@ -708,19 +703,19 @@ MonoBehaviour:
       name: UseBannedWord_UPDATE
       fullName: SQLReceiverTest.UseBannedWord_UPDATE
       resultStatus: 1
-      duration: 0.0022867
+      duration: 0.0014933
       messages: 
       output: 'You don''t have permission to use this command: "create", "update",
         "delete", "insert", "drop", "alter", "truncate", "grant", "revoke", "commit",
         "rollback", "savepoint"
 
-        You don''t have permission to use this
-        command: "create", "update", "delete", "insert", "drop", "alter", "truncate",
-        "grant", "revoke", "commit", "rollback", "savepoint"
+        You don''t have permission to use this command:
+        "create", "update", "delete", "insert", "drop", "alter", "truncate", "grant",
+        "revoke", "commit", "rollback", "savepoint"
 
-        You don''t
-        have permission to use this command: "create", "update", "delete", "insert",
-        "drop", "alter", "truncate", "grant", "revoke", "commit", "rollback", "savepoint"
+        You don''t have permission
+        to use this command: "create", "update", "delete", "insert", "drop", "alter",
+        "truncate", "grant", "revoke", "commit", "rollback", "savepoint"
 
         You
         don''t have permission to use this command: "create", "update", "delete",
@@ -737,7 +732,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1003
       parentUniqueId: EditModeTests.dll/[EditModeTests][SQLReceiverTest][suite]
-    m_ResultText: 'SQLCheckerTests (0.075s)
+    m_ResultText: 'SQLCheckerTests (0.094s)
 
       ---
 
@@ -748,7 +743,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: b7b62e72
       m_LastClickedID: 1915664055
-      m_ExpandedIDs: b96c4b9457ea4d32ffffff7f
+      m_ExpandedIDs: b96c4b94715641b957ea4d32ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -795,9 +790,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 506.4
+    y: 501.6
     width: 1103.8
-    height: 277
+    height: 273.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -824,14 +819,14 @@ MonoBehaviour:
   m_LastFolders:
   - Assets/Scripts/SQL
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: D:\code\year3\project_survey\SQL-game-project\SQL game build01
+  m_LastProjectPath: D:\SQL-game-project\SQL game build01
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 19}
-    m_SelectedIDs: b25d0000
-    m_LastClickedID: 23986
-    m_ExpandedIDs: 00000000965d0000985d00009a5d000000ca9a3b
+    m_SelectedIDs: e85d0000
+    m_LastClickedID: 24040
+    m_ExpandedIDs: 00000000a05d0000b85d000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -859,7 +854,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000965d0000985d00009a5d0000
+    m_ExpandedIDs: 00000000a05d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -884,9 +879,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 741e0000
+    m_LastClickedInstanceID: 7796
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -938,7 +933,7 @@ MonoBehaviour:
     x: 1104.8
     y: 73.6
     width: 430.19995
-    height: 294.2
+    height: 291
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -980,7 +975,7 @@ MonoBehaviour:
     x: 0
     y: 73.6
     width: 263
-    height: 411.8
+    height: 407
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -989,9 +984,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 741e0000
       m_LastClickedID: 0
-      m_ExpandedIDs: 4ac5ffff72c6ffff58c8ffff7ad2ffff94d2ffff2cd8ffff48d8ffff90d9ffffb4daffff68ddffff20dfffff96e0ffffc0e1ffffc4e3fffff2e4fffface6ffff48e7ffff2afbffffec600000
+      m_ExpandedIDs: 2cfbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1038,7 +1033,7 @@ MonoBehaviour:
     x: 264
     y: 73.6
     width: 838.80005
-    height: 411.8
+    height: 407
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1490,9 +1485,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 506.4
+    y: 501.6
     width: 1103.8
-    height: 277
+    height: 273.8
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default

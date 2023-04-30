@@ -12,12 +12,15 @@ public class SQLChecker
         this.dbPath = dbPath;
     }
 
-    public bool CheckAnswer(string pQuery, string anQuery)
+    public SQLResult CheckAnswer(string pQuery, string anQuery)
     {
+        string ansResult;
+        string pResult;
+        SQLResult playerResult = new SQLResult();
         // get result from answer's query
         try
         {
-
+            ansResult = GetQueryResult(anQuery);
         }
         catch (SqliteException e)
         {
@@ -27,24 +30,27 @@ public class SQLChecker
         // get result from player's query
         try
         {
-
+            pResult = GetQueryResult(pQuery);
+            // Player query is correct
+            if (ansResult.Equals(pResult))
+            {
+                playerResult.IsCorrect = true;
+            }
+            // Player query is not correct
+            else
+            {
+                playerResult.IsCorrect = false;
+            }
+            playerResult.tableResult = pResult;
         }
         catch (SqliteException e)
         {
-
+            playerResult.IsError = true;
+            playerResult.tableResult = e.Message.ToString();
         }
-        return true;
+
+        return playerResult;
     }
-
-    //public string GetPlayerResult(string pQuery)
-    //{
-    //    return "";
-    //}
-
-    //public string GetAnswerResult(string anQuery)
-    //{
-    //    return "";
-    //}
 
     // return result from query in json form.
     public string GetQueryResult(string query)
@@ -61,6 +67,7 @@ public class SQLChecker
                 using (IDataReader reader = command.ExecuteReader())
                 {
                     string[] jsonResult = new string[reader.FieldCount];
+                    // open json form
                     result += "{";
                     // set header in json
                     for (int i = 0; i < reader.FieldCount; i++)
@@ -77,19 +84,16 @@ public class SQLChecker
                         }
                     }
                     // fill last element of each header with '}' and ',' to close header
-                    for (int i = 0; i < reader.FieldCount; i++)
+                    for (int i = 0; i < reader.FieldCount-1; i++)
                     {
                         jsonResult[i] = jsonResult[i].Remove(jsonResult[i].Length - 1, 1);
-                        if(i < reader.FieldCount - 1)
-                        {
-                            jsonResult[i] += "},";
-                        }
-                        else
-                        {
-                            jsonResult[i] += "}";
-                        }
+                        jsonResult[i] += "},";
                         result += jsonResult[i];
                     }
+                    // fill last last with '}'
+                    jsonResult[reader.FieldCount-1] += "}";
+                    result += jsonResult[reader.FieldCount-1];
+                    // closed json form
                     result += "}";
                 }
             }
