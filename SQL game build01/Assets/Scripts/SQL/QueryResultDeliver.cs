@@ -1,8 +1,68 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Mono.Data.Sqlite;
+using System;
+using System.Data;
 
 public class QueryResultDeliver
 {
-    
+    private static QueryResultDeliver instance = new QueryResultDeliver();
+
+    private QueryResultDeliver()
+    {
+
+    }
+
+    public static QueryResultDeliver GetInstance()
+    {
+        return instance;
+    }
+
+    // return result from query in json form.
+    public string GetQueryResult(string dbPath,string query)
+    {
+        string result = "";
+        // Connect to database
+        using (SqliteConnection connection = new SqliteConnection(dbPath))
+        {
+            connection.Open();
+            // Query to database
+            using (SqliteCommand command = new SqliteCommand(query, connection))
+            {
+                // Read data from query
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    string[] jsonResult = new string[reader.FieldCount];
+                    // open json form
+                    result += "{";
+                    // set header in json
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        jsonResult[i] += "\"" + reader.GetName(i) + "\": {";
+                    }
+                    // fill value for each header from each row in table
+                    while (reader.Read())
+                    {
+                        for (int j = 0; j < reader.FieldCount; j++)
+                        {
+                            jsonResult[j] += reader.GetValue(j).ToString();
+                            jsonResult[j] += ",";
+                        }
+                    }
+                    // fill last element of each header with '}' and ',' to close header
+                    for (int i = 0; i < reader.FieldCount - 1; i++)
+                    {
+                        jsonResult[i] = jsonResult[i].Remove(jsonResult[i].Length - 1, 1);
+                        jsonResult[i] += "},";
+                        result += jsonResult[i];
+                    }
+                    // fill last last with '}'
+                    jsonResult[reader.FieldCount - 1] += "}";
+                    result += jsonResult[reader.FieldCount - 1];
+                    // closed json form
+                    result += "}";
+                }
+            }
+            connection.Close();
+        }
+        return result;
+    }
 }
