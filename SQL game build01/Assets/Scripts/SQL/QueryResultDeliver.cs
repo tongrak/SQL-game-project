@@ -47,14 +47,15 @@ public class QueryResultDeliver
                             jsonResult[j] += ",";
                         }
                     }
-                    // fill last element of each header with '}' and ',' to close header
+                    // Cut ',' from last element of each header except last header and fill last element of each header with '}' and ',' to close header
                     for (int i = 0; i < reader.FieldCount - 1; i++)
                     {
                         jsonResult[i] = jsonResult[i].Remove(jsonResult[i].Length - 1, 1);
                         jsonResult[i] += "},";
                         result += jsonResult[i];
                     }
-                    // fill last last with '}'
+                    // Cut ',' from last element of last header and fill last with '}'
+                    jsonResult[reader.FieldCount - 1] = jsonResult[reader.FieldCount - 1].Remove(jsonResult[reader.FieldCount - 1].Length - 1, 1);
                     jsonResult[reader.FieldCount - 1] += "}";
                     result += jsonResult[reader.FieldCount - 1];
                     // closed json form
