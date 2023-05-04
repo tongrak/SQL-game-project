@@ -71,6 +71,33 @@ public class SQLValidator
         }
     }
 
+    public bool validatePathAndQuery_forTest(string dbPath, string query)
+    {
+        if (haveBannedWord(query))
+        {
+            throw new SqliteException(WarningWord_BannedWord());
+        }
+        else
+        {
+            // Connect to database
+            using (SqliteConnection connection = new SqliteConnection(dbPath))
+            {
+                connection.Open();
+                // Query to database
+                using (SqliteCommand command = new SqliteCommand(query, connection))
+                {
+                    // Read data from query
+                    using (IDataReader reader = command.ExecuteReader())
+                    {
+
+                    }
+                }
+                connection.Close();
+            }
+            return true;
+        }
+    }
+
     public bool haveBannedWord(string query)
     {
         string[] sqlWords = query.ToLower().Split(' ', ';');
