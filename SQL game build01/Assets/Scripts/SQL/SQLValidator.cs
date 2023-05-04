@@ -16,5 +16,8 @@ public class SQLValidator
         return instance;
     }
 
-
+    public bool isQueryInvalid(string query)
+    {
+        return true;
+    }
 }
