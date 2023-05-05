@@ -7,6 +7,7 @@ public class PuzzleConsoleScript : MonoBehaviour
 
     private string _CurrInputString;
 
+
     #region Input Box
     public void UpdateCurrInput(string s)
     {
@@ -19,6 +20,7 @@ public class PuzzleConsoleScript : MonoBehaviour
     public void ExecuteInput()
     {
         Debug.Log(_CurrInputString);
+        //Send input string to SQLmaster??
     }
     #endregion
 }
