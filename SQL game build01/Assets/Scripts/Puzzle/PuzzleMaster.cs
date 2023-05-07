@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Mono.Data.Sqlite;
 
 public enum PuzzleType { query, keyItem, queryAndKeyItem, fillQueryCommand, tellQueryResult }
 public enum DatabaseFile
@@ -63,7 +64,17 @@ public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
 
     public string GetResult(string playerQuery)
     {
-        return null;
+        string result = "";
+        // Check if playerQuery is invalid.
+        try
+        {
+            SQLValidator.GetInstance().validatePathAndQuery(DBPath, playerQuery);
+        }
+        catch (SqliteException e) {
+            result = "{error:\"" + e.Message.ToString() + "\",score:0}";
+        }
+
+        return result;
     }
 
     public void ConstructForTest(PuzzleType pt, string puzzleText, DatabaseFile df)
