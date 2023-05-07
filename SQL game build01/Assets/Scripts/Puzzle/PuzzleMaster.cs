@@ -3,7 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class PuzzleMaster : MonoBehaviour
+interface PuzzleMasterInt
+{
+    public string DBPath { get;}
+    public string[] Dialog { get; }
+    public string Question { get; }
+    public string AnswerQuery { get; }
+    public string[] Condition { get; }
+    public string GetResult(string playerQuery)
+    {
+        return null;
+    }
+
+}
+
+public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
 {
     enum PuzzleType { query, keyItem, queryAndKeyItem, fillQueryCommand, tellQueryResult }
     enum DatabaseFile
@@ -25,14 +39,18 @@ public class PuzzleMaster : MonoBehaviour
     public string[] Dialog { get; private set; }
     public string Question { get; private set; }
     public string AnswerQuery { get; private set; }
-
+    public string[] Condition { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        // 1) read text from puzzle file
-        // 2) keep each value in this class
-        ReadAndPrintPuzzleFile();
+        // 1) locate used database path
+        LocateDBPath();
+        // 2) keep value from puzzle file to this object
+        LoadPuzzle();
+        // 3) validate answer query
+        SQLValidator validator = SQLValidator.GetInstance();
+        validator.validatePathAndQuery(DBPath, AnswerQuery);
     }
 
     // Update is called once per frame
@@ -41,54 +59,44 @@ public class PuzzleMaster : MonoBehaviour
         
     }
 
+    public string GetResult(string playerQuery)
+    {
+        return null;
+    }
+
     public void buttonMethod()
     {
-        PuzzleTypeCast();
-        DBPath = LocateDBPath();
-        Debug.Log(DBPath);
+        //PuzzleTypeCast();
+        //DBPath = LocateDBPath();
+        //Debug.Log(DBPath);
     }
 
-    private void PuzzleTypeCast()
-    {
-        switch (puzzleType)
-        {
-            case PuzzleType.query:
-                Debug.Log("This is query puzzle.");
-                break;
-            case PuzzleType.keyItem:
-                Debug.Log("This is key item puzzle.");
-                break;
-            case PuzzleType.queryAndKeyItem:
-                Debug.Log("This is query and key item puzzle.");
-                break;
-            case PuzzleType.fillQueryCommand:
-                Debug.Log("This is fill query command puzzle.");
-                break;
-            default:
-                Debug.Log("This is tell query result puzzle.");
-                break;
-        }
-    }
-
-    private string LocateDBPath()
+    // Locate database path when game start by following selected chapter.
+    private void LocateDBPath()
     {
         string dbPath = "URI=file:" + Application.dataPath + "/Database/";
         switch (databaseFile)
         {
             case DatabaseFile.ChapterDemo:
-                Debug.Log("DemoDatabase.db");
-                return dbPath += "DemoDatabase.db";
+                dbPath += "DemoDatabase.db";
+                DBPath = dbPath;
+                break;
             case DatabaseFile.Chapter1:
-                Debug.Log("Database1.db");
-                return dbPath += "Database1.db";
+                dbPath += "Database1.db";
+                DBPath = dbPath;
+                break;
             default:
                 throw new Exception("Database file is not real.");
         }
     }
 
-    private void ReadAndPrintPuzzleFile()
+    // Load puzzle value from json file
+    private void LoadPuzzle()
     {
         QueryPuzzleModel puzzle = JsonUtility.FromJson<QueryPuzzleModel>(puzzleFile.text);
-        Debug.Log("Question: " + puzzle.question);
+        Dialog = puzzle.dialog;
+        Question = puzzle.question;
+        AnswerQuery = puzzle.answer;
+        Condition = puzzle.condition;
     }
 }

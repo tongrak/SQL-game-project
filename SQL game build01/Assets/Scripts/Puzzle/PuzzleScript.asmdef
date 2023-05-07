@@ -1,3 +1,16 @@
 {
-	"name": "PuzzleScript"
+    "name": "PuzzleScript",
+    "rootNamespace": "",
+    "references": [
+        "SQL"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
