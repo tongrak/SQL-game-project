@@ -15,19 +15,24 @@ public class PuzzleMaster : MonoBehaviour
     [Header("Select puzzle type")]
     [SerializeField] PuzzleType puzzleType;
 
-    [Header("Puzzle text file")]
-    [SerializeField] TextAsset textfile;
+    [Header("Puzzle JSON file")]
+    [SerializeField] TextAsset puzzleFile;
 
     [Header("Database")]
-    [SerializeField] DatabaseFile databasefile;
+    [SerializeField] DatabaseFile databaseFile;
 
-    public string dbPath { get; private set; }
+    public string DBPath { get; private set; }
+    public string[] Dialog { get; private set; }
+    public string Question { get; private set; }
+    public string AnswerQuery { get; private set; }
+
 
     // Start is called before the first frame update
     void Start()
     {
         // 1) read text from puzzle file
         // 2) keep each value in this class
+        ReadAndPrintPuzzleFile();
     }
 
     // Update is called once per frame
@@ -39,8 +44,8 @@ public class PuzzleMaster : MonoBehaviour
     public void buttonMethod()
     {
         PuzzleTypeCast();
-        dbPath = LocateDBPath();
-        Debug.Log(dbPath);
+        DBPath = LocateDBPath();
+        Debug.Log(DBPath);
     }
 
     private void PuzzleTypeCast()
@@ -68,7 +73,7 @@ public class PuzzleMaster : MonoBehaviour
     private string LocateDBPath()
     {
         string dbPath = "URI=file:" + Application.dataPath + "/Database/";
-        switch (databasefile)
+        switch (databaseFile)
         {
             case DatabaseFile.ChapterDemo:
                 Debug.Log("DemoDatabase.db");
@@ -79,5 +84,11 @@ public class PuzzleMaster : MonoBehaviour
             default:
                 throw new Exception("Database file is not real.");
         }
+    }
+
+    private void ReadAndPrintPuzzleFile()
+    {
+        QueryPuzzleModel puzzle = JsonUtility.FromJson<QueryPuzzleModel>(puzzleFile.text);
+        Debug.Log("Question: " + puzzle.question);
     }
 }

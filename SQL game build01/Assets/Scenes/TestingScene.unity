@@ -387,8 +387,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puzzleType: 0
-  textfile: {fileID: 4900000, guid: b73a074f527f6fc4bb0da0c9bac5d49b, type: 3}
-  databasefile: 0
+  puzzleFile: {fileID: 4900000, guid: 31d4878d6aee0434daa4aa83ec44ad9d, type: 3}
+  databaseFile: 0
 --- !u!1 &526448467
 GameObject:
   m_ObjectHideFlags: 0
