@@ -35,6 +35,8 @@ public class PuzzleEvaluator
             result += "0";
         }
 
+        result += "}";
+
         return result;
     }
 }
