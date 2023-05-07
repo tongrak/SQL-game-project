@@ -5,7 +5,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Main",
-        "SQL"
+        "SQL",
+        "PuzzleScript"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

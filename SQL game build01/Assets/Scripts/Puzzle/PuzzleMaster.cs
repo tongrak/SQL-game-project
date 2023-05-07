@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public enum PuzzleType { query, keyItem, queryAndKeyItem, fillQueryCommand, tellQueryResult }
+public enum DatabaseFile
+{
+    ChapterDemo,
+    Chapter1
+}
+
 interface PuzzleMasterInt
 {
     public string DBPath { get;}
@@ -10,6 +17,7 @@ interface PuzzleMasterInt
     public string Question { get; }
     public string AnswerQuery { get; }
     public string[] Condition { get; }
+
     public string GetResult(string playerQuery)
     {
         return null;
@@ -19,12 +27,6 @@ interface PuzzleMasterInt
 
 public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
 {
-    enum PuzzleType { query, keyItem, queryAndKeyItem, fillQueryCommand, tellQueryResult }
-    enum DatabaseFile
-    {
-        ChapterDemo,
-        Chapter1
-    }
 
     [Header("Select puzzle type")]
     [SerializeField] PuzzleType puzzleType;
@@ -35,11 +37,11 @@ public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
     [Header("Database")]
     [SerializeField] DatabaseFile databaseFile;
 
-    public string DBPath { get; private set; }
-    public string[] Dialog { get; private set; }
-    public string Question { get; private set; }
-    public string AnswerQuery { get; private set; }
-    public string[] Condition { get; private set; }
+    public string DBPath { get; set; }
+    public string[] Dialog { get; set; }
+    public string Question { get; set; }
+    public string AnswerQuery { get; set; }
+    public string[] Condition { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +64,14 @@ public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
     public string GetResult(string playerQuery)
     {
         return null;
+    }
+
+    public void ConstructForTest(PuzzleType pt, string puzzleText, DatabaseFile df)
+    {
+        puzzleType = pt;
+        TextAsset pf = new TextAsset(puzzleText);
+        puzzleFile = pf;
+        databaseFile = df;
     }
 
     public void buttonMethod()
