@@ -4,13 +4,6 @@ using UnityEngine;
 using System;
 using Mono.Data.Sqlite;
 
-public enum PuzzleType { query, keyItem, queryAndKeyItem, fillQueryCommand, tellQueryResult }
-public enum DatabaseFile
-{
-    ChapterDemo,
-    Chapter1
-}
-
 interface PuzzleMasterInt
 {
     public string DBPath { get;}
@@ -48,7 +41,7 @@ public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
     void Start()
     {
         // 1) locate used database path
-        LocateDBPath();
+        DBPath = DatabaseFilePath.LocateDBPath(databaseFile);
         // 2) keep value from puzzle file to this object
         LoadPuzzle();
         // 3) validate answer query
@@ -90,25 +83,6 @@ public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
         //PuzzleTypeCast();
         //DBPath = LocateDBPath();
         //Debug.Log(DBPath);
-    }
-
-    // Locate database path when game start by following selected chapter.
-    private void LocateDBPath()
-    {
-        string dbPath = "URI=file:" + Application.dataPath + "/Database/";
-        switch (databaseFile)
-        {
-            case DatabaseFile.ChapterDemo:
-                dbPath += "DemoDatabase.db";
-                DBPath = dbPath;
-                break;
-            case DatabaseFile.Chapter1:
-                dbPath += "Database1.db";
-                DBPath = dbPath;
-                break;
-            default:
-                throw new Exception("Database file is not real.");
-        }
     }
 
     // Load puzzle value from json file
