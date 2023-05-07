@@ -1,0 +1,11 @@
+{
+	"puzzleModel":[
+		{
+			"Type": 1
+			"Dialog":["ตรงนี้มีหนอนที่ท่าทางอันตรายอยู่","โดยหนอนเหล่านั้นจะมีสีเหลือง"],
+			"Question":"บอกข้อมูลทั้งหมดของ Worm ที่มี Color เป็น Yellow"
+			"Answer":"SELECT * FROM Worm WHERE Color = 'Yellow'"
+			"Condition":[]
+		}
+	]
+}
