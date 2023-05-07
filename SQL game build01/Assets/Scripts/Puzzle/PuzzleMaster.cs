@@ -57,11 +57,12 @@ public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
 
     public string GetResult(string playerQuery)
     {
-        string result = "";
-        // Check if playerQuery is invalid.
+        string result;
         try
         {
+            // Check if playerQuery is invalid.
             SQLValidator.GetInstance().validatePathAndQuery(DBPath, playerQuery);
+            result = PuzzleEvaluator.GetInstance().EvalutateQuery(DBPath, AnswerQuery, playerQuery);
         }
         catch (SqliteException e) {
             result = "{error:\"" + e.Message.ToString() + "\",score:0}";
