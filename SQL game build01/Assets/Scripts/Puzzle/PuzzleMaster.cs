@@ -2,13 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
-public enum PuzzleType { query, keyItem, queryAndKeyItem, fillQueryCommand, tellQueryResult }
-public enum DatabaseFile
-{
-    ChapterDemo,
-    Chapter1
-}
+using Mono.Data.Sqlite;
 
 interface PuzzleMasterInt
 {
@@ -47,7 +41,7 @@ public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
     void Start()
     {
         // 1) locate used database path
-        LocateDBPath();
+        DBPath = DatabaseFilePath.LocateDBPath(databaseFile);
         // 2) keep value from puzzle file to this object
         LoadPuzzle();
         // 3) validate answer query
@@ -63,7 +57,18 @@ public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
 
     public string GetResult(string playerQuery)
     {
-        return null;
+        string result;
+        try
+        {
+            // Check if playerQuery is invalid.
+            SQLValidator.GetInstance().validatePathAndQuery(DBPath, playerQuery);
+            result = PuzzleEvaluator.GetInstance().EvalutateQuery(DBPath, AnswerQuery, playerQuery);
+        }
+        catch (SqliteException e) {
+            result = "{error:\"" + e.Message.ToString() + "\",score:0}";
+        }
+
+        return result;
     }
 
     public void ConstructForTest(PuzzleType pt, string puzzleText, DatabaseFile df)
@@ -79,25 +84,6 @@ public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
         //PuzzleTypeCast();
         //DBPath = LocateDBPath();
         //Debug.Log(DBPath);
-    }
-
-    // Locate database path when game start by following selected chapter.
-    private void LocateDBPath()
-    {
-        string dbPath = "URI=file:" + Application.dataPath + "/Database/";
-        switch (databaseFile)
-        {
-            case DatabaseFile.ChapterDemo:
-                dbPath += "DemoDatabase.db";
-                DBPath = dbPath;
-                break;
-            case DatabaseFile.Chapter1:
-                dbPath += "Database1.db";
-                DBPath = dbPath;
-                break;
-            default:
-                throw new Exception("Database file is not real.");
-        }
     }
 
     // Load puzzle value from json file
