@@ -12,9 +12,7 @@ public interface IPuzzleMaster
     public string AnswerQuery { get; }
     public string[] Condition { get; }
 
-    string GetResult(string playerQuery);
-
-    string[][] GetResultV2(string playerQuery);
+    public PlayerResult GetResult(string playerQuery);
 
 }
 
@@ -71,10 +69,6 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
             playerResult.ErrorMessage = e.Message.ToString();
         }
         return playerResult;
-    }
-    public string[][] GetResultV2(string playerQuery)
-    {
-        throw new NotImplementedException();
     }
     #endregion
 

@@ -8,12 +8,6 @@ public class PlayerResult
     public int Score { get; set; }
     public bool IsError { get; set; } = false;
     public string ErrorMessage { get; set; }
-
-    //public Result(string[][] qr, int score)
-    //{
-    //    QueryResult = qr;
-    //    Score = score;
-    //}
 }
 
 public class PuzzleEvaluator
@@ -89,27 +83,12 @@ public class PuzzleEvaluator
             for (int i = 0; i < arr1.Length; i++)
             {
                 // Check number of record from each attribute
-                if (arr1[i].SequenceEqual(arr2[i]))
+                if (!arr1[i].SequenceEqual(arr2[i]))
                 {
                     return false;
                 }
-                else
-                {
-                    return true;
-                }
-                //for (int j = 0; j < arr1[i].Length; j++)
-                //{
-                //    if (!(arr1[i][j].Equals(arr2[i][j])))
-                //    {
-                //        return false;
-                //    }
-                //    else
-                //    {
-                //        return true;
-                //    }
-                //}
             }
+            return true;
         }
-
     }
 }
