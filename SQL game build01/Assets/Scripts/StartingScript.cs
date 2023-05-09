@@ -11,7 +11,7 @@ public class StartingScript : MonoBehaviour
     private GameObject _mastersObj;
     private string _startingScene;
 
-    void Start()
+    private void Awake()
     {
         _mastersObj = GameObject.Find("Masters");
         _startingScene = this.gameObject.scene.name;
@@ -27,8 +27,12 @@ public class StartingScript : MonoBehaviour
             {
                 SceneManager.LoadSceneAsync(s, LoadSceneMode.Additive);
             }
-            catch(System.Exception e) { Debug.LogWarning("Starting scene err: " + e); }
+            catch (System.Exception e) { Debug.LogWarning("Starting scene err: " + e); }
         }
+    }
+
+    void Start()
+    {
         //Unloading starting scene
         SceneManager.sceneLoaded += ActivatorAndUnloader;
     }

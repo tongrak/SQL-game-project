@@ -402,8 +402,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 861998901079097471}
-        m_TargetAssemblyTypeName: PuzzleConsoleScript, Assembly-CSharp
-        m_MethodName: ExecuteInput
+        m_TargetAssemblyTypeName: PuzzleConsoleMaster, Consoles
+        m_MethodName: ExcutionButtonAct
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
