@@ -1,0 +1,6 @@
+{
+	"dialog":["บริเวณนี้มีผลไม้ที่มีสีเหลืองอยู่เต็มไปหมดเลย","แต่ไม่รู้เลยว่าลูกไหนมีรสชาติเป็นยังไง","ไม่อยากทดสอบด้วยลิ้นตัวเองเลย ใช้ skill ในการตรวจสอบดีกว่า"],
+	"question":"แสดงราย Name และ Flavor ของ Fruit ที่มี color เป็น Yellow",
+	"answer":"SELECT Name, Flavor FROM Fruit WHERE Color = 'Yellow'",
+	"condition":["condition1","condition2"]
+}
