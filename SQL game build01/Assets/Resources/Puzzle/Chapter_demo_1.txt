@@ -1,0 +1,6 @@
+{
+	"dialog":["ตรงนี้มีหนอนที่ท่าทางอันตรายอยู่","โดยหนอนเหล่านั้นจะมีสีแดง"],
+	"question":"แสดงข้อมูลทั้งหมดของ Worm ที่มี Color เป็น Red",
+	"answer":"SELECT * FROM Worm WHERE Color = 'Red'",
+	"condition":["condition1","condition2"]
+}
