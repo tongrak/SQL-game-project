@@ -34,8 +34,7 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
     public string AnswerQuery { get; set; }
     public string[] Condition { get; set; }
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // 1) locate used database path
         DBPath = DatabaseFilePath.LocateDBPath(databaseFile);
@@ -44,6 +43,12 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
         // 3) validate answer query
         SQLValidator validator = SQLValidator.GetInstance();
         validator.validatePathAndQuery(DBPath, AnswerQuery);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
     }
 
     // Update is called once per frame
@@ -82,9 +87,7 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
 
     public void buttonMethod()
     {
-        //PuzzleTypeCast();
-        //DBPath = LocateDBPath();
-        //Debug.Log(DBPath);
+        
     }
 
     // Load puzzle value from json file
