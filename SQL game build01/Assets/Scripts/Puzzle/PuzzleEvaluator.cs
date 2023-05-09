@@ -1,9 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+
+public class PlayerResult
+{
+    public string[][] QueryResult { get; set; }
+    public int Score { get; set; }
+    public bool IsError { get; set; } = false;
+    public string ErrorMessage { get; set; }
+}
 
 public class PuzzleEvaluator
 {
     private static PuzzleEvaluator instance = new PuzzleEvaluator();
+    
 
     private PuzzleEvaluator()
     {
@@ -15,28 +25,45 @@ public class PuzzleEvaluator
         return instance;
     }
 
-    public string EvalutateQuery(string dbPath ,string answerQuery, string playerQuery)
+    public PlayerResult EvalutateQuery(string dbPath, string answerQuery, string playerQuery)
     {
         QueryResultDeliver queryDeliver = QueryResultDeliver.GetInstance();
-        string result = "{queryResult:";
+        PlayerResult result = new PlayerResult();
         // Get result from answer query
-        string answerResult = queryDeliver.GetQueryResult(dbPath, answerQuery);
+        string[][] answerResult = queryDeliver.GetQueryResult(dbPath, answerQuery);
         // Get result from player query
-        string playerResult = queryDeliver.GetQueryResult(dbPath, playerQuery);
-        // Insert player query result
-        result += playerResult + ",score:";
-        // Check answer and player result if equal
-        if (answerResult.Equals(playerResult))
+        string[][] playerResult = queryDeliver.GetQueryResult(dbPath, playerQuery);
+
+        result.QueryResult = playerResult;
+        if(isCorrectQuery(answerResult, playerResult))
         {
-            result += "1";
+            result.Score = 1;
         }
         else
         {
-            result += "0";
+            result.Score = 0;
         }
-
-        result += "}";
-
         return result;
+    }
+
+    private bool isCorrectQuery(string[][] arr1, string[][] arr2)
+    {
+        if(arr1.Length != arr2.Length)
+        {
+            return false;
+        }
+        // Check each attribute
+        else
+        {
+            for (int i = 0; i < arr1.Length; i++)
+            {
+                // Check number of record from each attribute
+                if (!arr1[i].SequenceEqual(arr2[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

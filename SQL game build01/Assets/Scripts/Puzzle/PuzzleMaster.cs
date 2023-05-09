@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using Mono.Data.Sqlite;
 
-interface PuzzleMasterInt
+public interface IPuzzleMaster
 {
     public string DBPath { get;}
     public string[] Dialog { get; }
@@ -12,14 +12,11 @@ interface PuzzleMasterInt
     public string AnswerQuery { get; }
     public string[] Condition { get; }
 
-    public string GetResult(string playerQuery)
-    {
-        return null;
-    }
+    public PlayerResult GetResult(string playerQuery);
 
 }
 
-public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
+public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
 {
 
     [Header("Select puzzle type")]
@@ -37,8 +34,7 @@ public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
     public string AnswerQuery { get; set; }
     public string[] Condition { get; set; }
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // 1) locate used database path
         DBPath = DatabaseFilePath.LocateDBPath(databaseFile);
@@ -49,27 +45,37 @@ public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
         validator.validatePathAndQuery(DBPath, AnswerQuery);
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
     // Update is called once per frame
     void Update()
     {
         
     }
 
-    public string GetResult(string playerQuery)
+    #region Result
+    public PlayerResult GetResult(string playerQuery)
     {
-        string result;
+        PlayerResult playerResult;
         try
         {
             // Check if playerQuery is invalid.
             SQLValidator.GetInstance().validatePathAndQuery(DBPath, playerQuery);
-            result = PuzzleEvaluator.GetInstance().EvalutateQuery(DBPath, AnswerQuery, playerQuery);
+            playerResult = PuzzleEvaluator.GetInstance().EvalutateQuery(DBPath, AnswerQuery, playerQuery);
         }
-        catch (SqliteException e) {
-            result = "{error:\"" + e.Message.ToString() + "\",score:0}";
+        catch (SqliteException e)
+        {
+            playerResult = new PlayerResult();
+            playerResult.IsError = true;
+            playerResult.ErrorMessage = e.Message.ToString();
         }
-
-        return result;
+        return playerResult;
     }
+    #endregion
 
     public void ConstructForTest(PuzzleType pt, string puzzleText, DatabaseFile df)
     {
@@ -81,9 +87,7 @@ public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
 
     public void buttonMethod()
     {
-        //PuzzleTypeCast();
-        //DBPath = LocateDBPath();
-        //Debug.Log(DBPath);
+        
     }
 
     // Load puzzle value from json file
