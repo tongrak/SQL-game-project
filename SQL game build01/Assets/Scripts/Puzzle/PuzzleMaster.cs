@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using Mono.Data.Sqlite;
 
-interface PuzzleMasterInt
+public interface IPuzzleMaster
 {
     public string DBPath { get;}
     public string[] Dialog { get; }
@@ -12,14 +12,13 @@ interface PuzzleMasterInt
     public string AnswerQuery { get; }
     public string[] Condition { get; }
 
-    public string GetResult(string playerQuery)
-    {
-        return null;
-    }
+    string GetResult(string playerQuery);
+
+    string[][] GetResultV2(string playerQuery);
 
 }
 
-public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
+public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
 {
 
     [Header("Select puzzle type")]
@@ -55,21 +54,29 @@ public class PuzzleMaster : MonoBehaviour, PuzzleMasterInt
         
     }
 
-    public string GetResult(string playerQuery)
+    #region Result
+    public PlayerResult GetResult(string playerQuery)
     {
-        string result;
+        PlayerResult playerResult;
         try
         {
             // Check if playerQuery is invalid.
             SQLValidator.GetInstance().validatePathAndQuery(DBPath, playerQuery);
-            result = PuzzleEvaluator.GetInstance().EvalutateQuery(DBPath, AnswerQuery, playerQuery);
+            playerResult = PuzzleEvaluator.GetInstance().EvalutateQuery(DBPath, AnswerQuery, playerQuery);
         }
-        catch (SqliteException e) {
-            result = "{error:\"" + e.Message.ToString() + "\",score:0}";
+        catch (SqliteException e)
+        {
+            playerResult = new PlayerResult();
+            playerResult.IsError = true;
+            playerResult.ErrorMessage = e.Message.ToString();
         }
-
-        return result;
+        return playerResult;
     }
+    public string[][] GetResultV2(string playerQuery)
+    {
+        throw new NotImplementedException();
+    }
+    #endregion
 
     public void ConstructForTest(PuzzleType pt, string puzzleText, DatabaseFile df)
     {
