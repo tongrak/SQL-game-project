@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Starting Scene.unity
     guid: 7e6cf214088048c4aa4de81ed009f2c2
   - enabled: 1
-    path: Assets/Scenes/Passive GamePlay/Consoles Scene.unity
+    path: Assets/Scenes/Passive GamePlay/UI Scene.unity
     guid: 385ea98494af95e45885142b65a794bb
   - enabled: 1
     path: Assets/Scenes/RnD/Alpha01 Gameplay Developing Scene 1.unity
