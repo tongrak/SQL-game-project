@@ -24,6 +24,21 @@ namespace ChapNRoom
             }
         }
 
+        public ChapterRef GetChapRefFrom(string chapName, string path)
+        {
+            if (File.Exists(path))
+            {
+                string inTexts = File.ReadAllText(path);
+                inTexts.Trim();
+                string roomsDetails = StringHelper.GetStringBetween("rooms{", "}", inTexts);
+                RoomRef[] roomRefs = GetRoomRefs(inTexts);
+                return new ChapterRef(chapName, roomRefs);
+            }
+            else throw new FileNotFoundException("Cann't find chapter reference file in: " + path);
+        }
+
+        #region Misc Functions
+
         private RoomRef[] GetRoomRefs(string inString)
         {
             try
@@ -51,18 +66,6 @@ namespace ChapNRoom
             return new RoomRef(headNBody.Item1, neigbors);
         }
 
-        public ChapterRef GetChapRefFrom(string chapName, string path)
-        {
-            if (File.Exists(path))
-            {
-                string inTexts = File.ReadAllText(path);
-                inTexts.Trim();
-                string roomsDetails = StringHelper.GetStringBetween("rooms{", "}", inTexts);
-                RoomRef[] roomRefs = GetRoomRefs(inTexts);
-                return new ChapterRef(chapName, roomRefs);
-            }
-            else throw new FileNotFoundException("Cann't find chapter reference file in: " + path);
-        }
-
+        #endregion
     }
 }
