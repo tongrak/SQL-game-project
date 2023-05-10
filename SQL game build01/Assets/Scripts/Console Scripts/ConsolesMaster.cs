@@ -9,41 +9,31 @@ namespace ConsoleGenerals
         //[System.NonSerialized] private ConsoleMode _currentMode ;
 
         private PuzzleConsoleMaster _puzzleConsole;
-
-        
+        private DialogConsoleMaster _dialogConsole;
 
         //acquire SQL/Puzzle Master
 
-        public void GetPuzzleResponse()
+        public void GetPuzzleResponse(string playerInput)
         {
-            string playerResponse = _puzzleConsole.UpdateOutputString();
-
             //SQL/Puzzle Master.GetResponse(playerResponse)
-            Debug.Log("Player Input: " + playerResponse);
+            Debug.Log("Player Input: " + playerInput);
+        }
+
+        private void puzzleConsoleInit()
+        {
+            _puzzleConsole = GameObject.Find("Puzzle Console").GetComponent<PuzzleConsoleMaster>();
+            if (_puzzleConsole != null)
+            {
+                _puzzleConsole.ExcutionCalled += GetPuzzleResponse;
+                Debug.Log("PuzzleConsole connected");
+            }
         }
 
         #region UnityBasics
-        private void Awake()
-        {
-            //init console mode to Explore
-            //_currentMode = ConsoleMode.ExploreMode;
-
-            //init child console
-            //
-            //init explore console
-            //init dialog console
-        }
 
         private void Update()
         {
-            if ( _puzzleConsole == null )
-            {
-                _puzzleConsole = GameObject.Find("Puzzle Console").GetComponent<PuzzleConsoleMaster>();
-            }
-            else
-            {
-                if (_puzzleConsole.GetCalled()) { GetPuzzleResponse(); }
-            }
+            if (_puzzleConsole == null) puzzleConsoleInit();
         }
         #endregion
     }
