@@ -16,6 +16,14 @@ namespace ConsoleGenerals
         //Config var
         private int _dialogIndex = 0;
 
+        public void ShowDialog()
+        {
+            UpdateTitle();
+            UpdateDialog();
+
+            ToHideTitle(false);
+            ToHide(false);
+        }
 
         public void ShowDialog(string title, string[] dialogs)
         {
@@ -40,18 +48,19 @@ namespace ConsoleGenerals
 
         public void ShowNextDialog()
         {
-            if (!ChangeDialogBaseOnCurrIndex(-1)) Debug.LogWarning("Last dialog displayed");
+            if (!ChangeDialogBaseOnCurrIndex(1)) Debug.LogWarning("Last dialog displayed");
         }
 
         public void ShowPreviousDialog()
         {
-            if (!ChangeDialogBaseOnCurrIndex(1)) Debug.LogWarning("No negetive indexed dialog existed");
+            if (!ChangeDialogBaseOnCurrIndex(-1)) Debug.LogWarning("No negetive indexed dialog existed");
         }
 
+        #region private functions
         private bool ChangeDialogBaseOnCurrIndex(int changes)
         {
             int nextIndex = _dialogIndex + changes;
-            if (nextIndex > 0 && nextIndex < _dialogs.Length)
+            if (nextIndex >= 0 && nextIndex < _dialogs.Length)
             {
                 _dialogIndex = nextIndex;
                 UpdateDialog();
@@ -73,6 +82,15 @@ namespace ConsoleGenerals
         {
             _titleElement.gameObject.SetActive(!toHide);
         }
+        #endregion
+
+        #region Unity Basics
+        private void Awake()
+        {
+            ToHide(true);
+        }
+
+        #endregion
     }
 }
 
