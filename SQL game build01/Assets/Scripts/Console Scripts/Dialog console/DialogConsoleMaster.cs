@@ -13,16 +13,15 @@ namespace ConsoleGenerals
         [Header("Display Variable")]
         [SerializeField] private string _dialogTitle = "//Title//";
         [SerializeField] private string[] _dialogs;
-        //Config var
+        [Header("Configure Option")]
+        [SerializeField] private bool _IsTyped = false;
+        [SerializeField] private int _TypingSlowness = 1;
+        
         private int _dialogIndex = 0;
 
         public void ShowDialog()
         {
-            UpdateTitle();
-            UpdateDialog();
-
-            ToHideTitle(false);
-            ToHide(false);
+            ShowDialog(_dialogTitle, _dialogs);
         }
 
         public void ShowDialog(string title, string[] dialogs)
@@ -32,12 +31,15 @@ namespace ConsoleGenerals
             _dialogs = dialogs;
             //Settign config vars
             _dialogIndex = 0;
+
+            //clear elements, show title and dialog console
+            ClearTitleNDialog();
+            ToHideTitle(false);
+            ToHide(false);
+
             //enforce change
             UpdateTitle();
             UpdateDialog();
-
-            ToHideTitle(false);
-            ToHide(false);
         }
 
         public void ShowDialog(string[] dialogs)
@@ -69,6 +71,12 @@ namespace ConsoleGenerals
             else return false;
         }
 
+        private void ClearTitleNDialog()
+        {
+            _titleElement.text = string.Empty;
+            _mainDialogElement.text = string.Empty;
+        }
+
         private void UpdateTitle()
         {
             _titleElement.text = _dialogTitle;
@@ -76,8 +84,28 @@ namespace ConsoleGenerals
 
         private void UpdateDialog()
         {
-            _mainDialogElement.text = _dialogs[_dialogIndex];
+            string newDialog = _dialogs[_dialogIndex];
+            if (_IsTyped)
+            {
+                StopAllCoroutines();
+                StartCoroutine(TypeDialog(newDialog));
+            }else _mainDialogElement.text = newDialog;
+
         }
+
+        private IEnumerator TypeDialog(string dialog)
+        {
+            _mainDialogElement.text = string.Empty;
+            foreach(char letter in dialog.ToCharArray())
+            {
+                _mainDialogElement.text += letter;
+
+                //Wait for determined typing slowness frames
+                float waitFrame = Time.deltaTime * _TypingSlowness;
+                yield return new WaitForSeconds(waitFrame);
+            }
+        }
+
         private void ToHideTitle(bool toHide)
         {
             _titleElement.gameObject.SetActive(!toHide);
