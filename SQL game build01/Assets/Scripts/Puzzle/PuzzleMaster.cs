@@ -12,7 +12,7 @@ public interface IPuzzleMaster
     public string AnswerQuery { get; }
     public string[] Condition { get; }
 
-    public PlayerResult GetResult(string playerQuery);
+    public PuzzleResult GetResult(string playerQuery);
 
 }
 
@@ -58,9 +58,9 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
     }
 
     #region Result
-    public PlayerResult GetResult(string playerQuery)
+    public PuzzleResult GetResult(string playerQuery)
     {
-        PlayerResult playerResult;
+        PuzzleResult playerResult;
         try
         {
             // Check if playerQuery is invalid.
@@ -69,7 +69,7 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
         }
         catch (SqliteException e)
         {
-            playerResult = new PlayerResult();
+            playerResult = new PuzzleResult();
             playerResult.IsError = true;
             playerResult.ErrorMessage = e.Message.ToString();
         }

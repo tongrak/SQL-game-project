@@ -1,9 +1,8 @@
 {
-    "name": "PlayerScr",
+    "name": "IPoint",
     "rootNamespace": "",
     "references": [
-        "GUID:0256afb586c91ee4ca6b944d0a01c319",
-        "GUID:a4e937a1500a5d5499cdd54f3cbe164d"
+        "GUID:0256afb586c91ee4ca6b944d0a01c319"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

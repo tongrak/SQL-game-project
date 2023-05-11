@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class PlayerResult
+public class PuzzleResult
 {
     public string[][] QueryResult { get; set; }
     public int Score { get; set; }
@@ -25,10 +25,10 @@ public class PuzzleEvaluator
         return instance;
     }
 
-    public PlayerResult EvalutateQuery(string dbPath, string answerQuery, string playerQuery)
+    public PuzzleResult EvalutateQuery(string dbPath, string answerQuery, string playerQuery)
     {
         QueryResultDeliver queryDeliver = QueryResultDeliver.GetInstance();
-        PlayerResult result = new PlayerResult();
+        PuzzleResult result = new PuzzleResult();
         // Get result from answer query
         string[][] answerResult = queryDeliver.GetQueryResult(dbPath, answerQuery);
         // Get result from player query
