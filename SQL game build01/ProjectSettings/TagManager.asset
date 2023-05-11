@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Hard Border
   - Room Changing Zone
+  - I-Point
   layers:
   - Default
   - TransparentFX

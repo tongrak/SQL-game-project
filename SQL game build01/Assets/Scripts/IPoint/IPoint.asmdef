@@ -1,0 +1,16 @@
+{
+    "name": "IPoint",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0256afb586c91ee4ca6b944d0a01c319"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
