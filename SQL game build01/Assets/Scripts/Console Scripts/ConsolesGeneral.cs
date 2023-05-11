@@ -1,9 +1,11 @@
 ﻿
 using UnityEngine;
 
-namespace ConsoleGenerals
+namespace ConsoleGeneral
 {
-    enum ConsoleMode { ExploreMode, PuzzleMode}
+    public delegate void ExcuteButtonHandler(string playerInput);
+
+    public enum ConsoleMode { ExploreMode, PuzzleMode, DialogMode}
 
     public class ConsoleBasic : MonoBehaviour
     {
