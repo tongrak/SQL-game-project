@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace ConsoleGenerals
+namespace ConsoleGeneral
 {
     public class DialogConsoleMaster : ConsoleBasic
     {

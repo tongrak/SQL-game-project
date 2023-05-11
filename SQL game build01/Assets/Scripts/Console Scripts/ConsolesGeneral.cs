@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace ConsoleGenerals
+namespace ConsoleGeneral
 {
     public delegate void ExcuteButtonHandler(string playerInput);
 

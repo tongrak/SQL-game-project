@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ConsoleGenerals
+namespace ConsoleGeneral
 {
     public class PuzzleConsoleMaster : ConsoleBasic
     {

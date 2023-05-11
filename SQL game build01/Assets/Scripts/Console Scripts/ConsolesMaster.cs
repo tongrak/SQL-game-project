@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ConsoleGenerals
+namespace ConsoleGeneral
 {
     public class ConsolesMaster : MonoBehaviour
     {
@@ -11,6 +11,7 @@ namespace ConsoleGenerals
 
         private PuzzleConsoleMaster _puzzleConsole;
         private DialogConsoleMaster _dialogConsole;
+        private QuestBarMaster _questBarConsole;
 
         private bool _allConsoleLoaded = false;
 
@@ -27,12 +28,12 @@ namespace ConsoleGenerals
             }
         }
 
-        public void GetPuzzleResponse(string playerInput)
+        public void ShowQuestBar(string quest)
         {
-            //SQL/Puzzle Master.GetResponse(playerResponse)
-            Debug.Log("Player Input: " + playerInput);
+            _questBarConsole.ShowQuestBar(quest);
         }
 
+        #region PuzzleConsole Control
         private bool PuzzleConsoleInit()
         {
             _puzzleConsole = GameObject.Find("Puzzle Console").GetComponent<PuzzleConsoleMaster>();
@@ -43,31 +44,56 @@ namespace ConsoleGenerals
             }
             return false;
         }
+        public void GetPuzzleResponse(string playerInput)
+        {
+            //SQL/Puzzle Master.GetResponse(playerResponse)
+            Debug.Log("Player Input: " + playerInput);
+        }
+        #endregion
 
+        #region DialogConsole Control
         private bool DialogConsoleInit()
         {
             _dialogConsole = GameObject.FindFirstObjectByType<DialogConsoleMaster>();
             if (_dialogConsole != null) return true;
             return false;
         }
+        #endregion
 
+        #region QuestBar Control
+
+        public void ShowQuestBar()
+        {
+            _questBarConsole.ToHide(false);
+        }
+
+        private bool QuestBarInit()
+        {
+            _questBarConsole = FindAnyObjectByType<QuestBarMaster>();
+            if (_questBarConsole != null) return true;
+            return false;
+        }
+        #endregion
+
+        #region Misc Function
         private void HideAllConsole()
         {
             _puzzleConsole?.ToHide(true);
             _dialogConsole?.ToHide(true);
         }
 
+        #endregion
 
         #region UnityBasics
-
         private void Update()
         {
             //connect all console
             if (!_allConsoleLoaded)
             {
-                if (PuzzleConsoleInit() && DialogConsoleInit())
+                if (PuzzleConsoleInit() && DialogConsoleInit() && QuestBarInit())
                 {
-                    ShowConsole(ConsoleMode.PuzzleMode); _allConsoleLoaded = true;
+                    ShowConsole(ConsoleMode.PuzzleMode); 
+                    _allConsoleLoaded = true;
                 }
             }
         }
