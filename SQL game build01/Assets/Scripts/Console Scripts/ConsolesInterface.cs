@@ -5,7 +5,7 @@ namespace ConsoleGenerals
 {
     public delegate void ExcuteButtonHandler(string playerInput);
 
-    enum ConsoleMode { ExploreMode, PuzzleMode, DialogMode}
+    public enum ConsoleMode { ExploreMode, PuzzleMode, DialogMode}
 
     public class ConsoleBasic : MonoBehaviour
     {
