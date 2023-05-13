@@ -7,13 +7,14 @@ namespace ConsoleGeneral
 {
     public class ConsolesMaster : MonoBehaviour
     {
-        [System.NonSerialized] private ConsoleMode _currentMode;
+        [SerializeField] private ConsoleMode _startingMode = ConsoleMode.ExploreMode;
+        private ConsoleMode _currentMode;
+
+        private bool _allConsoleLoaded = false;
 
         private PuzzleConsoleMaster _puzzleConsole;
         private DialogConsoleMaster _dialogConsole;
         private QuestBarMaster _questBarConsole;
-
-        private bool _allConsoleLoaded = false;
 
         //acquire SQL/Puzzle Master
 
@@ -24,7 +25,7 @@ namespace ConsoleGeneral
             {
                 case ConsoleMode.ExploreMode: throw new NotImplementedException("Explore console isn't implemented");
                 case ConsoleMode.PuzzleMode: _puzzleConsole.ToHide(false); break;
-                case ConsoleMode.DialogMode: _dialogConsole.ToHide(false); break;
+                case ConsoleMode.DialogMode: _dialogConsole.ShowDialog(); break;
             }
         }
 
@@ -36,18 +37,19 @@ namespace ConsoleGeneral
         #region PuzzleConsole Control
         private bool PuzzleConsoleInit()
         {
-            _puzzleConsole = GameObject.Find("Puzzle Console").GetComponent<PuzzleConsoleMaster>();
+            _puzzleConsole = FindAnyObjectByType<PuzzleConsoleMaster>();
             if (_puzzleConsole != null)
             {
                 _puzzleConsole.ExcutionCalled += GetPuzzleResponse;
+                Debug.Log("Console: Puzzle connected");
                 return true;
             }
             return false;
         }
         public void GetPuzzleResponse(string playerInput)
         {
-            //SQL/Puzzle Master.GetResponse(playerResponse)
-            Debug.Log("Player Input: " + playerInput);
+                //Get response from puzzle master
+                Debug.Log("Player Input: " + playerInput);
         }
         #endregion
 
@@ -55,7 +57,11 @@ namespace ConsoleGeneral
         private bool DialogConsoleInit()
         {
             _dialogConsole = GameObject.FindFirstObjectByType<DialogConsoleMaster>();
-            if (_dialogConsole != null) return true;
+            if (_dialogConsole != null)
+            {
+                Debug.Log("Console: Dialog connected");
+                return true;
+            }
             return false;
         }
         #endregion
@@ -85,6 +91,12 @@ namespace ConsoleGeneral
         #endregion
 
         #region UnityBasics
+
+        private void Awake()
+        {
+            _currentMode = _startingMode;
+        }
+
         private void Update()
         {
             //connect all console
@@ -92,7 +104,9 @@ namespace ConsoleGeneral
             {
                 if (PuzzleConsoleInit() && DialogConsoleInit() && QuestBarInit())
                 {
-                    ShowConsole(ConsoleMode.PuzzleMode); 
+                    Debug.Log("Console: All set");
+                    ShowConsole(_currentMode); 
+                    _questBarConsole.ToHide(true);
                     _allConsoleLoaded = true;
                 }
             }

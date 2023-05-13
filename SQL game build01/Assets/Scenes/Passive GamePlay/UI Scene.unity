@@ -994,13 +994,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 722382286}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e9b40feb378da1458ef94c214b47033, type: 3}
+  m_Script: {fileID: 11500000, guid: bc51a606ed1e2d14b8f11022ff554678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _TargetObj: {fileID: 0}
-  _SelectedTestingOption: 0
-  _displayingText: //PlaceHolder//
-  _columnTexts: []
+  _columnPrefab: {fileID: 6378431456274603816, guid: 96f5192840991484fb73c0b7207b3bc2, type: 3}
 --- !u!1 &825502800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,7 +1411,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1123136908
 RectTransform:
   m_ObjectHideFlags: 0

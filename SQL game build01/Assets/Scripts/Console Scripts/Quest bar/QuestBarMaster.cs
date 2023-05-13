@@ -21,10 +21,10 @@ namespace ConsoleGeneral
         }
 
         #region Unity Basics
-        void Start()
+        /*void Start()
         {
             ToHide(true);
-        }
+        }*/
         #endregion
     }
 }
