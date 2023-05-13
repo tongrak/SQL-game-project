@@ -1,47 +1,55 @@
-using ConsoleGenerals;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PuzzleConsoleMaster : ConsoleBasic
+namespace ConsoleGeneral
 {
-    [SerializeField] public string currOutputString;
-    [SerializeField] private bool _calledForResponse = false;
-
-    private string _currInputString;
-    //private PuzzleMaster _currPuzzleMaster;
-
-    //public void InnitPuzzleMaster(PuzzleMaster pm)
-
-    #region Input Box
-    public void UpdateCurrInput(string s)
+    public class PuzzleConsoleMaster : ConsoleBasic
     {
-        _currInputString = s;
-    }
+        //For raising execution call
+        public event ExcuteButtonHandler ExcutionCalled;
 
-    #endregion
+        [Header("Displaying Element")]
+        [SerializeField] private Button _buttonElement;
 
-    public string UpdateOutputString()
-    {
-        currOutputString = _currInputString;
-        return currOutputString;
-    }   
+        //Input box feilds;
+        private string _currOutputString;
+        private string _currInputString;
 
-    #region Excute Butt
-    public void ExcutionButtonAct()
-    {
-        Debug.Log("Button Click");
-        _calledForResponse = true;
-    }
+        //Config fields
+        private bool _canExecute = true;
+        [Header("Configure variable")]
+        [SerializeField] private int _exeBuffer = 1;
 
-    public bool GetCalled()
-    {
-        if (_calledForResponse)
+        #region Input Box
+        public void UpdateCurrInput(string s)
         {
-            _calledForResponse = false;
-            return true;
+            _currInputString = s;
         }
-        return false;
+        #endregion
+
+        #region Excute Butt
+        IEnumerator ExecutionBuffer(int sec)
+        {
+            yield return new WaitForSeconds(sec);
+            _canExecute = true;
+            _buttonElement.interactable = true;
+        }
+
+        public virtual void ExcutionButtonAct()
+        {
+            _currOutputString = _currInputString;
+            if (_canExecute)
+            {
+                _canExecute = false;
+                _buttonElement.interactable = false;
+                ExcutionCalled?.Invoke(_currOutputString);
+                StartCoroutine(ExecutionBuffer(_exeBuffer));
+            }
+        }
+        #endregion
     }
-    #endregion
 }
+
