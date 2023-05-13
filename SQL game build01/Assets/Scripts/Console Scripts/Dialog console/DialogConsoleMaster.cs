@@ -19,9 +19,15 @@ namespace ConsoleGeneral
         
         private int _dialogIndex = 0;
 
+        private bool _hideTitle = false;
+
         public void ShowDialog()
         {
-            ShowDialog(_dialogTitle, _dialogs);
+            if (_hideTitle)
+            {
+                ShowDialog(_dialogs);
+            }
+            else ShowDialog(_dialogTitle, _dialogs);
         }
 
         public void ShowDialog(string title, string[] dialogs)
@@ -29,23 +35,19 @@ namespace ConsoleGeneral
             //Update displaying var
             _dialogTitle = title;
             _dialogs = dialogs;
-            //Settign config vars
-            _dialogIndex = 0;
 
-            //clear elements, show title and dialog console
-            ClearTitleNDialog();
-            ToHideTitle(false);
-            ToHide(false);
+            _hideTitle = false;
 
-            //enforce change
-            UpdateTitle();
-            UpdateDialog();
+            SettingUp(_hideTitle);
         }
 
         public void ShowDialog(string[] dialogs)
         {
-            this.ShowDialog("//Empty//", dialogs);
-            ToHideTitle(true);
+            _dialogs = dialogs;
+
+            _hideTitle = true;
+
+            SettingUp(_hideTitle);
         }
 
         public void ShowNextDialog()
@@ -59,6 +61,25 @@ namespace ConsoleGeneral
         }
 
         #region private functions
+        private void SettingUp(bool hideTitle)
+        {
+            //Settign config vars
+            _dialogIndex = 0;
+
+            //clear elements, show title and dialog console
+            ClearTitleNDialog();
+            //ToHideTitle(hideTitle);
+            ToHide(false);
+
+            //enforce change
+            if (!hideTitle)
+            {
+                Debug.Log("Enter UpdateTitle");
+                UpdateTitle();
+            }
+            UpdateDialog();
+        }
+
         private bool ChangeDialogBaseOnCurrIndex(int changes)
         {
             int nextIndex = _dialogIndex + changes;
@@ -108,8 +129,9 @@ namespace ConsoleGeneral
 
         private void ToHideTitle(bool toHide)
         {
-            _titleElement.gameObject.SetActive(!toHide);
+            if (toHide) { _titleElement.text = string.Empty; }
         }
+
         #endregion
 
         #region Unity Basics
