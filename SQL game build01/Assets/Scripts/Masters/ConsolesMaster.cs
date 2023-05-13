@@ -16,7 +16,7 @@ namespace ConsoleGeneral
         private DialogConsoleMaster _dialogConsole;
         private QuestBarMaster _questBarConsole;
 
-        //acquire SQL/Puzzle Master
+        private PuzzleMaster _currPuzzle;
 
         public void ShowConsole(ConsoleMode console)
         {
@@ -27,6 +27,12 @@ namespace ConsoleGeneral
                 case ConsoleMode.PuzzleMode: _puzzleConsole.ToHide(false); break;
                 case ConsoleMode.DialogMode: _dialogConsole.ShowDialog(); break;
             }
+        }
+
+        public void ShowConsole(PuzzleMaster pm)
+        {
+            _dialogConsole.ShowDialog(pm.Dialog);
+            ShowConsole(ConsoleMode.DialogMode);
         }
 
         public void ShowQuestBar(string quest)
