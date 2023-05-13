@@ -113,10 +113,10 @@ namespace ConsoleGeneral
         #endregion
 
         #region Unity Basics
-        private void Awake()
+        /*private void Awake()
         {
             ToHide(true);
-        }
+        }*/
 
         #endregion
     }
