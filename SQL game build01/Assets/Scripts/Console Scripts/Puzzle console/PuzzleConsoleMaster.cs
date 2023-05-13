@@ -2,15 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ConsoleGeneral
 {
     public class PuzzleConsoleMaster : ConsoleBasic
     {
+        //For raising execution call
         public event ExcuteButtonHandler ExcutionCalled;
 
+        [Header("Displaying Element")]
+        [SerializeField] private Button _buttonElement;
+
+        //Input box feilds;
         private string _currOutputString;
         private string _currInputString;
+
+        //Config fields
+        private bool _canExecute = true;
+        [Header("Configure variable")]
+        [SerializeField] private int _exeBuffer = 1;
 
         #region Input Box
         public void UpdateCurrInput(string s)
@@ -20,10 +31,23 @@ namespace ConsoleGeneral
         #endregion
 
         #region Excute Butt
+        IEnumerator ExecutionBuffer(int sec)
+        {
+            yield return new WaitForSeconds(sec);
+            _canExecute = true;
+            _buttonElement.interactable = true;
+        }
+
         public virtual void ExcutionButtonAct()
         {
             _currOutputString = _currInputString;
-            ExcutionCalled?.Invoke(_currOutputString);
+            if (_canExecute)
+            {
+                _canExecute = false;
+                _buttonElement.interactable = false;
+                ExcutionCalled?.Invoke(_currOutputString);
+                StartCoroutine(ExecutionBuffer(_exeBuffer));
+            }
         }
         #endregion
     }
