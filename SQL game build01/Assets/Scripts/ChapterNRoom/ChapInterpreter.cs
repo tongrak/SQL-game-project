@@ -29,9 +29,10 @@ namespace ChapNRoom
             if (File.Exists(path))
             {
                 string inTexts = File.ReadAllText(path);
-                inTexts.Trim();
-                string roomsDetails = StringHelper.GetStringBetween("rooms{", "}", inTexts);
-                RoomRef[] roomRefs = GetRoomRefs(inTexts);
+                inTexts = inTexts.Trim();
+                inTexts = inTexts.Replace("\r\n", string.Empty);
+                string roomsDetails = StringHelper.GetStringBetween("Rooms{", "}", inTexts);
+                RoomRef[] roomRefs = GetRoomRefs(roomsDetails);
                 return new ChapterRef(chapName, roomRefs);
             }
             else throw new FileNotFoundException("Cann't find chapter reference file in: " + path);
@@ -57,7 +58,7 @@ namespace ChapNRoom
 
         private RoomRef CreateRoomRef(string roomDetail)
         {
-            Tuple<string,string> headNBody = StringHelper.SpliteByPivot(":", roomDetail);
+            Tuple<string, string> headNBody = StringHelper.SpliteByPivot(":", roomDetail);
             if (headNBody == null) throw new Exception("no colon in roomdetail: " + roomDetail);
             if (String.IsNullOrEmpty(headNBody.Item1) || String.IsNullOrEmpty(headNBody.Item2)) throw new Exception("HeadOrBody is empty");
             string[] neigbors = headNBody.Item2.Split(",");

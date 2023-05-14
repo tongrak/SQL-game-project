@@ -6,7 +6,7 @@ namespace ChapNRoom
     /// <summary>
     /// Room's neighbor. Direction base on 4-side clock wise direction.
     /// </summary>
-    public enum RoomDirection {UP, RIGHT, DOWN, LEFT}
+    public enum RoomDirection { UP, RIGHT, DOWN, LEFT }
 
     /// <summary>
     ///  Reference of a room. Holding the room's name and it's neighbors name.
@@ -23,14 +23,14 @@ namespace ChapNRoom
             this._neighbors = neighbors;
         }
 
-        public string GetNeighborInDirection(RoomDirection direction) 
+        public string GetNeighborInDirection(RoomDirection direction)
         {
             return this._neighbors[(int)direction];
         }
 
         public override string ToString()
         {
-            return "Room(" + name + "):" + _neighbors.ToString()+";";
+            return "Room(" + name + "):" + _neighbors.ToString() + ";";
         }
     }
 
@@ -59,7 +59,7 @@ namespace ChapNRoom
 
         public override string ToString()
         {
-            return "Chapter(" + name + "):" + _roomRefs.ToString()+";";
+            return "Chapter(" + name + "):" + _roomRefs.ToString() + ";";
         }
 
 
@@ -101,7 +101,7 @@ namespace ChapNRoom
         /// <param name="pivot">String pivot</param>
         /// <param name="inString">String to be splited</param>
         /// <returns>A Pair if pivot existed else return null </returns>
-        public static Tuple<string,string> SpliteByPivot(string pivot, string inString)
+        public static Tuple<string, string> SpliteByPivot(string pivot, string inString)
         {
             if (inString.Contains(pivot))
             {
