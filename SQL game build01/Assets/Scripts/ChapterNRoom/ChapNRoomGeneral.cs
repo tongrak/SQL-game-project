@@ -47,7 +47,11 @@ namespace ChapNRoom
             this.name = name;
             _roomRefs = roomRefs;
         }
-
+        /// <summary>
+        /// Get Room reference with a given name of the chapter.
+        /// </summary>
+        /// <param name="roomName">Room name to be searched</param>
+        /// <returns>if given name exist in the chapter return RoomRef, else null </returns>
         public RoomRef GetRoomRef(string roomName)
         {
             foreach (RoomRef curr in this._roomRefs)
@@ -55,6 +59,11 @@ namespace ChapNRoom
                 if (curr.name == roomName) return curr;
             }
             return null;
+        }
+
+        public RoomRef GetFirstRoom()
+        {
+            return _roomRefs[0];
         }
 
         public override string ToString()

@@ -34,7 +34,7 @@ namespace GameHelper
             else throw new System.Exception("Scene: " + scene + "already be loaded;");
         }
 
-        public void SwapScene(Scene toUnload, Scene toLoad)
+        public void SwapScene(string toUnload, string toLoad)
         {
             try
             {
