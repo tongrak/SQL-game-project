@@ -653,7 +653,7 @@ MonoBehaviour:
   _mainDialogElement: {fileID: 485160447}
   _dialogTitle: //Title//
   _dialogs: []
-  _IsTyped: 0
+  _IsTyped: 1
   _TypingSlowness: 1
 --- !u!1 &320149208
 GameObject:
@@ -779,10 +779,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: //Dialog//
+  m_text: "// Dialog (\u0E44\u0E14\u0E2D\u0E30\u0E47\u0E25\u0E2D\u0E01) //"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4f945420d4f1a4847b2acc922a9ef605, type: 2}
+  m_sharedMaterial: {fileID: -8152441509173123210, guid: 4f945420d4f1a4847b2acc922a9ef605, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1448,6 +1448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonElement: {fileID: 8697928}
+  _exeBuffer: 1
 --- !u!1 &1139237833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1701,7 +1702,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1339174790}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 316400554}
+        m_TargetAssemblyTypeName: ConsoleGeneral.DialogConsoleMaster, Consoles
+        m_MethodName: ShowPreviousDialog
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1339174790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2065,10 +2078,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: //Dialog Title//
+  m_text: "// Dialog Title (\u0E37\u0E48\u0E0A\u0E2D\u0E44\u0E14\u0E2D\u0E30\u0E47\u0E25\u0E2D\u0E01)//"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4f945420d4f1a4847b2acc922a9ef605, type: 2}
+  m_sharedMaterial: {fileID: -8152441509173123210, guid: 4f945420d4f1a4847b2acc922a9ef605, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2225,7 +2238,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1720229489}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 316400554}
+        m_TargetAssemblyTypeName: ConsoleGeneral.DialogConsoleMaster, Consoles
+        m_MethodName: ShowNextDialog
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1720229489
 MonoBehaviour:
   m_ObjectHideFlags: 0

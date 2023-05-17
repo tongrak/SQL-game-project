@@ -55,6 +55,7 @@ public class PlMovement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Ground" && _bufferedJump) Jump();
+        else _canJump = true;
 
     }
 
