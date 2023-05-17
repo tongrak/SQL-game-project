@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace ChapNRoom
@@ -24,17 +25,39 @@ namespace ChapNRoom
             }
         }
 
-        public ChapterRef GetChapRefFrom(string chapName, string path)
+        /// <summary>
+        ///     Generate Chapter Reference (ChapterRef) from given path and Chapter name.
+        /// </summary>
+        /// <param name="path">file's full path in form of string</param>
+        /// <param name="chapName">string represent chapter</param>
+        /// <returns>If interpretation didn't got interrupted return ChapterRef else throw exception with message</returns>
+        public ChapterRef GetChapRefFrom(string path, string chapName)
         {
-            if (File.Exists(path))
+            try
             {
-                string inTexts = File.ReadAllText(path);
-                inTexts.Trim();
-                string roomsDetails = StringHelper.GetStringBetween("rooms{", "}", inTexts);
-                RoomRef[] roomRefs = GetRoomRefs(inTexts);
-                return new ChapterRef(chapName, roomRefs);
+                if (File.Exists(path))
+                {
+                    string inTexts = File.ReadAllText(path);
+                    inTexts = inTexts.Trim();
+                    inTexts = inTexts.Replace("\r\n", string.Empty);
+                    string roomsDetails = StringHelper.GetStringBetween("Rooms{", "}", inTexts);
+                    RoomRef[] roomRefs = GetRoomRefs(roomsDetails);
+                    return new ChapterRef(chapName, roomRefs);
+                }
+                else throw new FileNotFoundException("Cann't find chapter reference file in: " + path);
             }
-            else throw new FileNotFoundException("Cann't find chapter reference file in: " + path);
+            catch (Exception e) { throw e; }
+                
+        }
+
+        /// <summary>
+        ///     Generate Chapter Reference (ChapterRef) from given path. Which the result Chapter reference will be named with file name.
+        /// </summary>
+        /// <param name="path">file's full path in form of string</param>
+        /// <returns>If interpretation didn't got interrupted return ChapterRef else throw exception with message</returns>
+        public ChapterRef GetChapRefFrom(string path)
+        {
+            return GetChapRefFrom(path, Path.GetFileName(path));
         }
 
         #region Misc Functions
@@ -52,12 +75,12 @@ namespace ChapNRoom
                 }
                 return roomRefs.ToArray();
             }
-            catch (Exception e) { throw new Exception("Wrong chapter format: " + e.ToString()); }
+            catch (Exception e) { throw new Exception("Wrong chapter format: " + e.Message); }
         }
 
         private RoomRef CreateRoomRef(string roomDetail)
         {
-            Tuple<string,string> headNBody = StringHelper.SpliteByPivot(":", roomDetail);
+            Tuple<string, string> headNBody = StringHelper.SpliteByPivot(":", roomDetail);
             if (headNBody == null) throw new Exception("no colon in roomdetail: " + roomDetail);
             if (String.IsNullOrEmpty(headNBody.Item1) || String.IsNullOrEmpty(headNBody.Item2)) throw new Exception("HeadOrBody is empty");
             string[] neigbors = headNBody.Item2.Split(",");

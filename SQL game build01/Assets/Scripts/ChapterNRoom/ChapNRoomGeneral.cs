@@ -6,7 +6,7 @@ namespace ChapNRoom
     /// <summary>
     /// Room's neighbor. Direction base on 4-side clock wise direction.
     /// </summary>
-    public enum RoomDirection {UP, RIGHT, DOWN, LEFT}
+    public enum RoomDirection { UP, RIGHT, DOWN, LEFT }
 
     /// <summary>
     ///  Reference of a room. Holding the room's name and it's neighbors name.
@@ -23,14 +23,14 @@ namespace ChapNRoom
             this._neighbors = neighbors;
         }
 
-        public string GetNeighborInDirection(RoomDirection direction) 
+        public string GetNeighborInDirection(RoomDirection direction)
         {
             return this._neighbors[(int)direction];
         }
 
         public override string ToString()
         {
-            return "Room(" + name + "):" + _neighbors.ToString()+";";
+            return "Room(" + name + "):" + _neighbors.ToString() + ";";
         }
     }
 
@@ -47,7 +47,11 @@ namespace ChapNRoom
             this.name = name;
             _roomRefs = roomRefs;
         }
-
+        /// <summary>
+        /// Get Room reference with a given name of the chapter.
+        /// </summary>
+        /// <param name="roomName">Room name to be searched</param>
+        /// <returns>if given name exist in the chapter return RoomRef, else null </returns>
         public RoomRef GetRoomRef(string roomName)
         {
             foreach (RoomRef curr in this._roomRefs)
@@ -57,9 +61,14 @@ namespace ChapNRoom
             return null;
         }
 
+        public RoomRef GetFirstRoom()
+        {
+            return _roomRefs[0];
+        }
+
         public override string ToString()
         {
-            return "Chapter(" + name + "):" + _roomRefs.ToString()+";";
+            return "Chapter(" + name + "):" + _roomRefs.ToString() + ";";
         }
 
 
@@ -101,7 +110,7 @@ namespace ChapNRoom
         /// <param name="pivot">String pivot</param>
         /// <param name="inString">String to be splited</param>
         /// <returns>A Pair if pivot existed else return null </returns>
-        public static Tuple<string,string> SpliteByPivot(string pivot, string inString)
+        public static Tuple<string, string> SpliteByPivot(string pivot, string inString)
         {
             if (inString.Contains(pivot))
             {
