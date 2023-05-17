@@ -1,3 +1,4 @@
+using GameHelper;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class StartingScript : MonoBehaviour
     //A list of scene to load before the room is self. Like Consoles, Player?, Music?, other.
     [SerializeField] private string[] _passiveGameplayScenes;
 
+    private SceneLoadingHelper _SLH;
+
     private GameObject _mastersObj;
     private string _startingScene;
 
@@ -16,32 +19,28 @@ public class StartingScript : MonoBehaviour
         _mastersObj = GameObject.Find("Masters");
         _startingScene = this.gameObject.scene.name;
 
+        _SLH = FindAnyObjectByType<SceneLoadingHelper>();
+
         //Put Masters object to DontDestroyOnLoad Scene.
         if (_mastersObj != null) DontDestroyOnLoad(_mastersObj);
         else throw new MissingComponentException("Masters Object not detected");
 
         //Loading every passive gameplay scenes.
-        foreach (var s in _passiveGameplayScenes)
+        foreach (string s in _passiveGameplayScenes)
         {
             try
             {
-                SceneManager.LoadSceneAsync(s, LoadSceneMode.Additive);
+                Debug.Log("Trying to load scene: " + s);
+                _SLH.LoadSceneAdditively(s);
             }
-            catch (System.Exception e) { Debug.LogWarning("Starting scene err: " + e); }
+            catch (System.Exception e) { Debug.LogWarning("Starting scene err: " + e.Message); }
         }
     }
 
     void Start()
     {
-        //Unloading starting scene
-        SceneManager.sceneLoaded += ActivatorAndUnloader;
+        _SLH.UnloadScene(_startingScene);
     }
     
-    //Still do not know how it work...
-    void ActivatorAndUnloader(Scene s, LoadSceneMode m)
-    {
-        SceneManager.sceneLoaded -= ActivatorAndUnloader;
-        SceneManager.SetActiveScene(s);
-        SceneManager.UnloadSceneAsync(_startingScene);
-    }
+    
 }
