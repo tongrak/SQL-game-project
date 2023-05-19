@@ -15,7 +15,7 @@ public class PlInterection : MonoBehaviour
     public event InteractionHandler InteractionCalled;
     public event RoomTraverseHandler RoomTraverseCalled;
     [Header("Configure Variable")]
-    [SerializeField] private int _traverseWaitingTime = 2;
+    [SerializeField] private int _traverseWaitingTime = 1;
     [SerializeField] private float _interactionBufferTime = 0.5f; 
     //Dynamic Var
     private bool _canInteract = true;
@@ -33,6 +33,7 @@ public class PlInterection : MonoBehaviour
                 break;
             case "Room Changing Zone":
                 _interestedTraverseZone = collision.gameObject.GetComponent<RoomChangingScript>();
+                Debug.Log("Enter changing zone");
                 if (_interestedTraverseZone == null) Debug.LogWarning("Traverse Zone detected but cann't receive Direction");
                 else StartCoroutine(RoomsTraverseBuffer());
                 break;
@@ -77,7 +78,11 @@ public class PlInterection : MonoBehaviour
     {
         yield return new WaitForSeconds(_traverseWaitingTime);
 
-        if (_interestedTraverseZone != null) RoomTraverse();
+        if (_interestedTraverseZone != null)
+        {
+            Debug.Log("Pl-Interaction: travelling...");
+            RoomTraverse();
+        }
         else throw new System.Exception("Cann't traval to interested room; Due to : Fail to get travalling zone script");
     }
     #endregion

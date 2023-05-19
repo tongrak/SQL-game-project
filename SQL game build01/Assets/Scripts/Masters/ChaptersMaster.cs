@@ -95,6 +95,7 @@ namespace ChapNRoom
         }
         private void GoToRoom(RoomRef room)
         {
+            Debug.Log("ChapMaster: Going to room(" + room.name + ")");
             if (_currRoom == null) _SLH.LoadSceneAdditively(room.name);
             else _SLH.SwapScene(_currRoom.name, room.name);
             _currRoom = room;

@@ -11,7 +11,7 @@ public class PlMaster : MonoBehaviour
     private ChaptersMaster _roomTraverseController;
     //Player control
     private PlInterection _interactionController;
-
+    //Dynamic bool;
 
 
     /*public void ConsoleSelectionTest(int modeIndex) 
@@ -25,12 +25,13 @@ public class PlMaster : MonoBehaviour
         _roomTraverseController = FindAnyObjectByType<ChaptersMaster>();
         if (_roomTraverseController != null)
         {
-            //Debug.Log("Player: connected to chapter master");
+            Debug.Log("Player: connected to chapter master");
             _interactionController.RoomTraverseCalled += TravelToNeighborRoom;
         }
     }
     private void TravelToNeighborRoom(RoomDirection direction)
     {
+        Debug.Log("Player: call for room travel");
         _roomTraverseController.GoToNeigborRoom(direction);
     }
     #endregion
@@ -41,7 +42,9 @@ public class PlMaster : MonoBehaviour
         _interactionController = FindAnyObjectByType<PlInterection>();
         if (_interactionController != null)
         {
-            //Debug.Log("Player: Interaction controller connected");
+            Debug.Log("Player: Interaction controller connected");
+            //(re)connect all comm;
+            RoomTraverseControllerInit();
             _interactionController.InteractionCalled += PassPMToConsole;
         }
     }
@@ -66,7 +69,9 @@ public class PlMaster : MonoBehaviour
         //Dummy loading
         if(_consoleController == null) ConsoleControllerInit();
         if(_interactionController == null) InteractionConInit();
-        if (_roomTraverseController == null) RoomTraverseControllerInit();
+        //Dumbest line ... waiting for proper loading system.
+        //if (_roomTraverseController == null && _interactionController != null) RoomTraverseControllerInit();
+
     }
     #endregion
 }
