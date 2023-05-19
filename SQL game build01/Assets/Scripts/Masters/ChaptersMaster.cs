@@ -16,11 +16,9 @@ namespace ChapNRoom
         [Header("Configure value")]
         [SerializeField] private string _chapterFolderName = "Chapters";
         [SerializeField] private int _firstChapterIndex = 0;
-
+        //Dynamic object
         private ChapterInterpreter _ChapI = ChapterInterpreter.Instance;
-        
         private SceneLoadingHelper _SLH; //init during start;
-
         //Config var
         private string _defaultDirPath;
         private string[] _chapterRefPaths;
@@ -97,6 +95,7 @@ namespace ChapNRoom
         }
         private void GoToRoom(RoomRef room)
         {
+            Debug.Log("ChapMaster: Going to room(" + room.name + ")");
             if (_currRoom == null) _SLH.LoadSceneAdditively(room.name);
             else _SLH.SwapScene(_currRoom.name, room.name);
             _currRoom = room;
