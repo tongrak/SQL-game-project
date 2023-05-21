@@ -2,5 +2,10 @@
 	"dialog":["บริเวรนี้มีวัชพืชอยู่มากมาย ซึ่งมีทั้งที่มึพิษและไม่มีพิษ","เราต้องรู้ให้ได้ว่าวัชพืชอันไหนที่ไม่มีพิษจะได้เอาไปทำยา"],
 	"question":"แสดงข้อมูลของ Grass ที่มี Status เป็น Nontoxic",
 	"answer":"SELECT * FROM Grass WHERE Status = 'Nontoxic'",
-	"condition":["condition1","condition2"]
+	"condition":{
+		"joinNum":,
+		"join":,
+		"nestedNum":,
+		"executeNum":
+	}
 }

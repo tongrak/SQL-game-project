@@ -2,5 +2,10 @@
 	"dialog":["ข้างหน้าพวกเรานั้นมีฝูง slime ที่มีสีทองอยู่","อยากรู้ว่าพวกมันแต่ละตัวมี HP อยู่เท่าไหร่"],
 	"question":"แสดงพลัง HP ของ Slime ที่มี Color เป็น Golden",
 	"answer":"SELECT HP FROM Slime WHERE Color = 'Golden'",
-	"condition":["condition1","condition2"]
+	"condition":{
+		"joinNum":,
+		"join":,
+		"nestedNum":,
+		"executeNum":
+	}
 }
