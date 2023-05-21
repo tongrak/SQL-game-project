@@ -10,5 +10,6 @@ namespace conditionModel
         public string join;
         public string nestedNum;
         public string executeNum;
+        public string whereCondNum;
     }
 }
