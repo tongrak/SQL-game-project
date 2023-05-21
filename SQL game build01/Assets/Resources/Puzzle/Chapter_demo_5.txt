@@ -3,9 +3,9 @@
 	"question":"แสดงราย Name และ Flavor ของ Fruit ที่มี color เป็น Yellow",
 	"answer":"SELECT Name, Flavor FROM Fruit WHERE Color = 'Yellow'",
 	"condition":{
-		"joinNum":,
-		"join":,
-		"nestedNum":,
-		"executeNum":
+		"joinNum":null,
+		"join":null,
+		"nestedNum":null,
+		"executeNum":null
 	}
 }

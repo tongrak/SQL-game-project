@@ -6,9 +6,9 @@ namespace conditionModel
     [System.Serializable]
     public class Condition
     {
-        public int joinNum;
-        public bool join;
-        public int nestedNum;
-        public int executeNum;
+        public string joinNum;
+        public string join;
+        public string nestedNum;
+        public string executeNum;
     }
 }

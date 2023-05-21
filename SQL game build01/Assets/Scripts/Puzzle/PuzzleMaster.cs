@@ -30,11 +30,11 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
     [Header("Database")]
     [SerializeField] DatabaseFile databaseFile;
 
-    public string DBPath { get; set; }
-    public string[] Dialog { get; set; }
-    public string Question { get; set; }
-    public string AnswerQuery { get; set; }
-    public Condition Condition { get; set; }
+    public string DBPath { get; set; } = null;
+    public string[] Dialog { get; set; } = null;
+    public string Question { get; set; } = null;
+    public string AnswerQuery { get; set; } = null;
+    public Condition Condition { get; set; } = null;
 
     void Awake()
     {
@@ -90,7 +90,9 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
     public void buttonMethod()
     {
         Debug.Log("Question: " + Question);
-        Debug.Log("JoinNum: " + Condition.joinNum.ToString());
+        Debug.Log("Join: " + Condition.joinNum.ToString());
+        Debug.Log("JoinNum is null: " + (Condition.joinNum.Equals("")).ToString());
+
     }
 
     // Load puzzle value from json file
