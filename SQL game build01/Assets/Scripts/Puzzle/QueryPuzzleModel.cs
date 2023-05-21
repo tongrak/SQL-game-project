@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using conditionModel;
 
-[System.Serializable]
-public class QueryPuzzleModel
+namespace queryPuzzleModel
 {
-    public string[] dialog;
-    public string question;
-    public string answer;
-    public string[] condition;
+    [System.Serializable]
+    public class QueryPuzzleModel
+    {
+        public string[] dialog;
+        public string question;
+        public string answer;
+        public Condition condition;
+    }
 }
 

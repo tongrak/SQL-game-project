@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Mono.Data.Sqlite;
+using queryPuzzleModel;
+using conditionModel;
 
 public interface IPuzzleMaster
 {
@@ -10,7 +12,7 @@ public interface IPuzzleMaster
     public string[] Dialog { get; }
     public string Question { get; }
     public string AnswerQuery { get; }
-    public string[] Condition { get; }
+    public Condition Condition { get; }
 
     public PuzzleResult GetResult(string playerQuery);
 
@@ -32,7 +34,7 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
     public string[] Dialog { get; set; }
     public string Question { get; set; }
     public string AnswerQuery { get; set; }
-    public string[] Condition { get; set; }
+    public Condition Condition { get; set; }
 
     void Awake()
     {
@@ -87,7 +89,8 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
 
     public void buttonMethod()
     {
-        
+        Debug.Log("Question: " + Question);
+        Debug.Log("JoinNum: " + Condition.joinNum.ToString());
     }
 
     // Load puzzle value from json file

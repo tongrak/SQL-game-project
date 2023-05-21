@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace conditionModel
 {
+    [System.Serializable]
     public class Condition
     {
         public int joinNum;
