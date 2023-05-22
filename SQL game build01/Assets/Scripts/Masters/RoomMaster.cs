@@ -4,39 +4,49 @@ using UnityEngine;
 
 namespace ChapNRoom
 {
+    //public delegate Room
+
     public class RoomMaster : MonoBehaviour
     {
         [Header("Default Spawn Points")]
         [SerializeField] private GameObject _defaultSpawnPoint;
         [Header("Border Spawn Points")]
         [SerializeField] private GameObject _UpSpawnPoint;
-        [SerializeField] private GameObject _RightSpawbPoint;
+        [SerializeField] private GameObject _RightSpawnPoint;
         [SerializeField] private GameObject _DownSpawnPoint;
-        [SerializeField] private GameObject _LeftSpawbPoint;
+        [SerializeField] private GameObject _LeftSpawnPoint;
         [Header("Player Holder")]
         [SerializeField] private GameObject _playerHolderObj;
+
+        private List<GameObject> _spawnPoints = new List<GameObject>();
+
+        public GameObject playerHolder { get { return _playerHolderObj; } }
 
         /// <summary>
         /// Get spawn point location in given direction. If given direction doesn't exist return default spawn point.
         /// </summary>
         /// <param name="direction"></param>
         /// <returns></returns>
-        public GameObject GetSpawnPointInDirection(RoomDirection direction)
+        public GameObject GetSpawnPoint(RoomDirection? direction)
         {
-            GameObject[] _spawnPoints = { _UpSpawnPoint, _RightSpawbPoint, _DownSpawnPoint, _LeftSpawbPoint };
-            GameObject targetSpawn = _spawnPoints[(int)direction];
-            if (targetSpawn == null) return _defaultSpawnPoint;
-            else return targetSpawn;
+            if(!direction.HasValue) return _defaultSpawnPoint;
+            else
+            {
+                GameObject targetSpawn = _spawnPoints[(int)direction.Value];
+                if (targetSpawn != null) return targetSpawn;
+                Debug.LogWarning(string.Format("RoomMaster: No spawnpoint for direction: {0}", direction.Value));
+                return _defaultSpawnPoint;
+            }
         }
 
-        public GameObject GetPlayerHolder()
+        private void Awake()
         {
-            return _playerHolderObj;
-        }
+            _spawnPoints.Add(_UpSpawnPoint);
+            _spawnPoints.Add(_RightSpawnPoint);
+            _spawnPoints.Add(_DownSpawnPoint);
+            _spawnPoints.Add(_LeftSpawnPoint);
 
-        public GameObject GetDefaultSpawnPoint()
-        {
-            return _defaultSpawnPoint;
+            if (_spawnPoints.TrueForAll(x => x == null)) throw new System.Exception("Fail to load the room");
         }
     }
 }

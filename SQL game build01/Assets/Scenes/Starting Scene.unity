@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chapterFolderName: Chapters
+  _firstChapterIndex: 0
 --- !u!114 &1915432783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac447cf056fdf9e4daca7a97037eb4e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerPrefab: {fileID: 7268944720659136952, guid: 02813add7db59c043856191f6447d19b, type: 3}
 --- !u!114 &1915432784
 MonoBehaviour:
   m_ObjectHideFlags: 0

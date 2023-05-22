@@ -92,9 +92,7 @@ namespace MasterGeneral
         private void SpawnPlayer(RoomSpawningDetail rsd)
         {
             _currPlayerObj = GameObject.Instantiate(_playerPrefab, rsd.spawn.transform.position, rsd.spawn.transform.rotation, rsd.playerholder.transform);
-            _currPlayerObj.SetActive(false);
             PlayerControlInit();
-            _currPlayerObj.SetActive(true);
         }
         private void DespawnPlayer()
         {
@@ -107,6 +105,7 @@ namespace MasterGeneral
         {
             //try to initiate 5 time
             GameplayInit(5);
+            Debug.Log("PlMaster: Loaded");
         }
         private void Update()
         {

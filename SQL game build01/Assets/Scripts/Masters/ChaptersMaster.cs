@@ -1,6 +1,7 @@
 
 using GameHelper;
 using MasterGeneral;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -72,7 +73,7 @@ namespace ChapNRoom
         private void LoadStartOfChapter(ChapterRef chap)
         {
             _currChapter = chap;
-            GoToRoom(chap.GetFirstRoom());
+            GoToRoom(chap.GetFirstRoom(),null);
         }
         #endregion
 
@@ -105,34 +106,29 @@ namespace ChapNRoom
                 _currRoom = null;
             }
         }
-        private void GoToRoom(RoomRef room, RoomDirection direction)
-        {
-            GoToRoom(room, direction, false);
-        }
-
-        private void GoToRoom(RoomRef room)
-        {
-            GoToRoom(room, RoomDirection.LEFT, true);
-        }
-
-        private void GoToRoom(RoomRef room, RoomDirection direction, bool spawnDefault)
+        private void GoToRoom(RoomRef room, RoomDirection? direction)
         {
             if (_currRoom == null) _SLH.LoadSceneAdditively(room.name);
             else _SLH.SwapScene(_currRoom.name, room.name);
-            _currRoom = room;
 
-            RoomMaster targetRoomControl = FindAnyObjectByType<RoomMaster>();
-            GameObject spawnLocation = spawnDefault ? targetRoomControl.GetDefaultSpawnPoint() : targetRoomControl.GetSpawnPointInDirection(direction);
-            GameObject playerHolder = targetRoomControl.GetPlayerHolder();
+            if(direction.HasValue) _SLH.ActOnSceneSwaped(_currRoom.name, room.name, () => CallForPlayerSpawn(direction));
+            else _SLH.ActOnSceneLoaded(room.name, () => CallForPlayerSpawn(direction));
+
+            _currRoom = room;
+        }
+        #endregion
+
+        #region Misc Function
+        private void CallForPlayerSpawn(RoomDirection? direction)
+        {
+            RoomMaster currRoomMaster = FindAnyObjectByType<RoomMaster>();
+            if (!currRoomMaster) throw new System.Exception("Fail to get room master");
+            GameObject spawnLocation = currRoomMaster.GetSpawnPoint(direction);
+            GameObject playerHolder = currRoomMaster.playerHolder;
             RoomSpawningDetail spawningDetail = new RoomSpawningDetail(spawnLocation, playerHolder);
 
             this.spawnPlayer(spawningDetail);
         }
-
-
-        #endregion
-
-        #region Misc Function
         private RoomDirection GetOppositeDi(RoomDirection direction)
         {
             RoomDirection[] reverseDirection = { RoomDirection.DOWN, RoomDirection.LEFT, RoomDirection.UP, RoomDirection.RIGHT };
