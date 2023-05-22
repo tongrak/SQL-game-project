@@ -12,7 +12,8 @@ public interface IPuzzleMaster
     public string[] Dialog { get; }
     public string Question { get; }
     public string AnswerQuery { get; }
-    public Condition Condition { get; }
+    public bool[] CondStatus { get; }
+    public string[] ConditionMessage { get; }
 
     public PuzzleResult GetResult(string playerQuery);
 
@@ -35,6 +36,12 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
     public string Question { get; set; } = null;
     public string AnswerQuery { get; set; } = null;
     public Condition Condition { get; set; } = null;
+
+    public int MaxScore { get; private set; }
+
+    public bool[] CondStatus => throw new NotImplementedException();
+
+    public string[] ConditionMessage => throw new NotImplementedException();
 
     void Awake()
     {
@@ -59,26 +66,39 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
         
     }
 
-    #region Result
+    #region Public methods
     public PuzzleResult GetResult(string playerQuery)
     {
         PuzzleResult playerResult;
-        try
-        {
-            // Check if playerQuery is invalid.
-            SQLValidator.GetInstance().validatePathAndQuery(DBPath, playerQuery);
-            playerResult = PuzzleEvaluator.GetInstance().EvalutateQuery(DBPath, AnswerQuery, playerQuery);
-        }
-        catch (SqliteException e)
-        {
-            playerResult = new PuzzleResult();
-            playerResult.IsError = true;
-            playerResult.ErrorMessage = e.Message.ToString();
-        }
-        return playerResult;
+        //try
+        //{
+        //    // Check if playerQuery is invalid.
+        //    SQLValidator.GetInstance().validatePathAndQuery(DBPath, playerQuery);
+        //    playerResult = PuzzleEvaluator.GetInstance().EvaluateQuery(DBPath, AnswerQuery, playerQuery);
+        //}
+        //catch (SqliteException e)
+        //{
+        //    playerResult = new PuzzleResult();
+        //    playerResult.IsError = true;
+        //    playerResult.errorMessage = e.Message.ToString();
+        //}
+        return null;
     }
     #endregion
 
+    #region Private methods
+    // Load puzzle value from json file
+    private void LoadPuzzle()
+    {
+        QueryPuzzleModel puzzle = JsonUtility.FromJson<QueryPuzzleModel>(puzzleFile.text);
+        Dialog = puzzle.dialog;
+        Question = puzzle.question;
+        AnswerQuery = puzzle.answer;
+        Condition = puzzle.condition;
+    }
+    #endregion
+
+    #region Test methods
     public void ConstructForTest(PuzzleType pt, string puzzleText, DatabaseFile df)
     {
         puzzleType = pt;
@@ -94,14 +114,6 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
         Debug.Log("JoinNum is null: " + (Condition.joinNum.Equals("")).ToString());
 
     }
+    #endregion
 
-    // Load puzzle value from json file
-    private void LoadPuzzle()
-    {
-        QueryPuzzleModel puzzle = JsonUtility.FromJson<QueryPuzzleModel>(puzzleFile.text);
-        Dialog = puzzle.dialog;
-        Question = puzzle.question;
-        AnswerQuery = puzzle.answer;
-        Condition = puzzle.condition;
-    }
 }

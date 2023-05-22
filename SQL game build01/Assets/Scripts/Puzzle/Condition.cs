@@ -7,7 +7,7 @@ namespace conditionModel
     public class Condition
     {
         public string joinNum;
-        public string join;
+        public string haveJoin;
         public string nestedNum;
         public string executeNum;
         public string whereCondNum;
