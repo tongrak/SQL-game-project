@@ -36,6 +36,7 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
     public string Question { get; set; } = null;
     public string AnswerQuery { get; set; } = null;
     public Condition Condition { get; set; } = null;
+    public int executedNum { get; set; }
 
     public int MaxScore { get; private set; }
 
@@ -69,22 +70,15 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
     #region Public methods
     public PuzzleResult GetResult(string playerQuery)
     {
-        PuzzleResult playerResult;
-        //try
-        //{
-        //    // Check if playerQuery is invalid.
-        //    SQLValidator.GetInstance().validatePathAndQuery(DBPath, playerQuery);
-        //    playerResult = PuzzleEvaluator.GetInstance().EvaluateQuery(DBPath, AnswerQuery, playerQuery);
-        //}
-        //catch (SqliteException e)
-        //{
-        //    playerResult = new PuzzleResult();
-        //    playerResult.IsError = true;
-        //    playerResult.errorMessage = e.Message.ToString();
-        //}
-        return null;
+        executedNum += 1;
+        return PuzzleEvaluator.GetInstance().EvaluateQuery(DBPath, AnswerQuery, playerQuery, Condition, executedNum);
     }
     #endregion
+
+    private void ResetExecutedNum()
+    {
+        executedNum = 0;
+    }
 
     #region Private methods
     // Load puzzle value from json file
@@ -98,7 +92,7 @@ public class PuzzleMaster : MonoBehaviour, IPuzzleMaster
     }
     #endregion
 
-    #region Test methods
+    #region For Testing methods
     public void ConstructForTest(PuzzleType pt, string puzzleText, DatabaseFile df)
     {
         puzzleType = pt;
