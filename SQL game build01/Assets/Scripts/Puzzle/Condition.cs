@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace conditionModel
+namespace PuzzleController
 {
     [System.Serializable]
     public class Condition

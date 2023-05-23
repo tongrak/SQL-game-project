@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
+using PuzzleController;
 using System;
 
 public class PuzzleMasterTest
@@ -11,8 +12,8 @@ public class PuzzleMasterTest
     {
         var gameObject = new GameObject();
         // construct puzzleMaster
-        var pm = gameObject.AddComponent<PuzzleMaster>();
-        pm.ConstructForTest(PuzzleType.query, "{\"dialog\":[\"ตรงนี้มีหนอนที่ท่าทางอันตรายอยู่\", \"โดยหนอนเหล่านั้นจะมีสีเหลือง\"],\"question\":\"แสดงข้อมูลทั้งหมดของ Worm ที่มี Color เป็น Yellow\",\"answer\":\"SELECT * FROM Worm WHERE Color = 'Yellow'\",\"condition\":[\"condition1\",\"condition2\"]}", DatabaseFile.ChapterDemo);
+        var pm = gameObject.AddComponent<QueryPuzzleMaster>();
+        pm.ConstructForTest(PuzzleType.QueryPuzzle, "{\"dialog\":[\"ตรงนี้มีหนอนที่ท่าทางอันตรายอยู่\", \"โดยหนอนเหล่านั้นจะมีสีเหลือง\"],\"question\":\"แสดงข้อมูลทั้งหมดของ Worm ที่มี Color เป็น Yellow\",\"answer\":\"SELECT * FROM Worm WHERE Color = 'Yellow'\",\"condition\":[\"condition1\",\"condition2\"]}", DatabaseFile.ChapterDemo);
         yield return null;
 
         // Expected value

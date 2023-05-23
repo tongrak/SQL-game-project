@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using conditionModel;
 
-namespace queryPuzzleModel
+namespace PuzzleController
 {
     [System.Serializable]
     public class QueryPuzzleModel

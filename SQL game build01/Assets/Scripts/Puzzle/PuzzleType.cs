@@ -1,1 +1,10 @@
-public enum PuzzleType { query, keyItem, queryAndKeyItem, fillQueryCommand, tellQueryResult }
+namespace PuzzleController
+{
+    public enum PuzzleType
+    {
+        QueryPuzzle,
+        LockPuzzle,
+        LockQueryPuzzle,
+        QueryPuzzleToGetKeyItem
+    }
+}
