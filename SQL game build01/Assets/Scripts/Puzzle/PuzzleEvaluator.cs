@@ -22,7 +22,7 @@ namespace PuzzleController
             errorMessage = errMessage;
             isError = true;
 
-            int condNum = GetConditionNum(cond);
+            int condNum = cond.GetConditionNum();
             conditionResult = new List<bool>();
             for (int i = 0; i < condNum; i++)
             {
@@ -39,32 +39,6 @@ namespace PuzzleController
         }
         #endregion
 
-        private int GetConditionNum(Condition cond)
-        {
-            int condNum = 1;  // Init number of condition with 1 because correctness query must have in every puzzle.  
-            if (!cond.joinNum.Equals(null))
-            {
-                condNum += 1;
-            }
-            if (!cond.haveJoin.Equals(null))
-            {
-                condNum += 1;
-            }
-            if (!cond.nestedNum.Equals(null))
-            {
-                condNum += 1;
-            }
-            if (!cond.executeNum.Equals(null))
-            {
-                condNum += 1;
-            }
-            if (!cond.whereCondNum.Equals(null))
-            {
-                condNum += 1;
-            }
-
-            return condNum;
-        }
     }
 
     public class PuzzleEvaluator
