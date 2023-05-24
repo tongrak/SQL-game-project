@@ -9,17 +9,17 @@ namespace PuzzleController
         #region Properties
         PuzzleType PuzzleType { get; }
         string[] Dialog { get; }
-        string AnswerQuery { get; }
-        int ExecuteNum { get; }
+        string Question { get; }
+        int ExecutedNum { get; }
         string[] ConditionMessage { get; }
         PuzzleResult CurrPuzzleResult { get; }
-        bool isPassAllKeyItem { get; }
+        bool isUnlock { get; }
         #endregion
 
         #region Methods
-        PuzzleResult GetResult();
-        int GetKeyItem(string playerQuery);
-        bool CheckKeyItem(int keyItem);
+        PuzzleResult GetResult(string playerQuery);
+        KeyItem GetKeyItem();
+        bool InsertKeyItem(KeyItem playerItem);
         #endregion
     }
 }

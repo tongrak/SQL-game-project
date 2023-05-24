@@ -37,6 +37,14 @@ namespace PuzzleController
             this.queryResult = queryResult;
             this.conditionResult = conditionResult;
         }
+
+        // Initiate PuzzleResult's constructor
+        public PuzzleResult(Condition cond)
+        {
+            playerQuery = "";
+            queryResult = null;
+            conditionResult = Enumerable.Repeat(false, cond.GetConditionNum()).ToList();
+        }
         #endregion
 
     }

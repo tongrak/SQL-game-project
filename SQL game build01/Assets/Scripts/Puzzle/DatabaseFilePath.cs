@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-public enum DatabaseFile
+public enum DatabaseChapter
 {
     ChapterDemo,
     Chapter1
@@ -8,15 +8,15 @@ public enum DatabaseFile
 
 public class DatabaseFilePath
 {
-    public static string LocateDBPath(DatabaseFile databaseFile)
+    public static string LocateDBPath(DatabaseChapter databaseFile)
     {
         string dbPath = "URI=file:" + Application.dataPath + "/Database/";
         switch (databaseFile)
         {
-            case DatabaseFile.ChapterDemo:
+            case DatabaseChapter.ChapterDemo:
                 dbPath += "DemoDatabase.db";
                 break;
-            case DatabaseFile.Chapter1:
+            case DatabaseChapter.Chapter1:
                 dbPath += "Database1.db";
                 break;
             default:
