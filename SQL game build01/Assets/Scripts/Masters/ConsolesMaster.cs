@@ -31,7 +31,8 @@ namespace ConsoleGeneral
 
         public void ShowConsole(PuzzleMaster pm)
         {
-            _dialogConsole.ShowDialog(pm.Dialog);
+            //Temp Puzzle master to console;
+            _dialogConsole.ShowDialog(null,pm.Dialog);
             ShowConsole(ConsoleMode.DialogMode);
         }
 
