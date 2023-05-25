@@ -41,6 +41,7 @@ namespace ChapNRoom
 
         private void Awake()
         {
+            //Initialize
             _spawnPoints.Add(_UpSpawnPoint);
             _spawnPoints.Add(_RightSpawnPoint);
             _spawnPoints.Add(_DownSpawnPoint);
