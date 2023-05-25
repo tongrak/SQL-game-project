@@ -26,7 +26,7 @@ namespace MasterGeneral
         //to Consoles 
         private void PassPMToConsole(PuzzleMaster pm)
         {
-            _consoleController.ShowConsole(pm);
+            _consoleController.ShowConsoleFor(pm);
         }
         //to Chapter
         private void TravelToNeighborRoom(RoomDirection direction)
@@ -104,7 +104,7 @@ namespace MasterGeneral
         private void Start()
         {
             //try to initiate 5 time
-            GameplayInit(5);
+            GameplayInit(2);
             Debug.Log("PlMaster: Loaded");
         }
         private void Update()

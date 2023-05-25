@@ -7,16 +7,17 @@ namespace ConsoleGeneral
 {
     public class ConsolesMaster : MonoBehaviour
     {
-        [SerializeField] private ConsoleMode _startingMode = ConsoleMode.ExploreMode;
+        [SerializeField] private ConsoleMode _defaultMode = ConsoleMode.ExploreMode;
         private ConsoleMode _currentMode;
-
+        //Dumb field
         private bool _allConsoleLoaded = false;
-
+        //Submaster controller
         private PuzzleConsoleMaster _puzzleConsole;
         private DialogConsoleMaster _dialogConsole;
         private QuestBarMaster _questBarConsole;
-
+        //Dynamic field
         private PuzzleMaster _currPuzzle;
+        private Queue<ConsoleMode> _consoleOrder = new Queue<ConsoleMode>();
 
         public void ShowConsole(ConsoleMode console)
         {
@@ -25,15 +26,19 @@ namespace ConsoleGeneral
             {
                 case ConsoleMode.ExploreMode: throw new NotImplementedException("Explore console isn't implemented");
                 case ConsoleMode.PuzzleMode: _puzzleConsole.ToHide(false); break;
-                case ConsoleMode.DialogMode: _dialogConsole.ShowDialog(); break;
+                case ConsoleMode.DialogMode: _dialogConsole.ToHide(false); break;
             }
         }
 
-        public void ShowConsole(PuzzleMaster pm)
+        public void ShowConsoleFor(PuzzleMaster pm)
         {
-            //Temp Puzzle master to console;
-            _dialogConsole.ShowDialog(null,pm.Dialog);
+            _currPuzzle = pm;
             ShowConsole(ConsoleMode.DialogMode);
+            _dialogConsole.ShowDialogs(pm.Dialog); //initial dialog
+            //switch pm.puzzletype -> each puzzle show console in different order
+            //current puzzletype = dialogThenPuzzle
+            this._consoleOrder.Enqueue(ConsoleMode.PuzzleMode);
+
         }
 
         public void ShowQuestBar(string quest)
@@ -66,10 +71,26 @@ namespace ConsoleGeneral
             _dialogConsole = GameObject.FindFirstObjectByType<DialogConsoleMaster>();
             if (_dialogConsole != null)
             {
+                _dialogConsole.DialogConfirmation += ToNextConsole;
                 Debug.Log("Console: Dialog connected");
                 return true;
             }
             return false;
+        }
+        private void ToNextConsole()
+        {
+            //base on puzzle type
+            ConsoleMode nextConsole;
+            if(_consoleOrder.TryDequeue(out nextConsole))
+            {
+                ShowConsole(nextConsole);
+            }
+            else
+            {
+                //reset console order
+                ShowConsole(_defaultMode);
+
+            }
         }
         #endregion
 
@@ -94,14 +115,25 @@ namespace ConsoleGeneral
             _puzzleConsole?.ToHide(true);
             _dialogConsole?.ToHide(true);
         }
-
+        private void SetConsoleOrder(PuzzleType type)
+        {
+            switch (type)
+            {
+                case PuzzleType.query: break;
+                case PuzzleType.keyItem: break;
+                case PuzzleType.queryAndKeyItem: break;
+                default:
+                    this._consoleOrder.Clear();
+                break;
+            }
+        }
         #endregion
 
         #region UnityBasics
 
         private void Awake()
         {
-            _currentMode = _startingMode;
+            _currentMode = _defaultMode;
         }
 
         private void Update()

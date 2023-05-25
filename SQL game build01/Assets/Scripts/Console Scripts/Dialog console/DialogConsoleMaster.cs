@@ -1,13 +1,15 @@
+using GameHelper;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ConsoleGeneral
 {
-    //public delegate void DialogConsoleConfirmHandler();
+    public delegate void DialogConfirmationHandler();
 
     public class DialogConsoleMaster : ConsoleBasic
     {
@@ -19,38 +21,31 @@ namespace ConsoleGeneral
         [SerializeField] private ConfirmButton _confirmButton;
         [Header("Display Variable")]
         [SerializeField] private string _dialogTitle = "//Title//";
-        [SerializeField] private string[] _dialogs;
+        //[SerializeField] private string _dialog = "//Dialog//";
         [SerializeField] private string _confirmText = "confirm";
         [Header("Configure Option")]
         [SerializeField] private bool _IsTyped = false;
         [SerializeField] private int _TypingSlowness = 1;
-        private bool _hideTitle = false;
         //Dynamic fields
+        public event DialogConfirmationHandler DialogConfirmation;
+        private string[] _rawDialogs = null; //combination of title and dialog
         private int _dialogIndex = 0;
 
+        public void ShowDialogs(string[] rawDialogs, string confirmMessage)
+        {
+            this._confirmText = confirmMessage;
+            ShowDialogs(rawDialogs);
+        }
+        public void ShowDialogs(string[] rawDialogs)
+        {
+            this._rawDialogs = rawDialogs;
+            this._dialogIndex = 0;
+            ShowDialog();
+        }
         public void ShowDialog()
         {
-            if (_hideTitle) ShowDialog(null,_dialogs);
-            else ShowDialog(_dialogTitle, _dialogs);
-        }
-        public void ShowDialog(string title, string[] dialogs, string confirmText)
-        {
-            _confirmText = confirmText;
-            _confirmButton.SetDispalyText(_confirmText);
-            ShowDialog(title, dialogs);
-        }
-        public void ShowDialog(string title, string[] dialogs)
-        {
-            //Update displaying var
-            _dialogs = dialogs;
-            if (!string.IsNullOrEmpty(title))
-            {
-                _dialogTitle = title;
-                _hideTitle = false;
-            }
-            _hideTitle = true;
-
-            SettingUp();
+            UpdateDialogDisplay();
+            UpdateButtons();
         }
         public void ShowNextDialog()
         {
@@ -62,35 +57,20 @@ namespace ConsoleGeneral
         }
         public void ConfirmButtonAct()
         {
-            //Do something
+            ConfirmationCall();
+        }
+        public virtual void ConfirmationCall()
+        {
+            DialogConfirmation?.Invoke();
         }
         #region private functions
-        private void SettingUp()
-        {
-            //Settign config vars
-            _dialogIndex = 0;
-
-            //clear elements, show title and dialog console
-            ClearTitleNDialog();
-            ToHide(false);
-
-            //enforce change
-            if (!_hideTitle)
-            {
-                Debug.Log("Enter UpdateTitle");
-                UpdateTitle();
-            }
-            UpdateButtons();
-            UpdateDialog();
-        }
         private bool ChangeDialogBaseOnCurrIndex(int changes)
         {
             int nextIndex = _dialogIndex + changes;
-            if (nextIndex >= 0 && nextIndex < _dialogs.Length)
+            if (nextIndex >= 0 && nextIndex < _rawDialogs.Length)
             {
-                _dialogIndex = nextIndex;
-                UpdateDialog();
-                UpdateButtons();
+                this._dialogIndex = nextIndex;
+                ShowDialog();
                 return true;
             }
             else return false;
@@ -100,18 +80,33 @@ namespace ConsoleGeneral
             _titleElement.text = string.Empty;
             _mainDialogElement.text = string.Empty;
         }
-        private void UpdateTitle()
+        private void DisplayTitle(bool showTitle)
         {
-            _titleElement.text = _dialogTitle;
+            this._titleElement.text = (showTitle) ? _dialogTitle : string.Empty;
         }
-        private void UpdateDialog()
+        private void UpdateTitle(string title)
         {
-            string newDialog = _dialogs[_dialogIndex];
+            if (!string.IsNullOrEmpty(title))
+            {
+                _dialogTitle = title;
+                DisplayTitle(true);
+            }
+            else DisplayTitle(false);
+
+        }
+        private void UpdateDialogDisplay()
+        {
+            string rawDialog = _rawDialogs[_dialogIndex];
+            Tuple<string, string> titleNDialog = StringHelper.SpliteByPivot(" : ", rawDialog);
+            //if raw dialog can be splited display title else "hide" it
+            UpdateTitle((titleNDialog != null) ? titleNDialog.Item1 : null); 
+            string displayDialog = (titleNDialog != null) ? titleNDialog.Item2 : rawDialog;
+
             if (_IsTyped)
             {
                 StopAllCoroutines();
-                StartCoroutine(TypeDialog(newDialog));
-            }else _mainDialogElement.text = newDialog;
+                StartCoroutine(TypeDialog(displayDialog));
+            }else _mainDialogElement.text = displayDialog;
 
         }
         private IEnumerator TypeDialog(string dialog)
@@ -130,9 +125,10 @@ namespace ConsoleGeneral
         {
             //Previous and Next buttons
             _previousButton.enabled = (_dialogIndex == 0) ? false : true;
-            bool isLastDialog = (_dialogIndex == _dialogs.Length - 1) ? true : false;
+            bool isLastDialog = (_dialogIndex == _rawDialogs.Length - 1) ? true : false;
             _nextButton.enabled = !isLastDialog;
             //ConfirmButton;
+            _confirmButton.SetDispalyText(_confirmText);
             _confirmButton.ShowSelf(isLastDialog);
         }
         #endregion
