@@ -1,7 +1,9 @@
 {
     "name": "ChapNRoom",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:c25a42914548cba4dafd3ecdf60b1198"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
