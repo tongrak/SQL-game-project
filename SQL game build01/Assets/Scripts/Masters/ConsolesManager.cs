@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ConsoleGeneral
 {
-    public class ConsolesMaster : MonoBehaviour
+    public class ConsolesManager : MonoBehaviour
     {
         [SerializeField] private ConsoleMode _defaultMode = ConsoleMode.ExploreMode;
         private ConsoleMode _currentMode;
@@ -96,4 +96,3 @@ namespace ConsoleGeneral
         #endregion
     }
 }
-

@@ -15,7 +15,7 @@ Script to control a loading of active gameplay scene or room in short.
  */
 namespace ChapNRoom
 {
-    public class ChaptersMaster : MonoBehaviour
+    public class ChaptersManager : MonoBehaviour
     {
         [Header("Configure value")]
         [SerializeField] private string _chapterFolderName = "Chapters";
@@ -157,4 +157,3 @@ namespace ChapNRoom
         #endregion
     }
 }
-

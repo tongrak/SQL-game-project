@@ -8,13 +8,13 @@ using UnityEngine;
 
 namespace MasterGeneral
 {
-    public class PlMaster : MonoBehaviour
+    public class PlayerScriptManager : MonoBehaviour
     {
         [Header("Spawning configuration")]
         [SerializeField] private GameObject _playerPrefab;
         //Gameplay control
-        private ConsolesMaster _consoleController;
-        private ChaptersMaster _roomController;
+        private ConsolesManager _consoleController;
+        private ChaptersManager _roomController;
         //Player control
         private PlInterection _interactionController;
         //Dynamic Var
@@ -75,8 +75,8 @@ namespace MasterGeneral
             bool initComplete = false; 
             try
             {
-                _consoleController = MasterHelper.GetObjectWithType<ConsolesMaster>();
-                _roomController = MasterHelper.GetObjectWithType<ChaptersMaster>();
+                _consoleController = MasterHelper.GetObjectWithType<ConsolesManager>();
+                _roomController = MasterHelper.GetObjectWithType<ChaptersManager>();
                 initComplete = true;
             }
             catch (FailToGetUnityObjectException fgo)
@@ -92,5 +92,3 @@ namespace MasterGeneral
         #endregion
     }
 }
-
-
