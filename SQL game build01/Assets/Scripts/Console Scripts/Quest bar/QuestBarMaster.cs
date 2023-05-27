@@ -13,18 +13,20 @@ namespace ConsoleGeneral
 
         private string _displayingString = "//QuestBar// /n//QuestBar//";
 
-        public void ShowQuestBar(string quest)
+        public override void ShowConsole()
+        {
+            this.isShow = true;
+        }
+
+        public void ShowConsole(string quest)
         {
             _displayingString = quest;
             _displayElement.text = _displayingString;
-            ToHide(false);
+            ShowConsole();
         }
 
         #region Unity Basics
-        /*void Start()
-        {
-            ToHide(true);
-        }*/
+
         #endregion
     }
 }

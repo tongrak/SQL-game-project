@@ -6,6 +6,21 @@ using UnityEngine.UI;
 
 namespace ConsoleGeneral
 {
+    public class PuzzleConsoleStarter : ConModeStarterUnit
+    {
+        private PuzzleConsoleMaster _puzzleConsoleController;
+
+        public PuzzleConsoleStarter(PuzzleConsoleMaster puzzleConsoleController)
+        {
+            _puzzleConsoleController = puzzleConsoleController;
+        }
+
+        public void StartConsole()
+        {
+            _puzzleConsoleController.ShowConsole();
+        }
+    }
+
     public class PuzzleConsoleMaster : ConsoleBasic
     {
         //For raising execution call
@@ -13,15 +28,18 @@ namespace ConsoleGeneral
 
         [Header("Displaying Element")]
         [SerializeField] private Button _buttonElement;
-
         //Input box feilds;
         private string _currOutputString;
         private string _currInputString;
-
         //Config fields
         private bool _canExecute = true;
         [Header("Configure variable")]
         [SerializeField] private int _exeBuffer = 1;
+
+        public override void ShowConsole()
+        {
+            this.isShow = true;
+        }
 
         #region Input Box
         public void UpdateCurrInput(string s)
@@ -34,17 +52,14 @@ namespace ConsoleGeneral
         IEnumerator ExecutionBuffer(int sec)
         {
             yield return new WaitForSeconds(sec);
-            _canExecute = true;
-            _buttonElement.interactable = true;
+            _canExecute = _buttonElement.interactable = true;
         }
-
         public virtual void ExcutionButtonAct()
         {
             _currOutputString = _currInputString;
             if (_canExecute)
             {
-                _canExecute = false;
-                _buttonElement.interactable = false;
+                _canExecute = _buttonElement.interactable = false;
                 ExcutionCalled?.Invoke(_currOutputString);
                 StartCoroutine(ExecutionBuffer(_exeBuffer));
             }

@@ -1,10 +1,14 @@
 
 using GameHelper;
+using MasterGeneral;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+public delegate void RoomLoadedHandler(RoomSpawningDetail spawningDetail);
 
 /*
 Script to control a loading of active gameplay scene or room in short.
@@ -19,6 +23,7 @@ namespace ChapNRoom
         //Dynamic object
         private ChapterInterpreter _ChapI = ChapterInterpreter.Instance;
         private SceneLoadingHelper _SLH; //init during start;
+        private RoomMaster _currRoomMaster;
         //Config var
         private string _defaultDirPath;
         private string[] _chapterRefPaths;
@@ -26,7 +31,9 @@ namespace ChapNRoom
         //Dynamic var
         private ChapterRef _currChapter = null;
         private RoomRef _currRoom = null;
-        private RoomDirection _spawnDirection;
+        private RoomSpawningDetail _spawningDetail;
+
+        public event RoomLoadedHandler RoomLoaded;
 
         #region Chapter Master Init
 
@@ -66,14 +73,20 @@ namespace ChapNRoom
         private void LoadStartOfChapter(ChapterRef chap)
         {
             _currChapter = chap;
-            GoToRoom(chap.GetFirstRoom());
+            GoToRoom(chap.GetFirstRoom(),null);
         }
         #endregion
 
         #region Room Loading
+        /// <summary>
+        /// Switch to neigbor room of given direction (if existed) and return spawn location in Vector2 manner.
+        /// </summary>
+        /// <param name="direction">Direction of the neigbor</param>
+        /// <returns>Vector2 of spawn location</returns>
+        /// <exception cref="System.Exception">If no neigbor in given direction</exception>
         public void GoToNeigborRoom(RoomDirection direction)
         {
-            if (_currRoom == null) throw new System.Exception("Current room didn't initialize");
+            //if (_currRoom == null) throw new System.Exception("Current room didn't initialize");
 
             string targetRoomName = _currRoom.GetNeighborInDirection(direction);
             RoomRef targetRoom = _currChapter.GetRoomRef(targetRoomName);
@@ -81,8 +94,8 @@ namespace ChapNRoom
             if (targetRoom == null) throw new System.Exception("room(" + targetRoomName + ") doesn't existed in the chapter(" + _currChapter.name + ")");
             else
             {
-                _spawnDirection = GetOppositeDi(direction);
-                GoToRoom(targetRoom);
+                RoomDirection spawnDirection = GetOppositeDi(direction);
+                GoToRoom(targetRoom, spawnDirection);
             }
         }
         public void UnloadCurrentRoom()
@@ -93,27 +106,38 @@ namespace ChapNRoom
                 _currRoom = null;
             }
         }
-        private void GoToRoom(RoomRef room)
+        private void GoToRoom(RoomRef room, RoomDirection? direction)
         {
-            Debug.Log("ChapMaster: Going to room(" + room.name + ")");
             if (_currRoom == null) _SLH.LoadSceneAdditively(room.name);
             else _SLH.SwapScene(_currRoom.name, room.name);
+
+            if(direction.HasValue) _SLH.ActOnSceneSwaped(_currRoom.name, room.name, () => CallForPlayerSpawn(direction));
+            else _SLH.ActOnSceneLoaded(room.name, () => CallForPlayerSpawn(direction));
+
             _currRoom = room;
         }
         #endregion
 
         #region Misc Function
+        private void CallForPlayerSpawn(RoomDirection? direction)
+        {
+            RoomMaster currRoomMaster = FindAnyObjectByType<RoomMaster>();
+            if (!currRoomMaster) throw new System.Exception("Fail to get room master");
+            GameObject spawnLocation = currRoomMaster.GetSpawnPoint(direction);
+            GameObject playerHolder = currRoomMaster.playerHolder;
+            RoomSpawningDetail spawningDetail = new RoomSpawningDetail(spawnLocation, playerHolder);
 
+            this.spawnPlayer(spawningDetail);
+        }
         private RoomDirection GetOppositeDi(RoomDirection direction)
         {
-            switch (direction)
-            {
-                case RoomDirection.UP: return RoomDirection.DOWN;
-                case RoomDirection.RIGHT: return RoomDirection.LEFT;
-                case RoomDirection.DOWN: return RoomDirection.UP;
-                case RoomDirection.LEFT: return RoomDirection.RIGHT;
-            }
-            throw new System.Exception(direction + " isn't a invalid direction");
+            RoomDirection[] reverseDirection = { RoomDirection.DOWN, RoomDirection.LEFT, RoomDirection.UP, RoomDirection.RIGHT };
+            return reverseDirection[(int)direction];
+        }
+
+        public virtual void spawnPlayer(RoomSpawningDetail spawningDetail)
+        {
+            RoomLoaded?.Invoke(spawningDetail);
         }
 
         #endregion
