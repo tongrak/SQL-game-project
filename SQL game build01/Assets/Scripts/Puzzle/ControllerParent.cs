@@ -36,29 +36,6 @@ namespace PuzzleController
 
         #region For awake method
         // Load puzzle value from json file
-        //public void Load_QueryPuzzle(ref string[] puzzleDialog, ref string queryQuestion, ref string[] conditionMessage, ref PuzzleResult currPuzzleResult) 
-        //{
-        //    QueryPuzzleModel puzzle = JsonUtility.FromJson<QueryPuzzleModel>(puzzleFile.text);
-
-        //    puzzleDialog = puzzle.dialog;
-        //    queryQuestion = puzzle.question;
-        //    AnswerQuery = puzzle.answer;
-
-        //    Condition = puzzle.condition;
-        //    conditionMessage = Condition.GetConditionMessage();
-
-        //    currPuzzleResult = new PuzzleResult(puzzle.condition);
-
-        //    ResetExecutedNum();
-
-        //    // locate used database path
-        //    DBPath = DatabaseFilePath.LocateDBPath(databaseChapter);
-
-        //    // validate answer query
-        //    SQLValidator validator = SQLValidator.GetInstance();
-        //    validator.validatePathAndQuery(DBPath, AnswerQuery);
-        //}
-
         public void Load_QueryPuzzle(Action<string[]> setPuzzleDialog, Action<string> setQueryQuestion, Action<string[]> setConditionMessage, Action<PuzzleResult> setCurrPuzzleResult)
         {
             QueryPuzzleModel puzzle = JsonUtility.FromJson<QueryPuzzleModel>(puzzleFile.text);
@@ -102,30 +79,15 @@ namespace PuzzleController
         [SerializeField] protected string[] UnityPreDialog;
         [SerializeField] protected List<KeyItem> LockKeyItem;
 
-        #region Interface methods
-        //public bool InsertKeyItem(KeyItem playerItem, ref bool isLock)
-        //{
-        //    if (LockKeyItem.Contains(playerItem))
-        //    {
-        //        LockKeyItem.Remove(playerItem);
-        //        if (LockKeyItem.Count == 0)
-        //        {
-        //            UnlockPuzzle(ref isLock);
-        //        }
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
+        protected List<KeyItem> leftLockKeyItem;
 
+        #region Interface methods
         public bool InsertKeyItem(KeyItem playerItem, Action<bool> setIsLock)
         {
-            if (LockKeyItem.Contains(playerItem))
+            if (leftLockKeyItem.Contains(playerItem))
             {
-                LockKeyItem.Remove(playerItem);
-                if (LockKeyItem.Count == 0)
+                leftLockKeyItem.Remove(playerItem);
+                if (leftLockKeyItem.Count == 0)
                 {
                     // Unlock the puzzle.
                     setIsLock(false);
@@ -143,15 +105,8 @@ namespace PuzzleController
         protected void Load_LockPuzzle(Action<string[]> setPrePuzzleDialog)
         {
             setPrePuzzleDialog(UnityPreDialog);
+            leftLockKeyItem = LockKeyItem;
         }
         #endregion
-
-        //protected void UnlockPuzzle(ref bool isLock)
-        //{
-        //    isLock = false;
-        //    Debug.Log("Puzzle is unlock");
-        //}
-
-        
     }
 }
