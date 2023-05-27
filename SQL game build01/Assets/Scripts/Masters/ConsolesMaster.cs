@@ -43,7 +43,7 @@ namespace ConsoleGeneral
 
         public void ShowQuestBar(string quest)
         {
-            _questBarConsole.ShowQuestBar(quest);
+            _questBarConsole.ShowConsole(quest);
         }
 
         #region PuzzleConsole Control
