@@ -5,6 +5,7 @@ using System;
 
 namespace PuzzleController
 {
+    [Serializable]
     public class QueryPuzzleControllerParent
     {
         [SerializeField] protected TextAsset puzzleFile;
@@ -61,19 +62,21 @@ namespace PuzzleController
         #endregion
     }
 
-    public class GetItemControllerParent
+    [Serializable]
+    public class GetItemPuzzleControllerParent
     {
         [SerializeField] protected KeyItem keyItemCarried;
 
         #region Interface methods
-        public KeyItem GetItem()
+        public KeyItem GetKeyItem()
         {
             return keyItemCarried;
         }
         #endregion
 
     }
-
+    
+    [Serializable]
     public class LockPuzzleControllerParent
     {
         [SerializeField] protected string[] UnityPreDialog;
@@ -102,7 +105,7 @@ namespace PuzzleController
         #endregion
 
         #region For awake method
-        protected void Load_LockPuzzle(Action<string[]> setPrePuzzleDialog)
+        public void Load_LockPuzzle(Action<string[]> setPrePuzzleDialog)
         {
             setPrePuzzleDialog(UnityPreDialog);
             leftLockKeyItem = LockKeyItem;

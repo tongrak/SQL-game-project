@@ -7,25 +7,20 @@ namespace PuzzleController
 {
     public class LockPuzzleController : MonoBehaviour, IPuzzleController
     {
-        [SerializeField] protected string[] UnityDialog;
-        [SerializeField] protected string UnityQuestion;
-
+        #region Interface's properties
         public PuzzleType PuzzleType { get; protected set; } = PuzzleType.LockPuzzle;
-
-        public string[] Dialog { get; protected set; }
-
-        public string Question { get; protected set; }
-
+        public string[] PrePuzzleDialog { get; protected set; }
+        public string[] PuzzleDialog { get; protected set; }
+        public string QueryQuestion { get; protected set; }
         public int ExecutedNum => throw new Exception("This puzzle doesn't have to execute query");
-
         public string[] ConditionMessage => throw new Exception("This puzzle doesn't have any condition");
-
         public PuzzleResult CurrPuzzleResult => throw new Exception("This puzzle doesn't have query result");
+        public bool IsLock { get; protected set; } = false;
+        #endregion
 
-        public bool isUnlock { get; protected set; } = false;
+        [SerializeField] protected LockPuzzleControllerParent lockPControl = new LockPuzzleControllerParent();
 
-        [SerializeField] protected List<KeyItem> LockedKeyItem;
-
+        #region Interface's methods
         public PuzzleResult GetResult(string playerQuery)
         {
             throw new Exception("This puzzle doesn't have to query");
@@ -38,36 +33,24 @@ namespace PuzzleController
 
         public bool InsertKeyItem(KeyItem playerItem)
         {
-            if (LockedKeyItem.Contains(playerItem))
-            {
-                LockedKeyItem.Remove(playerItem);
-                if(LockedKeyItem.Count == 0)
-                {
-                    UnlockPuzzle();
-                }
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return lockPControl.InsertKeyItem(playerItem, value => IsLock = value);
         }
 
-        protected void UnlockPuzzle()
+        public void ResetExecutedNum()
         {
-            isUnlock = true;
-            Debug.Log("Puzzle is unlock");
+            throw new Exception("This puzzle doesn't have to reset number of executed");
         }
 
-        protected void LoadPuzzle()
+        public int GetExecutedNum()
         {
-            Dialog = UnityDialog;
-            Question = UnityQuestion;
+            throw new Exception("This puzzle doesn't have number of executed");
         }
+        #endregion
 
+        #region Unity's method
         void Awake()
         {
-            LoadPuzzle();
+            lockPControl.Load_LockPuzzle(value => PrePuzzleDialog = value);
         }
 
         // Start is called before the first frame update
@@ -81,5 +64,6 @@ namespace PuzzleController
         {
 
         }
+        #endregion
     }
 }

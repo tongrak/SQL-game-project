@@ -5,6 +5,7 @@ namespace PuzzleController
         QueryPuzzle,
         LockPuzzle,
         LockQueryPuzzle,
-        QueryPuzzleToGetKeyItem
+        QueryPuzzleGetKeyItem,
+        LockQueryPuzzleGetKeyItem
     }
 }
