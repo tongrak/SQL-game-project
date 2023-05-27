@@ -12,38 +12,67 @@ namespace PuzzleController
 
         protected string DBPath { get; set; }
         protected string AnswerQuery { get; set; }
-        protected Condition Condition { get; set; }
+        public Condition Condition { get; protected set; }
         protected int currScore { get; set; }
+        protected int ExecutedNum;
 
         #region Interface methods
-        public void ResetExecutedNum(ref int executedNum)
+        public void ResetExecutedNum()
         {
-            executedNum = 0;
+            ExecutedNum = 0;
         } 
 
-        public PuzzleResult GetResult(string playerQuery, ref int executedNum) 
+        public PuzzleResult GetResult(string playerQuery) 
         { 
-            executedNum += 1;
-            return PuzzleEvaluator.GetInstance().EvaluateQuery(DBPath, AnswerQuery, playerQuery, Condition, executedNum);
+            ExecutedNum += 1;
+            return PuzzleEvaluator.GetInstance().EvaluateQuery(DBPath, AnswerQuery, playerQuery, Condition, ExecutedNum);
+        }
+
+        public int GetExecutedNum()
+        {
+            return ExecutedNum;
         }
         #endregion
 
         #region For awake method
         // Load puzzle value from json file
-        public void Load_QueryPuzzle(ref string[] puzzleDialog, ref string queryQuestion, ref string[] conditionMessage, ref PuzzleResult currPuzzleResult, ref int executedNum) 
+        //public void Load_QueryPuzzle(ref string[] puzzleDialog, ref string queryQuestion, ref string[] conditionMessage, ref PuzzleResult currPuzzleResult) 
+        //{
+        //    QueryPuzzleModel puzzle = JsonUtility.FromJson<QueryPuzzleModel>(puzzleFile.text);
+
+        //    puzzleDialog = puzzle.dialog;
+        //    queryQuestion = puzzle.question;
+        //    AnswerQuery = puzzle.answer;
+
+        //    Condition = puzzle.condition;
+        //    conditionMessage = Condition.GetConditionMessage();
+
+        //    currPuzzleResult = new PuzzleResult(puzzle.condition);
+
+        //    ResetExecutedNum();
+
+        //    // locate used database path
+        //    DBPath = DatabaseFilePath.LocateDBPath(databaseChapter);
+
+        //    // validate answer query
+        //    SQLValidator validator = SQLValidator.GetInstance();
+        //    validator.validatePathAndQuery(DBPath, AnswerQuery);
+        //}
+
+        public void Load_QueryPuzzle(Action<string[]> setPuzzleDialog, Action<string> setQueryQuestion, Action<string[]> setConditionMessage, Action<PuzzleResult> setCurrPuzzleResult)
         {
             QueryPuzzleModel puzzle = JsonUtility.FromJson<QueryPuzzleModel>(puzzleFile.text);
 
-            puzzleDialog = puzzle.dialog;
-            queryQuestion = puzzle.question;
+            setPuzzleDialog(puzzle.dialog);
+            setQueryQuestion(puzzle.question);
             AnswerQuery = puzzle.answer;
 
             Condition = puzzle.condition;
-            conditionMessage = Condition.GetConditionMessage();
+            setConditionMessage(Condition.GetConditionMessage());
 
-            currPuzzleResult = new PuzzleResult(puzzle.condition);
+            setCurrPuzzleResult(new PuzzleResult(puzzle.condition));
 
-            ResetExecutedNum(ref executedNum);
+            ResetExecutedNum();
 
             // locate used database path
             DBPath = DatabaseFilePath.LocateDBPath(databaseChapter);
@@ -59,10 +88,12 @@ namespace PuzzleController
     {
         [SerializeField] protected KeyItem keyItemCarried;
 
+        #region Interface methods
         public KeyItem GetItem()
         {
             return keyItemCarried;
         }
+        #endregion
 
     }
 
@@ -71,14 +102,33 @@ namespace PuzzleController
         [SerializeField] protected string[] UnityPreDialog;
         [SerializeField] protected List<KeyItem> LockKeyItem;
 
-        public bool InsertKeyItem(KeyItem playerItem, ref bool isLock)
+        #region Interface methods
+        //public bool InsertKeyItem(KeyItem playerItem, ref bool isLock)
+        //{
+        //    if (LockKeyItem.Contains(playerItem))
+        //    {
+        //        LockKeyItem.Remove(playerItem);
+        //        if (LockKeyItem.Count == 0)
+        //        {
+        //            UnlockPuzzle(ref isLock);
+        //        }
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
+
+        public bool InsertKeyItem(KeyItem playerItem, Action<bool> setIsLock)
         {
             if (LockKeyItem.Contains(playerItem))
             {
                 LockKeyItem.Remove(playerItem);
                 if (LockKeyItem.Count == 0)
                 {
-                    UnlockPuzzle(ref isLock);
+                    // Unlock the puzzle.
+                    setIsLock(false);
                 }
                 return true;
             }
@@ -87,16 +137,21 @@ namespace PuzzleController
                 return false;
             }
         }
+        #endregion
 
-        protected void UnlockPuzzle(ref bool isLock)
+        #region For awake method
+        protected void Load_LockPuzzle(Action<string[]> setPrePuzzleDialog)
         {
-            isLock = false;
-            Debug.Log("Puzzle is unlock");
+            setPrePuzzleDialog(UnityPreDialog);
         }
+        #endregion
 
-        protected void Load_LockPuzzle(ref string[] PrePuzzleDialog)
-        {
-            PrePuzzleDialog = UnityPreDialog;
-        }
+        //protected void UnlockPuzzle(ref bool isLock)
+        //{
+        //    isLock = false;
+        //    Debug.Log("Puzzle is unlock");
+        //}
+
+        
     }
 }

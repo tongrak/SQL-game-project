@@ -11,7 +11,6 @@ namespace PuzzleController
         string[] PrePuzzleDialog { get; }
         string[] PuzzleDialog { get; }
         string QueryQuestion { get; }
-        int ExecutedNum { get; }
         string[] ConditionMessage { get; }
         PuzzleResult CurrPuzzleResult { get; }
         bool IsLock { get; }
@@ -20,6 +19,7 @@ namespace PuzzleController
         #region Methods
         PuzzleResult GetResult(string playerQuery);
         void ResetExecutedNum();
+        int GetExecutedNum();
         KeyItem GetKeyItem();
         bool InsertKeyItem(KeyItem playerItem);
         #endregion
