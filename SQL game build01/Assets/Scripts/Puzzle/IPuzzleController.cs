@@ -8,16 +8,18 @@ namespace PuzzleController
     {
         #region Properties
         PuzzleType PuzzleType { get; }
-        string[] Dialog { get; }
-        string Question { get; }
+        string[] PrePuzzleDialog { get; }
+        string[] PuzzleDialog { get; }
+        string QueryQuestion { get; }
         int ExecutedNum { get; }
         string[] ConditionMessage { get; }
         PuzzleResult CurrPuzzleResult { get; }
-        bool isUnlock { get; }
+        bool IsLock { get; }
         #endregion
 
         #region Methods
         PuzzleResult GetResult(string playerQuery);
+        void ResetExecutedNum();
         KeyItem GetKeyItem();
         bool InsertKeyItem(KeyItem playerItem);
         #endregion
