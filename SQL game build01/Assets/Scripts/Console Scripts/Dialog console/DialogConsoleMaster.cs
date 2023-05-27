@@ -11,6 +11,26 @@ namespace ConsoleGeneral
 {
     public delegate void DialogConfirmationHandler();
 
+    public class DialogConsoleStarter : ConModeStarterUnit
+    {
+        private DialogConsoleMaster _dialogConsoleController;
+        private string[] _rawDialogs;
+        private string _confirmMessage = null;
+
+        public DialogConsoleStarter(DialogConsoleMaster dialogConsoleController, string[] rawDialogs, string confirmMessage)
+        {
+            _dialogConsoleController = dialogConsoleController;
+            _rawDialogs = rawDialogs;
+            _confirmMessage = confirmMessage;
+        }
+
+        public void StartConsole()
+        {
+            if (string.IsNullOrEmpty(_confirmMessage)) _dialogConsoleController.ShowConsole(_rawDialogs);
+            else _dialogConsoleController.ShowConsole(_rawDialogs, _confirmMessage);
+        }
+    }
+
     public class DialogConsoleMaster : ConsoleBasic
     {
         [Header("Display Element")]
@@ -31,22 +51,26 @@ namespace ConsoleGeneral
         private string[] _rawDialogs = null; //combination of title and dialog
         private int _dialogIndex = 0;
 
-        public void ShowDialogs(string[] rawDialogs, string confirmMessage)
+        //Showing function
+        public override void ShowConsole()
         {
-            this._confirmText = confirmMessage;
-            ShowDialogs(rawDialogs);
-        }
-        public void ShowDialogs(string[] rawDialogs)
-        {
-            this._rawDialogs = rawDialogs;
-            this._dialogIndex = 0;
-            ShowDialog();
-        }
-        public void ShowDialog()
-        {
+            this.isShow = true;
             UpdateDialogDisplay();
             UpdateButtons();
         }
+        public void ShowConsole(string[] rawDialogs, string confirmMessage)
+        {
+            this._confirmText = confirmMessage;
+            ShowConsole(rawDialogs);
+        }
+        public void ShowConsole(string[] rawDialogs)
+        {
+            this._rawDialogs = rawDialogs;
+            this._dialogIndex = 0;
+            ShowConsole();
+        }
+
+        #region UI elements function
         public void ShowNextDialog()
         {
             if (!ChangeDialogBaseOnCurrIndex(1)) Debug.LogWarning("Last dialog displayed");
@@ -63,6 +87,8 @@ namespace ConsoleGeneral
         {
             DialogConfirmation?.Invoke();
         }
+        #endregion
+
         #region private functions
         private bool ChangeDialogBaseOnCurrIndex(int changes)
         {
@@ -70,7 +96,7 @@ namespace ConsoleGeneral
             if (nextIndex >= 0 && nextIndex < _rawDialogs.Length)
             {
                 this._dialogIndex = nextIndex;
-                ShowDialog();
+                ShowConsole();
                 return true;
             }
             else return false;

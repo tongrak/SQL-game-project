@@ -17,7 +17,7 @@ namespace ConsoleGeneral
         private QuestBarMaster _questBarConsole;
         //Dynamic field
         private PuzzleMaster _currPuzzle;
-        private Queue<ConsoleMode> _consoleOrder = new Queue<ConsoleMode>();
+        private Queue<ConModeStarterUnit> _consoleOrder = new Queue<ConModeStarterUnit>();
 
         public void ShowConsole(ConsoleMode console)
         {
@@ -25,19 +25,19 @@ namespace ConsoleGeneral
             switch (console)
             {
                 case ConsoleMode.ExploreMode: throw new NotImplementedException("Explore console isn't implemented");
-                case ConsoleMode.PuzzleMode: _puzzleConsole.ToHide(false); break;
-                case ConsoleMode.DialogMode: _dialogConsole.ToHide(false); break;
+                case ConsoleMode.PuzzleMode: _puzzleConsole.isShow = true; break;
+                case ConsoleMode.DialogMode: _dialogConsole.isShow = true; break;
             }
         }
-
         public void ShowConsoleFor(PuzzleMaster pm)
         {
             _currPuzzle = pm;
-            ShowConsole(ConsoleMode.DialogMode);
-            _dialogConsole.ShowDialogs(pm.Dialog); //initial dialog
+            //ShowConsole(ConsoleMode.DialogMode);
+            //add into dialog 
+            this._consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogConsole, pm.Dialog, null));
             //switch pm.puzzletype -> each puzzle show console in different order
             //current puzzletype = dialogThenPuzzle
-            this._consoleOrder.Enqueue(ConsoleMode.PuzzleMode);
+            this._consoleOrder.Enqueue(CMStarterFactory.CreatePuzzleMode(_puzzleConsole));
 
         }
 
@@ -80,26 +80,18 @@ namespace ConsoleGeneral
         private void ToNextConsole()
         {
             //base on puzzle type
-            ConsoleMode nextConsole;
-            if(_consoleOrder.TryDequeue(out nextConsole))
-            {
-                ShowConsole(nextConsole);
-            }
-            else
-            {
-                //reset console order
-                ShowConsole(_defaultMode);
-
-            }
+            ConModeStarterUnit nextConsole;
+            if(_consoleOrder.TryDequeue(out nextConsole)) nextConsole.StartConsole();
+            else ShowConsole(_defaultMode);
         }
         #endregion
 
         #region QuestBar Control
-
+        /*
         public void ShowQuestBar()
         {
-            _questBarConsole.ToHide(false);
-        }
+            _questBarConsole.isShow = true;
+        }*/
 
         private bool QuestBarInit()
         {
@@ -112,8 +104,8 @@ namespace ConsoleGeneral
         #region Misc Function
         private void HideAllConsole()
         {
-            _puzzleConsole?.ToHide(true);
-            _dialogConsole?.ToHide(true);
+            _puzzleConsole.isShow = false;
+            _dialogConsole.isShow = false;
         }
         private void SetConsoleOrder(PuzzleType type)
         {
@@ -145,7 +137,7 @@ namespace ConsoleGeneral
                 {
                     Debug.Log("Console: All set");
                     ShowConsole(_currentMode); 
-                    _questBarConsole.ToHide(true);
+                    _questBarConsole.isShow = false;
                     _allConsoleLoaded = true;
                 }
             }

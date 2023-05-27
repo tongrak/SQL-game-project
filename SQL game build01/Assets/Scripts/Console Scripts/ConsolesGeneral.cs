@@ -8,13 +8,28 @@ namespace ConsoleGeneral
 
     public enum ConsoleMode { ExploreMode, PuzzleMode, DialogMode}
 
-    public class ConsoleBasic : MonoBehaviour
+    public static class CMStarterFactory
     {
-        public void ToHide(bool hide)
+        public static ConModeStarterUnit CreateDialogMode(DialogConsoleMaster dialogConsole, string[] dialogs, string confirmMessage)
+                => new DialogConsoleStarter(dialogConsole, dialogs, confirmMessage);
+
+        public static ConModeStarterUnit CreatePuzzleMode(PuzzleConsoleMaster puzzleConsole)
+               => new PuzzleConsoleStarter(puzzleConsole);
+    }
+
+    public interface ConModeStarterUnit
+    {
+        public void StartConsole();
+    }
+
+    public abstract class ConsoleBasic : MonoBehaviour
+    {
+        public bool isShow
         {
-            if (hide) this.gameObject.SetActive(false);
-            else this.gameObject.SetActive(true);
+            get => this.gameObject.activeSelf;
+            set => this.gameObject.SetActive(value);
         }
+        public abstract void ShowConsole();
     }
 
     public class TextBox : MonoBehaviour
