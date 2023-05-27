@@ -1,4 +1,5 @@
 using ChapNRoom;
+using Codice.Client.BaseCommands;
 using ConsoleGeneral;
 using System;
 using System.Collections;
@@ -11,8 +12,6 @@ namespace MasterGeneral
     {
         [Header("Spawning configuration")]
         [SerializeField] private GameObject _playerPrefab;
-        //[SerializeField] private string _playerHolderObjectName = "Player holder";
-
         //Gameplay control
         private ConsolesMaster _consoleController;
         private ChaptersMaster _roomController;
@@ -40,52 +39,22 @@ namespace MasterGeneral
         #endregion
 
         #region Init Functions
-        private void GameplayInit(int maxLoadCount)
-        {
-            bool loadComplete = false;
-            int loadCount = 0;
-            string errorMessage = string.Empty;
-
-
-            while (!loadComplete && loadCount < maxLoadCount)
-            {
-                try
-                {
-                    _consoleController = MasterHelper.GetMasterWithType<ConsolesMaster>();
-                    _roomController = MasterHelper.GetMasterWithType<ChaptersMaster>();
-                }
-                catch (System.Exception ex)
-                {
-                    loadCount++;
-                    errorMessage = ex.Message;
-                }
-                loadComplete = true;
-            }
-
-            if (!loadComplete) throw new MissingComponentException("Fail to initiate PlayerMaster gameplay component due to: " + errorMessage); //do raise fail to init to MastersController
-            else
-            {
-                _roomController.RoomLoaded += SpawnPlayer;
-            }
-        }
-
         private void PlayerControlInit()
         {
             try
             {
-                _interactionController = MasterHelper.GetMasterWithType<PlInterection>();
+                _interactionController = MasterHelper.GetObjectWithType<PlInterection>();
             }
-            catch (System.Exception ex) { throw new MissingFieldException("Fail to get player's component due to: " + ex.Message); }
+            catch (System.Exception ex) { throw new MissingFieldException(string.Format("Fail to get player's component due to: {0}", ex.Message)); }
 
-            InteractionControllerListenerInit();
+            InteractionListenerInit();
         }
 
-        private void InteractionControllerListenerInit()
+        private void InteractionListenerInit()
         {
             _interactionController.InteractionCalled += PassPMToConsole;
             _interactionController.RoomTraverseCalled += TravelToNeighborRoom;
         }
-
         #endregion
 
         #region Spawning Functions
@@ -103,13 +72,22 @@ namespace MasterGeneral
         #region Unity Basics
         private void Start()
         {
-            //try to initiate 5 time
-            GameplayInit(2);
-            Debug.Log("PlMaster: Loaded");
-        }
-        private void Update()
-        {
-
+            bool initComplete = false; 
+            try
+            {
+                _consoleController = MasterHelper.GetObjectWithType<ConsolesMaster>();
+                _roomController = MasterHelper.GetObjectWithType<ChaptersMaster>();
+                initComplete = true;
+            }
+            catch (FailToGetUnityObjectException fgo)
+            {
+                Debug.LogException(fgo);
+                //Handling above object initiate failure
+                //Somehow....
+                throw new System.Exception(fgo.Message);
+            }
+            Debug.Log("PlMaster: init complete");
+            if (initComplete) _roomController.RoomLoaded += SpawnPlayer;
         }
         #endregion
     }

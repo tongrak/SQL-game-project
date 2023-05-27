@@ -142,6 +142,7 @@ namespace ChapNRoom
 
         #endregion
 
+        #region Unity Basic
         void Start()
         {
             _SLH = FindAnyObjectByType<SceneLoadingHelper>();
@@ -153,6 +154,7 @@ namespace ChapNRoom
             //Load first default chapter
             LoadStartOfChapter(_firstChapterIndex);
         }
+        #endregion
     }
 }
 
