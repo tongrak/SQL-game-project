@@ -10,12 +10,12 @@ namespace PuzzleController
     {
         #region Interface's properties
         public PuzzleType PuzzleType { get; protected set; } = PuzzleType.QueryPuzzle;
-        public string[] PrePuzzleDialog => throw new Exception("This puzzle doesn't have dialog for using key item.");
+        public string[] PrePuzzleDialog => throw new Exception(PuzzleControlExceptionMessage.noPrePuzzleDialog);
         public string[] PuzzleDialog { get; protected set; }
         public string QueryQuestion { get; protected set; }
         public string[] ConditionMessage { get; protected set; }
         public PuzzleResult CurrPuzzleResult { get; protected set; }
-        public bool IsLock => throw new Exception("This puzzle doesn't have to use key item to unlock.");
+        public bool IsLock => throw new Exception(PuzzleControlExceptionMessage.noIsLock);
         #endregion
 
         [SerializeField] protected QueryPuzzleControllerParent queryPControl = new QueryPuzzleControllerParent();
@@ -28,12 +28,12 @@ namespace PuzzleController
 
         public KeyItem GetKeyItem()
         {
-            throw new Exception("This puzzle doesn't contain any key item");
+            throw new Exception(PuzzleControlExceptionMessage.noGetKeyItemMethod);
         }
 
         public bool InsertKeyItem(KeyItem playerItem)
         {
-            throw new Exception("This puzzle doesn't need key item to unlock");
+            throw new Exception(PuzzleControlExceptionMessage.noInsertKeyItemMethod);
         }
 
         public void ResetExecutedNum()

@@ -37,7 +37,7 @@ namespace PuzzleController
 
         public KeyItem GetKeyItem()
         {
-            throw new Exception("This puzzle doesn't have key item");
+            throw new Exception(PuzzleControlExceptionMessage.noGetKeyItemMethod);
         }
 
         public void ResetExecutedNum()

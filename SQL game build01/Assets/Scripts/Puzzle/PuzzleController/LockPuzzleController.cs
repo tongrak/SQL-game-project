@@ -12,9 +12,8 @@ namespace PuzzleController
         public string[] PrePuzzleDialog { get; protected set; }
         public string[] PuzzleDialog { get; protected set; }
         public string QueryQuestion { get; protected set; }
-        public int ExecutedNum => throw new Exception("This puzzle doesn't have to execute query");
-        public string[] ConditionMessage => throw new Exception("This puzzle doesn't have any condition");
-        public PuzzleResult CurrPuzzleResult => throw new Exception("This puzzle doesn't have query result");
+        public string[] ConditionMessage => throw new Exception(PuzzleControlExceptionMessage.noConditionMessgage);
+        public PuzzleResult CurrPuzzleResult => throw new Exception(PuzzleControlExceptionMessage.noCurrPuzzleResult);
         public bool IsLock { get; protected set; } = false;
         #endregion
 
@@ -23,12 +22,12 @@ namespace PuzzleController
         #region Interface's methods
         public PuzzleResult GetResult(string playerQuery)
         {
-            throw new Exception("This puzzle doesn't have to query");
+            throw new Exception(PuzzleControlExceptionMessage.noGetResultMethod);
         }
 
         public KeyItem GetKeyItem()
         {
-            throw new Exception("This puzzle doesn't have key item");
+            throw new Exception(PuzzleControlExceptionMessage.noGetKeyItemMethod);
         }
 
         public bool InsertKeyItem(KeyItem playerItem)
@@ -38,12 +37,12 @@ namespace PuzzleController
 
         public void ResetExecutedNum()
         {
-            throw new Exception("This puzzle doesn't have to reset number of executed");
+            throw new Exception(PuzzleControlExceptionMessage.noResetExecutedNumMethod);
         }
 
         public int GetExecutedNum()
         {
-            throw new Exception("This puzzle doesn't have number of executed");
+            throw new Exception(PuzzleControlExceptionMessage.noGetExecutedNumMethod);
         }
         #endregion
 
