@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace PuzzleController
+namespace Puzzle.PuzzleController
 {
     public class LockQueryPuzzleController : MonoBehaviour, IPuzzleController
     {
@@ -23,7 +23,7 @@ namespace PuzzleController
         #region Interface's methods
         public PuzzleResult GetResult(string playerQuery)
         {
-            return queryPControl.GetResult(playerQuery);
+            return queryPControl.GetResult(playerQuery, value => CurrPuzzleResult = value);
         }
 
         public bool InsertKeyItem(KeyItem playerItem)

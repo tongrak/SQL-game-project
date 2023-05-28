@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace PuzzleController
+namespace Puzzle.PuzzleController
 {
     [Serializable]
     public class QueryPuzzleControllerParent
@@ -14,19 +14,21 @@ namespace PuzzleController
         protected string DBPath { get; set; }
         protected string AnswerQuery { get; set; }
         public Condition Condition { get; protected set; }
-        protected int currScore { get; set; }
+        protected int currScore { get; set; } = 0;
         protected int ExecutedNum;
 
         #region Interface methods
         public void ResetExecutedNum()
         {
             ExecutedNum = 0;
-        } 
+        }
 
-        public PuzzleResult GetResult(string playerQuery) 
-        { 
+        public PuzzleResult GetResult(string playerQuery, Action<PuzzleResult> SetCurrPuzzleResult)
+        {
             ExecutedNum += 1;
-            return PuzzleEvaluator.GetInstance().EvaluateQuery(DBPath, AnswerQuery, playerQuery, Condition, ExecutedNum);
+            PuzzleResult latestPuzzleResult = PuzzleEvaluator.GetInstance().EvaluateQuery(DBPath, AnswerQuery, playerQuery, Condition, ExecutedNum);
+            UpdateCurrPResultAndScore(latestPuzzleResult, SetCurrPuzzleResult);
+            return latestPuzzleResult;
         }
 
         public int GetExecutedNum()
@@ -60,6 +62,16 @@ namespace PuzzleController
             validator.validatePathAndQuery(DBPath, AnswerQuery);
         }
         #endregion
+
+        private void UpdateCurrPResultAndScore(PuzzleResult latestPuzzleResult, Action<PuzzleResult> SetCurrPuzzleResult)
+        {
+            int latestScore = PuzzleEvaluator.GetInstance().CalculateQueryScore(latestPuzzleResult.conditionResult);
+            if(latestScore > currScore)
+            {
+                SetCurrPuzzleResult(latestPuzzleResult);
+                currScore = latestScore;
+            }
+        }
     }
 
     [Serializable]

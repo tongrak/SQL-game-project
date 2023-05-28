@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace PuzzleController
+namespace Puzzle.PuzzleController
 {
     public class LockPuzzleController : MonoBehaviour, IPuzzleController
     {

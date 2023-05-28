@@ -1,4 +1,4 @@
-namespace PuzzleController
+namespace Puzzle
 {
     public enum PuzzleType
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using Mono.Data.Sqlite;
 
-namespace PuzzleController
+namespace Puzzle.PuzzleController
 {
     public class QueryPuzzleController : MonoBehaviour, IPuzzleController
     {
@@ -23,7 +23,7 @@ namespace PuzzleController
         #region Interface methods
         public PuzzleResult GetResult(string playerQuery)
         {
-            return queryPControl.GetResult(playerQuery);
+            return queryPControl.GetResult(playerQuery, value => CurrPuzzleResult = value);
         }
 
         public KeyItem GetKeyItem()

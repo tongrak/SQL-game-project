@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
-using PuzzleController;
+using Puzzle;
 using System;
 
 public class PuzzleMasterTest

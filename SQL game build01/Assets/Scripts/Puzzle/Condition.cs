@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace PuzzleController
+namespace Puzzle
 {
     [System.Serializable]
     public class Condition
