@@ -42,4 +42,9 @@ namespace Puzzle.PuzzleController
         public static string noGetExecutedNumMethod = "This puzzle doesn't have number of executed";
         #endregion
     }
+
+    public interface IQueryPuzzle
+    {
+        int GetCurrScore();
+    }
 }

@@ -6,7 +6,7 @@ using Mono.Data.Sqlite;
 
 namespace Puzzle.PuzzleController
 {
-    public class QueryPuzzleController : MonoBehaviour, IPuzzleController
+    public class QueryPuzzleController : MonoBehaviour, IPuzzleController, IQueryPuzzle
     {
         #region Interface's properties
         public PuzzleType PuzzleType { get; protected set; } = PuzzleType.QueryPuzzle;
@@ -44,6 +44,11 @@ namespace Puzzle.PuzzleController
         public int GetExecutedNum()
         {
             return queryPControl.GetExecutedNum();
+        }
+
+        public int GetCurrScore()
+        {
+            return queryPControl.GetCurrScore();
         }
         #endregion
 

@@ -10,6 +10,7 @@ namespace Puzzle.PuzzleController
     {
         [SerializeField] protected TextAsset puzzleFile;
         [SerializeField] protected DatabaseChapter databaseChapter;
+        [SerializeField] protected QueryPuzzleScoreManager queryPScoreManager;
 
         protected string DBPath { get; set; }
         protected string AnswerQuery { get; set; }
@@ -34,6 +35,11 @@ namespace Puzzle.PuzzleController
         public int GetExecutedNum()
         {
             return ExecutedNum;
+        }
+
+        public int GetCurrScore()
+        {
+            return currScore;
         }
         #endregion
 
@@ -68,7 +74,11 @@ namespace Puzzle.PuzzleController
             int latestScore = PuzzleEvaluator.GetInstance().CalculateQueryScore(latestPuzzleResult.conditionResult);
             if(latestScore > currScore)
             {
+                // Update current PuzzleResult
                 SetCurrPuzzleResult(latestPuzzleResult);
+
+                // Update puzzle score and total score in manager
+                queryPScoreManager.AddScore(latestScore - currScore);
                 currScore = latestScore;
             }
         }

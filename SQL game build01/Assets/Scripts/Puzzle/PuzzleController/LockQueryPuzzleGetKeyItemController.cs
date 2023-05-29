@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Puzzle.PuzzleController
 {
-    public class LockQueryPuzzleGetKeyItemController : MonoBehaviour, IPuzzleController
+    public class LockQueryPuzzleGetKeyItemController : MonoBehaviour, IPuzzleController, IQueryPuzzle
     {
         #region Interface's properties
         public PuzzleType PuzzleType { get; protected set; } = PuzzleType.LockQueryPuzzleGetKeyItem;
@@ -44,6 +44,11 @@ namespace Puzzle.PuzzleController
         public void ResetExecutedNum()
         {
             queryPControl.ResetExecutedNum();
+        }
+
+        public int GetCurrScore()
+        {
+            return queryPControl.GetCurrScore();
         }
         #endregion
 

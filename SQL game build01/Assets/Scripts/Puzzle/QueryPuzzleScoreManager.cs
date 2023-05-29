@@ -6,9 +6,12 @@ namespace Puzzle
 {
     public class QueryPuzzleScoreManager : MonoBehaviour
     {
-        [SerializeField] private int minimumScore;
-
         private int totalScore = 0;
+
+        public void AddScore(int score)
+        {
+            totalScore += score;
+        }
 
         // Start is called before the first frame update
         void Start()

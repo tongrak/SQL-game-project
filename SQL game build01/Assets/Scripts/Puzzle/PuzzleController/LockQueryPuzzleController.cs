@@ -5,7 +5,7 @@ using System;
 
 namespace Puzzle.PuzzleController
 {
-    public class LockQueryPuzzleController : MonoBehaviour, IPuzzleController
+    public class LockQueryPuzzleController : MonoBehaviour, IPuzzleController, IQueryPuzzle
     {
         #region Interface's properties
         public PuzzleType PuzzleType { get; protected set; } = PuzzleType.LockQueryPuzzle;
@@ -43,6 +43,11 @@ namespace Puzzle.PuzzleController
         public void ResetExecutedNum()
         {
             queryPControl.ResetExecutedNum();
+        }
+
+        public int GetCurrScore()
+        {
+            return queryPControl.GetCurrScore();
         }
         #endregion
 
