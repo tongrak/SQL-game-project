@@ -4,7 +4,7 @@
 	"answer":"SELECT HP FROM Slime WHERE Color = 'Golden'",
 	"condition":{
 		"joinNum":null,
-		"join":null,
+		"haveJoin":null,
 		"nestedNum":null,
 		"executeNum":null,
 		"whereCondNum":null
