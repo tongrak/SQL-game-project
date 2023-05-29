@@ -4,9 +4,9 @@ using UnityEngine;
 using System;
 using Mono.Data.Sqlite;
 
-namespace PuzzleController
+namespace Puzzle.PuzzleController
 {
-    public class QueryPuzzleController : MonoBehaviour, IPuzzleController
+    public class QueryPuzzleController : MonoBehaviour, IPuzzleController, IQueryPuzzle
     {
         #region Interface's properties
         public PuzzleType PuzzleType { get; protected set; } = PuzzleType.QueryPuzzle;
@@ -23,7 +23,7 @@ namespace PuzzleController
         #region Interface methods
         public PuzzleResult GetResult(string playerQuery)
         {
-            return queryPControl.GetResult(playerQuery);
+            return queryPControl.GetResult(playerQuery, value => CurrPuzzleResult = value);
         }
 
         public KeyItem GetKeyItem()
@@ -44,6 +44,11 @@ namespace PuzzleController
         public int GetExecutedNum()
         {
             return queryPControl.GetExecutedNum();
+        }
+
+        public int GetCurrScore()
+        {
+            return queryPControl.GetCurrScore();
         }
         #endregion
 
