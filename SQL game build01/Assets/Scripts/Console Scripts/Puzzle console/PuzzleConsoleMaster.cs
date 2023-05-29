@@ -1,47 +1,78 @@
-using ConsoleGenerals;
+
+using PuzzleConsole;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PuzzleConsoleMaster : ConsoleBasic
+namespace ConsoleGeneral
 {
-    [SerializeField] public string currOutputString;
-    [SerializeField] private bool _calledForResponse = false;
-
-    private string _currInputString;
-    //private PuzzleMaster _currPuzzleMaster;
-
-    //public void InnitPuzzleMaster(PuzzleMaster pm)
-
-    #region Input Box
-    public void UpdateCurrInput(string s)
+    public class PuzzleConsoleStarter : CMStarterUnit
     {
-        _currInputString = s;
-    }
+        private PuzzleConsoleMaster _puzzleConsoleController;
 
-    #endregion
-
-    public string UpdateOutputString()
-    {
-        currOutputString = _currInputString;
-        return currOutputString;
-    }   
-
-    #region Excute Butt
-    public void ExcutionButtonAct()
-    {
-        Debug.Log("Button Click");
-        _calledForResponse = true;
-    }
-
-    public bool GetCalled()
-    {
-        if (_calledForResponse)
+        public PuzzleConsoleStarter(PuzzleConsoleMaster puzzleConsoleController)
         {
-            _calledForResponse = false;
-            return true;
+            _puzzleConsoleController = puzzleConsoleController;
         }
-        return false;
+
+        public void StartConsole()
+        {
+            _puzzleConsoleController.ShowConsole();
+        }
     }
-    #endregion
+
+    public class PuzzleConsoleMaster : ConsoleBasic
+    {
+        //For raising execution call
+        public event ExcuteButtonHandler ExcutionCalled;
+
+        [Header("Displaying Element")]
+        [SerializeField] private TableGenerationScript _tableGenerator;
+        [SerializeField] private Button _buttonElement;
+        //Input box feilds;
+        private string _currOutputString;
+        private string _currInputString;
+        //Config fields
+        private bool _canExecute = true;
+        [Header("Configure variable")]
+        [SerializeField] private int _exeBuffer = 1;
+
+        public override void ShowConsole()
+        {
+            this.isShow = true;
+        }
+
+        public void DisplayOutput(string[][] data)
+        {
+            _tableGenerator.SetDisplayData(data);
+            _tableGenerator.isShow = true;
+        }
+
+        #region Input Box
+        public void UpdateCurrInput(string s)
+        {
+            _currInputString = s;
+        }
+        #endregion
+
+        #region Excute Butt
+        IEnumerator ExecutionBuffer(int sec)
+        {
+            yield return new WaitForSeconds(sec);
+            _canExecute = _buttonElement.interactable = true;
+        }
+        public virtual void ExcutionButtonAct()
+        {
+            _currOutputString = _currInputString;
+            if (_canExecute)
+            {
+                _canExecute = _buttonElement.interactable = false;
+                ExcutionCalled?.Invoke(_currOutputString);
+                StartCoroutine(ExecutionBuffer(_exeBuffer));
+            }
+        }
+        #endregion
+    }
 }
+

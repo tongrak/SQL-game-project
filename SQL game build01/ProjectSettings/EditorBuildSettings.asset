@@ -11,7 +11,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Passive GamePlay/UI Scene.unity
     guid: 385ea98494af95e45885142b65a794bb
-  - enabled: 1
-    path: Assets/Scenes/RnD/Alpha01 Gameplay Developing Scene 1.unity
+  - enabled: 0
+    path: Assets/Scenes/RnD/Alpha01 Gameplay Developing Scene.unity
     guid: eabfac5439fd4db4389862fc3de6fbf1
+  - enabled: 1
+    path: Assets/Scenes/Room/SimpleRoom00.unity
+    guid: 5d696e14da7592b428ba3291dffdfd67
+  - enabled: 1
+    path: Assets/Scenes/Room/SimpleRoom01.unity
+    guid: 9cfb26dd48265f84fa7b90e01e380371
+  - enabled: 1
+    path: Assets/Scenes/Room/SimpleRoom02.unity
+    guid: 56a578cc21969c84589272c023174880
   m_configObjects: {}

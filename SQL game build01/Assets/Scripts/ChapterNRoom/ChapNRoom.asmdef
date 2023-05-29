@@ -1,3 +1,16 @@
 {
-	"name": "ChapNRoom"
+    "name": "ChapNRoom",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c25a42914548cba4dafd3ecdf60b1198"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

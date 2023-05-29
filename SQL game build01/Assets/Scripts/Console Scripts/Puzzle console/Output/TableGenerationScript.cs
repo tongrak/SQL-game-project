@@ -1,14 +1,21 @@
 ﻿
+using ConsoleGeneral;
 using UnityEngine;
 
 namespace PuzzleConsole
 {
-    public class TableGenerationScript : OutputTableElement, TableElement
+    public class TableGenerationScript : UIElementBasic, TableElement
     {
         [SerializeField] private GameObject _columnPrefab;
 
+
         public void SetDisplayData(string[][] inData)
         {
+            foreach (Transform col in this.transform)
+            {
+                Destroy(col.gameObject);
+            }
+
             foreach (var col in inData)
             {
                 GameObject colObjRef = Instantiate(_columnPrefab, this.transform);
@@ -17,6 +24,12 @@ namespace PuzzleConsole
                 else Debug.LogWarning("No column script detected");
             }
         }
+
+        /*private void DeleteOldCol()
+        {
+            Object[] colObj = FindObjectsOfType(typeof(ColumnEleScript));
+            foreach (var col in colObj) Destroy(col);
+        }*/
 
         #region Unity Basic
         private void Start()

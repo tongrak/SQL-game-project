@@ -23,7 +23,7 @@ public class PlMovement : MonoBehaviour
     [Header("Horizontal")]
     [SerializeField] private float _acceleration = 1f;
     [SerializeField] private float _deAcceleration = 60F;
-    [SerializeField] private float _maxClamp = 30;
+    [SerializeField] private float _maxClamp = 150;
     void WalkCal()
     {
         float xInput = UnityEngine.Input.GetAxis("Horizontal");
@@ -55,6 +55,7 @@ public class PlMovement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Ground" && _bufferedJump) Jump();
+        else _canJump = true;
 
     }
 
@@ -67,7 +68,6 @@ public class PlMovement : MonoBehaviour
         bool yInput = UnityEngine.Input.GetButtonDown("Jump");
         if (yInput)
         {
-            Debug.Log("yInput");
             if (_canJump) Jump();
             else _bufferedJump = true;
         }
@@ -76,7 +76,6 @@ public class PlMovement : MonoBehaviour
     void Jump()
     {
         rb2D.AddForce(transform.up * _jumpForce);
-        Debug.Log("Jump!");
         _canJump = false;
         _bufferedJump = false;
     }
