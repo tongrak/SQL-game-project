@@ -18,23 +18,23 @@ namespace PuzzleController
             List<string> condMessage = new List<string>();
 
             condMessage.Add("Correct the query");
-            if (!joinNum.Equals(null))
+            if (!joinNum.Equals(""))
             {
                 condMessage.Add(GetjoinNumMessage());
             }
-            if (!haveJoin.Equals(null))
+            if (!haveJoin.Equals(""))
             {
                 condMessage.Add(GetHaveJoinMessage());
             }
-            if (!nestedNum.Equals(null))
+            if (!nestedNum.Equals(""))
             {
                 condMessage.Add(GetNestedNumMessage());
             }
-            if (!executeNum.Equals(null))
+            if (!executeNum.Equals(""))
             {
                 condMessage.Add(GetExecuteNumMessage());
             }
-            if (!whereCondNum.Equals(null))
+            if (!whereCondNum.Equals(""))
             {
                 condMessage.Add(GetWhereCondNumMessage());
             }
@@ -45,23 +45,23 @@ namespace PuzzleController
         public int GetConditionNum()
         {
             int condNum = 1;  // Init number of condition with 1 because correctness query must have in every puzzle.  
-            if (!joinNum.Equals(null))
+            if (!joinNum.Equals(""))
             {
                 condNum += 1;
             }
-            if (!haveJoin.Equals(null))
+            if (!haveJoin.Equals(""))
             {
                 condNum += 1;
             }
-            if (!nestedNum.Equals(null))
+            if (!nestedNum.Equals(""))
             {
                 condNum += 1;
             }
-            if (!executeNum.Equals(null))
+            if (!executeNum.Equals(""))
             {
                 condNum += 1;
             }
-            if (!whereCondNum.Equals(null))
+            if (!whereCondNum.Equals(""))
             {
                 condNum += 1;
             }

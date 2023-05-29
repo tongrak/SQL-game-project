@@ -4,7 +4,7 @@
 	"answer":"SELECT * FROM Worm WHERE Color = 'Red'",
 	"condition":{
 		"joinNum":null,
-		"join":null,
+		"haveJoin":null,
 		"nestedNum":null,
 		"executeNum":null,
 		"whereCondNum":null
