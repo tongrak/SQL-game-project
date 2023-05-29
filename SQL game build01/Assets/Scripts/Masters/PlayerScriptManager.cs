@@ -1,6 +1,6 @@
 using ChapNRoom;
-using Codice.Client.BaseCommands;
 using ConsoleGeneral;
+using GameHelper;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,7 +43,7 @@ namespace MasterGeneral
         {
             try
             {
-                _interactionController = MasterHelper.GetObjectWithType<PlInterection>();
+                _interactionController = ComponentHelper.GetObjectWithType<PlInterection>();
             }
             catch (System.Exception ex) { throw new MissingFieldException(string.Format("Fail to get player's component due to: {0}", ex.Message)); }
 
@@ -75,8 +75,8 @@ namespace MasterGeneral
             bool initComplete = false; 
             try
             {
-                _consoleController = MasterHelper.GetObjectWithType<ConsolesManager>();
-                _roomController = MasterHelper.GetObjectWithType<ChaptersManager>();
+                _consoleController = ComponentHelper.GetObjectWithType<ConsolesManager>();
+                _roomController = ComponentHelper.GetObjectWithType<ChaptersManager>();
                 initComplete = true;
             }
             catch (FailToGetUnityObjectException fgo)

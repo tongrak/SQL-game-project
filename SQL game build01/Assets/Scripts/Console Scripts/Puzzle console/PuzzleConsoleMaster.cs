@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace ConsoleGeneral
 {
-    public class PuzzleConsoleStarter : ConModeStarterUnit
+    public class PuzzleConsoleStarter : CMStarterUnit
     {
         private PuzzleConsoleMaster _puzzleConsoleController;
 

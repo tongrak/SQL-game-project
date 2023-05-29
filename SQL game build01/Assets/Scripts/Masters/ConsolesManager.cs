@@ -1,4 +1,4 @@
-using MasterGeneral;
+using GameHelper;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,11 +12,14 @@ namespace ConsoleGeneral
         private ConsoleMode _currentMode;
         //Submaster controller
         private PuzzleConsoleMaster _puzzleConsole;
-        private DialogConsoleMaster _dialogConsole;
+        private DialogConsoleController _dialogConsole;
         private QuestBarMaster _questBarConsole;
+
+        private DialogModeController _dialogMode;
+
         //Dynamic field
         private PuzzleMaster _currPuzzle;
-        private Queue<ConModeStarterUnit> _consoleOrder = new Queue<ConModeStarterUnit>();
+        private Queue<CMStarterUnit> _consoleOrder = new Queue<CMStarterUnit>();
 
         public void ShowConsole(ConsoleMode console)
         {
@@ -32,7 +35,7 @@ namespace ConsoleGeneral
         {
             _currPuzzle = pm;
             //add into dialog 
-            this._consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogConsole, pm.Dialog, null));
+            this._consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogMode, pm.Dialog, null));
             //switch pm.puzzletype -> each puzzle show console in different order
             //current puzzletype = dialogThenPuzzle
             this._consoleOrder.Enqueue(CMStarterFactory.CreatePuzzleMode(_puzzleConsole));
@@ -61,7 +64,7 @@ namespace ConsoleGeneral
         private void ToNextConsole()
         {
             HideAllConsole();
-            ConModeStarterUnit nextConsole;
+            CMStarterUnit nextConsole;
             if (_consoleOrder.TryDequeue(out nextConsole)) nextConsole.StartConsole();
             else ShowConsole(_defaultMode);
         }
@@ -71,12 +74,14 @@ namespace ConsoleGeneral
 
         private void Start()
         {
+            //_dialogMode = DialogModeController.Instance;
+
             _currentMode = _defaultMode;
             try
             {
-                _puzzleConsole = MasterHelper.GetObjectWithType<PuzzleConsoleMaster>();
-                _dialogConsole = MasterHelper.GetObjectWithType<DialogConsoleMaster>();
-                _questBarConsole = MasterHelper.GetObjectWithType<QuestBarMaster>();
+                _puzzleConsole = ComponentHelper.GetObjectWithType<PuzzleConsoleMaster>();
+                _dialogConsole = ComponentHelper.GetObjectWithType<DialogConsoleController>();
+                _questBarConsole = ComponentHelper.GetObjectWithType<QuestBarMaster>();
             }
             catch(FailToGetUnityObjectException fgo)
             {
