@@ -1,4 +1,5 @@
 using GameHelper;
+using PuzzleController;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace ConsoleGeneral
         private DialogModeController _dialogMode;
 
         //Dynamic field
-        private PuzzleMaster _currPuzzle;
+        private IPuzzleController _currPuzzle;
         private Queue<CMStarterUnit> _consoleOrder = new Queue<CMStarterUnit>();
 
         public void ShowConsole(ConsoleMode console)
@@ -31,11 +32,13 @@ namespace ConsoleGeneral
                 case ConsoleMode.DialogMode: _dialogConsole.isShow = true; break;
             }
         }
-        public void ShowConsoleFor(PuzzleMaster pm)
+        public void ShowConsoleFor(IPuzzleController pm)
         {
             _currPuzzle = pm;
             //add into dialog 
-            this._consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogMode, pm.Dialog, null));
+            //if (pm.PrePuzzleDialog == null) this._consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogConsole, pm.PuzzleDialog, null));
+            //else this._consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogConsole, pm.PrePuzzleDialog, null));
+            this._consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogConsole, pm.PuzzleDialog, null));
             //switch pm.puzzletype -> each puzzle show console in different order
             //current puzzletype = dialogThenPuzzle
             this._consoleOrder.Enqueue(CMStarterFactory.CreatePuzzleMode(_puzzleConsole));
@@ -50,8 +53,15 @@ namespace ConsoleGeneral
         #region PuzzleConsole Control
         public void GetPuzzleResponse(string playerInput)
         {
-                //Get response from puzzle master
-                Debug.Log("Player Input: " + playerInput);
+            //Get response from puzzle master
+            Debug.Log("Player Input: " + playerInput);
+            PuzzleResult result =  _currPuzzle.GetResult(playerInput);
+            if (!result.isError)
+            {
+                _puzzleConsole.DisplayOutput(result.queryResult);
+            }
+            else Debug.LogWarning(result.errorMessage);
+                
         }
         #endregion
 

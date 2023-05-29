@@ -1,15 +1,16 @@
 using ChapNRoom;
+using PuzzleController;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public delegate void InteractionHandler(PuzzleMaster pm);
+public delegate void InteractionHandler(IPuzzleController pm);
 public delegate void RoomTraverseHandler(RoomDirection direction);
 
 public class PlInterection : MonoBehaviour
 {
     //Dynamic object
-    private PuzzleMaster _interectedPM;
+    private IPuzzleController _interectedPM;
     private RoomChangingScript _interestedTraverseZone;
     //Event raiser
     public event InteractionHandler InteractionCalled;
@@ -18,16 +19,22 @@ public class PlInterection : MonoBehaviour
     [SerializeField] private int _traverseWaitingTime = 1;
     [SerializeField] private float _interactionBufferTime = 0.5f; 
     //Dynamic Var
-    private bool _canInteract = true;
+    [SerializeField] private bool _canInteract = true;
+    public bool CanInteract
+    {
+        get => _canInteract;
+        set => _canInteract = value;
+    }
     private bool _interactionCall = false;
     private bool _iPointDetected = false;
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.gameObject.tag)
         {
             case "I-Point":
-                _interectedPM = collision.gameObject.GetComponent<PuzzleMaster>();
+                _interectedPM = collision.gameObject.GetComponent<IPuzzleController>();
                 if (_interectedPM == null) Debug.LogWarning("IPoint detected but cann't receive PuzzleMaster");
                 else _iPointDetected = true;
                 break;

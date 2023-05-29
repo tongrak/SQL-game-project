@@ -791,7 +791,6 @@ MonoBehaviour:
   _nextButton: {fileID: 1720229488}
   _confirmButton: {fileID: 740003747}
   _dialogTitle: //Title//
-  _dialogs: []
   _confirmText: confirm
   _IsTyped: 1
   _TypingSlowness: 1
@@ -896,7 +895,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.460022, y: -354.86}
+  m_AnchoredPosition: {x: 2.460083, y: -354.86}
   m_SizeDelta: {x: -83.6, y: -850.29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &485160447
@@ -1132,7 +1131,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 722382286}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc51a606ed1e2d14b8f11022ff554678, type: 3}
   m_Name: 
@@ -1736,6 +1735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7c9b493defefa4496f841de88ccf5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tableGenerator: {fileID: 1400970060}
   _buttonElement: {fileID: 8697928}
   _exeBuffer: 1
 --- !u!1 &1139237833
