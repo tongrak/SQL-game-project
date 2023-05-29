@@ -90,19 +90,19 @@ namespace PuzzleController
             condResult.Add(isQueryCorrect);
 
             string[] queryToken = CreateQueryToken(playerQuery);
-            if (!cond.joinNum.Equals(null))
+            if (!cond.joinNum.Equals(""))
             {
                 condResult.Add(JoinNumEval(cond.joinNum, queryToken));
             }
-            if (!cond.haveJoin.Equals(null))
+            if (!cond.haveJoin.Equals(""))
             {
                 condResult.Add(HaveJoinEval(cond.haveJoin, queryToken));
             }
-            if (!cond.nestedNum.Equals(null))
+            if (!cond.nestedNum.Equals(""))
             {
                 condResult.Add(NestedNumEval(cond.nestedNum, queryToken));
             }
-            if (!cond.executeNum.Equals(null))
+            if (!cond.executeNum.Equals(""))
             {
                 condResult.Add(ExecuteNumEval(cond.executeNum, executedNum));
             }
