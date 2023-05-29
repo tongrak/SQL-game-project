@@ -1,0 +1,19 @@
+This is a testing for Chapter Interpretation system.
+You should be able to write note or comment on top or below the Rooms declaration
+==================================
+Rooms
+{
+SimpleRoom00:
+NONE,
+SimpleRoom01,
+NONE,
+NONE;
+
+SimpleRoom01:
+NONE,
+NONE,
+NONE,
+SimpleRoom00;
+}
+==================================
+And the interpretor shouldn't consider this or following text.

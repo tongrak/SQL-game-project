@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlMaster : MonoBehaviour
+public class PuzzleModeController : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
