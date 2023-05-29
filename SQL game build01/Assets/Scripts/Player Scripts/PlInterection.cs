@@ -1,5 +1,5 @@
 using ChapNRoom;
-using PuzzleController;
+using Puzzle.PuzzleController;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,7 +1,7 @@
 using ChapNRoom;
 using ConsoleGeneral;
 using GameHelper;
-using PuzzleController;
+using Puzzle.PuzzleController;
 using System;
 using System.Collections;
 using System.Collections.Generic;
