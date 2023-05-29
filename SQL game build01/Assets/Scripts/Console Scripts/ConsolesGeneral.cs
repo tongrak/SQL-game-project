@@ -12,7 +12,7 @@ namespace ConsoleGeneral
     #region Console Mode Unit
     public static class CMStarterFactory
     {
-        public static CMStarterUnit CreateDialogMode(DialogModeController dialogConsole, string[] dialogs, string confirmMessage)
+        public static CMStarterUnit CreateDialogMode(DialogConsoleController dialogConsole, string[] dialogs, string confirmMessage)
                 => new DialogModeStarter(dialogConsole, dialogs, confirmMessage);
 
         public static CMStarterUnit CreatePuzzleMode(PuzzleConsoleMaster puzzleConsole)

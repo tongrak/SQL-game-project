@@ -1945,9 +1945,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab76ac6b77b230b44a84c796e0ee195e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleType: 0
-  puzzleFile: {fileID: 4900000, guid: 31d4878d6aee0434daa4aa83ec44ad9d, type: 3}
-  databaseFile: 0
+  queryPControl:
+    puzzleFile: {fileID: 4900000, guid: a98c88d6592d68c42a53408015317b79, type: 3}
+    databaseChapter: 0
 --- !u!61 &1888326035
 BoxCollider2D:
   m_ObjectHideFlags: 0

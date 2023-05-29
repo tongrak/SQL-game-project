@@ -1,4 +1,5 @@
 
+using PuzzleConsole;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,7 @@ namespace ConsoleGeneral
         public event ExcuteButtonHandler ExcutionCalled;
 
         [Header("Displaying Element")]
+        [SerializeField] private TableGenerationScript _tableGenerator;
         [SerializeField] private Button _buttonElement;
         //Input box feilds;
         private string _currOutputString;
@@ -39,6 +41,12 @@ namespace ConsoleGeneral
         public override void ShowConsole()
         {
             this.isShow = true;
+        }
+
+        public void DisplayOutput(string[][] data)
+        {
+            _tableGenerator.SetDisplayData(data);
+            _tableGenerator.isShow = true;
         }
 
         #region Input Box

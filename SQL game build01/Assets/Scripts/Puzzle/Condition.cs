@@ -22,7 +22,7 @@ namespace PuzzleController
             {
                 condMessage.Add(GetjoinNumMessage());
             }
-            if (!haveJoin.Equals(null))
+            if (!haveJoin.Equals(""))
             {
                 condMessage.Add(GetHaveJoinMessage());
             }

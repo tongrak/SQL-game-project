@@ -9,11 +9,11 @@ namespace ConsoleGeneral
 
     public class DialogModeStarter : CMStarterUnit
     {
-        private DialogModeController _dialogConsoleController;
+        private DialogConsoleController _dialogConsoleController;
         private string[] _rawDialogs;
         private string _confirmMessage = null;
 
-        public DialogModeStarter(DialogModeController dialogConsoleController, string[] rawDialogs, string confirmMessage)
+        public DialogModeStarter(DialogConsoleController dialogConsoleController, string[] rawDialogs, string confirmMessage)
         {
             _dialogConsoleController = dialogConsoleController;
             _rawDialogs = rawDialogs;
@@ -22,8 +22,8 @@ namespace ConsoleGeneral
 
         public void StartConsole()
         {
-            if (string.IsNullOrEmpty(_confirmMessage)) _dialogConsoleController.ShowMode(_rawDialogs);
-            else _dialogConsoleController.ShowMode(_rawDialogs, _confirmMessage);
+            if (string.IsNullOrEmpty(_confirmMessage)) _dialogConsoleController.ShowConsole(_rawDialogs);
+            else _dialogConsoleController.ShowConsole(_rawDialogs, _confirmMessage);
         }
     }
 

@@ -1,6 +1,7 @@
 using ChapNRoom;
 using ConsoleGeneral;
 using GameHelper;
+using PuzzleController;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,8 +24,9 @@ namespace MasterGeneral
 
         #region Listener Functions
         //to Consoles 
-        private void PassPMToConsole(PuzzleMaster pm)
+        private void PassPMToConsole(IPuzzleController pm)
         {
+            _interactionController.CanInteract = false;
             _consoleController.ShowConsoleFor(pm);
         }
         //to Chapter

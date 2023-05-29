@@ -1,9 +1,10 @@
 ﻿
+using ConsoleGeneral;
 using UnityEngine;
 
 namespace PuzzleConsole
 {
-    public class TableGenerationScript : OutputTableElement, TableElement
+    public class TableGenerationScript : UIElementBasic, TableElement
     {
         [SerializeField] private GameObject _columnPrefab;
 
