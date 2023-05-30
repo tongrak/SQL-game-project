@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PuzzleController
+namespace Puzzle.PuzzleController
 {
     public interface IPuzzleController
     {
@@ -41,5 +41,10 @@ namespace PuzzleController
         public static string noResetExecutedNumMethod = "This puzzle doesn't have to reset number of executed";
         public static string noGetExecutedNumMethod = "This puzzle doesn't have number of executed";
         #endregion
+    }
+
+    public interface IQueryPuzzle
+    {
+        int GetCurrScore();
     }
 }

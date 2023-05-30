@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PuzzleController
+namespace Puzzle
 {
     [System.Serializable]
     public class QueryPuzzleModel

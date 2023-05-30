@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Data.Sqlite;
 
-namespace PuzzleController
+namespace Puzzle
 {
     public class PuzzleResult
     {
@@ -81,6 +81,11 @@ namespace PuzzleController
             List<bool> conditionResult = EvalByCond(cond, playerQuery, IsCorrectQuery(dbPath, answerQuery, playerQuery), executedNum);
 
             return new PuzzleResult(playerQuery, queryResult, conditionResult);
+        }
+
+        public int CalculateQueryScore(List<bool> conditionsResult)
+        {
+            return conditionsResult.Where(condResult => condResult == true).Count();
         }
 
         private List<bool> EvalByCond(Condition cond, string playerQuery, bool isQueryCorrect, int executedNum)

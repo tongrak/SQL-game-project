@@ -1,5 +1,6 @@
 using GameHelper;
-using PuzzleController;
+using Puzzle;
+using Puzzle.PuzzleController;
 using System;
 using System.Collections;
 using System.Collections.Generic;

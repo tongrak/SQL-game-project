@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace PuzzleController
+namespace Puzzle.PuzzleController
 {
-    public class QueryPuzzleGetKeyItemController : MonoBehaviour, IPuzzleController
+    public class QueryPuzzleGetKeyItemController : MonoBehaviour, IPuzzleController, IQueryPuzzle
     {
         #region Interface's properties
         public PuzzleType PuzzleType { get; protected set; } = PuzzleType.QueryPuzzleGetKeyItem;
@@ -33,7 +33,7 @@ namespace PuzzleController
 
         public PuzzleResult GetResult(string playerQuery)
         {
-            return queryPControl.GetResult(playerQuery);
+            return queryPControl.GetResult(playerQuery, value => CurrPuzzleResult = value);
         }
 
         public bool InsertKeyItem(KeyItem playerItem)
@@ -44,6 +44,11 @@ namespace PuzzleController
         public void ResetExecutedNum()
         {
             queryPControl.ResetExecutedNum();
+        }
+
+        public int GetCurrScore()
+        {
+            return queryPControl.GetCurrScore();
         }
         #endregion
 
