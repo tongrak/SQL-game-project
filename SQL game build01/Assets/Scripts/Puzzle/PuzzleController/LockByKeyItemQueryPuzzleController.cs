@@ -1,36 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Puzzle.PuzzleController
 {
-    public class LockQueryPuzzleGetKeyItemController : MonoBehaviour, IPuzzleController, IQueryPuzzle
+    public class LockByKeyItemQueryPuzzleController : MonoBehaviour, IPuzzleController, IQueryPuzzle
     {
         #region Interface's properties
-        public PuzzleType PuzzleType { get; protected set; } = PuzzleType.LockQueryPuzzleGetKeyItem;
+        public PuzzleType PuzzleType { get; protected set; } = PuzzleType.LockByKeyItemQueryPuzzle;
+        public bool IsLock { get; protected set; } = false;
         public string[] PrePuzzleDialog { get; protected set; }
         public string[] PuzzleDialog { get; protected set; }
         public string QueryQuestion { get; protected set; }
         public string[] ConditionMessage { get; protected set; }
         public PuzzleResult CurrPuzzleResult { get; protected set; }
-        public bool IsLock { get; protected set; }
         #endregion
 
-        [SerializeField] QueryPuzzleControllerParent queryPControl = new QueryPuzzleControllerParent();
-        [SerializeField] LockPuzzleControllerParent lockPControl = new LockPuzzleControllerParent();
-        [SerializeField] GetItemPuzzleControllerParent getItemPControl = new GetItemPuzzleControllerParent();
+        [SerializeField] protected QueryPuzzleControllerParent queryPControl = new QueryPuzzleControllerParent();
+        [SerializeField] protected LockByKeyItemPuzzleControllerParent lockPControl = new LockByKeyItemPuzzleControllerParent();
 
         #region Interface's methods
-        public int GetExecutedNum()
-        {
-            return queryPControl.GetExecutedNum();
-        }
-
-        public KeyItem GetKeyItem()
-        {
-            return getItemPControl.GetKeyItem();
-        }
-
         public PuzzleResult GetResult(string playerQuery)
         {
             return queryPControl.GetResult(playerQuery, value => CurrPuzzleResult = value);
@@ -39,6 +29,15 @@ namespace Puzzle.PuzzleController
         public bool InsertKeyItem(KeyItem playerItem)
         {
             return lockPControl.InsertKeyItem(playerItem, value => IsLock = value);
+        }
+        public int GetExecutedNum()
+        {
+            return queryPControl.GetExecutedNum();
+        }
+
+        public KeyItem GetKeyItem()
+        {
+            throw new Exception(PuzzleControlExceptionMessage.noGetKeyItemMethod);
         }
 
         public void ResetExecutedNum()
@@ -58,6 +57,7 @@ namespace Puzzle.PuzzleController
             queryPControl.Load_QueryPuzzle(value => PuzzleDialog = value, value => QueryQuestion = value, value => ConditionMessage = value, value => CurrPuzzleResult = value);
             lockPControl.Load_LockPuzzle(value => PrePuzzleDialog = value);
         }
+
         // Start is called before the first frame update
         void Start()
         {

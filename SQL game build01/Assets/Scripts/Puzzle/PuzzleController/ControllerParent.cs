@@ -99,7 +99,7 @@ namespace Puzzle.PuzzleController
     }
     
     [Serializable]
-    public class LockPuzzleControllerParent
+    public class LockByKeyItemPuzzleControllerParent
     {
         [SerializeField] protected string[] UnityPreDialog;
         [SerializeField] protected List<KeyItem> LockKeyItem;
