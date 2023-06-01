@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ConsoleGeneral
 {
-    public class QuestBarMaster : ConsoleBasic
+    public class QuestBarController : ConsoleBasic
     {
         [Header("Displaying element")]
         [SerializeField] private TextMeshProUGUI _displayElement;
@@ -24,10 +24,6 @@ namespace ConsoleGeneral
             _displayElement.text = _displayingString;
             ShowConsole();
         }
-
-        #region Unity Basics
-
-        #endregion
     }
 }
 

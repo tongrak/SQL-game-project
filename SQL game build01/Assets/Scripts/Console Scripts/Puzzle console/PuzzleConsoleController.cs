@@ -1,4 +1,3 @@
-
 using PuzzleConsole;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,22 +6,7 @@ using UnityEngine.UI;
 
 namespace ConsoleGeneral
 {
-    public class PuzzleConsoleStarter : CMStarterUnit
-    {
-        private PuzzleConsoleMaster _puzzleConsoleController;
-
-        public PuzzleConsoleStarter(PuzzleConsoleMaster puzzleConsoleController)
-        {
-            _puzzleConsoleController = puzzleConsoleController;
-        }
-
-        public void StartConsole()
-        {
-            _puzzleConsoleController.ShowConsole();
-        }
-    }
-
-    public class PuzzleConsoleMaster : ConsoleBasic
+    public class PuzzleConsoleController : ConsoleBasic
     {
         //For raising execution call
         public event ExcuteButtonHandler ExcutionCalled;
