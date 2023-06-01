@@ -11,88 +11,82 @@ namespace ConsoleGeneral
     public class ConsolesManager : MonoBehaviour
     {
         [SerializeField] private ConsoleMode _defaultMode = ConsoleMode.ExploreMode;
-        private ConsoleMode _currentMode;
-        //Submaster controller
-        private PuzzleConsoleMaster _puzzleConsole;
-        private DialogConsoleController _dialogConsole;
-        private QuestBarMaster _questBarConsole;
 
+        private ExploreModeController _exploreMode;
+        private PuzzleModeController _puzzleMode;
         private DialogModeController _dialogMode;
 
         //Dynamic field
+        private ConsoleModeController[] _modeControllers;
         private IPuzzleController _currPuzzle;
         private Queue<CMStarterUnit> _consoleOrder = new Queue<CMStarterUnit>();
+        private CMStarterUnit _currUnit;
 
-        public void ShowConsole(ConsoleMode console)
-        {
-            HideAllConsole();
-            switch (console)
-            {
-                case ConsoleMode.ExploreMode: throw new NotImplementedException("Explore console isn't implemented");
-                case ConsoleMode.PuzzleMode: _puzzleConsole.isShow = true; break;
-                case ConsoleMode.DialogMode: _dialogConsole.isShow = true; break;
-            }
-        }
         public void ShowConsoleFor(IPuzzleController pm)
         {
             _currPuzzle = pm;
             //add into dialog 
             //if (pm.PrePuzzleDialog == null) this._consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogConsole, pm.PuzzleDialog, null));
             //else this._consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogConsole, pm.PrePuzzleDialog, null));
-            this._consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogConsole, pm.PuzzleDialog, null));
+            this._consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogMode, pm.PuzzleDialog, null));
             //switch pm.puzzletype -> each puzzle show console in different order
             //current puzzletype = dialogThenPuzzle
-            this._consoleOrder.Enqueue(CMStarterFactory.CreatePuzzleMode(_puzzleConsole));
+            this._consoleOrder.Enqueue(CMStarterFactory.CreatePuzzleMode(_puzzleMode, GetPuzzleResponse));
 
             ToNextConsole();
         }
-        public void ShowQuestBar(string quest)
-        {
-            _questBarConsole.ShowConsole(quest);
-        }
 
-        #region PuzzleConsole Control
+        #region PuzzleMode Control
+
         public void GetPuzzleResponse(string playerInput)
         {
-            //Get response from puzzle master
             Debug.Log("Player Input: " + playerInput);
-            PuzzleResult result =  _currPuzzle.GetResult(playerInput);
-            if (!result.isError)
-            {
-                _puzzleConsole.DisplayOutput(result.queryResult);
-            }
-            else Debug.LogWarning(result.errorMessage);
-                
+            PuzzleResult result = _currPuzzle.GetResult(playerInput);
+            if (!result.isError) _puzzleMode.DisplayOutputTable(result.queryResult);
+            else Debug.LogWarning(string.Format("Input error:{0}", result.errorMessage));
         }
+
         #endregion
 
         #region Misc Function
-        private void HideAllConsole()
+        private void HideAllMode()
         {
-            _puzzleConsole.isShow = false;
-            _dialogConsole.isShow = false;
+            foreach (ConsoleModeController cmc in _modeControllers) if (cmc != null) cmc.HideMode();
         }
+        private void ForceShowMode(ConsoleMode mode)
+        {
+            _consoleOrder.Clear();
+           switch (mode)
+           {
+                case ConsoleMode.ExploreMode: _consoleOrder.Enqueue(CMStarterFactory.CreateExploreMode()); break;
+                case ConsoleMode.PuzzleMode: _consoleOrder.Enqueue(CMStarterFactory.CreatePuzzleMode(_puzzleMode, GetPuzzleResponse)); break;
+                case ConsoleMode.DialogMode: _consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogMode, null, null)); break;
+           }
+            ToNextConsole();
+        }
+
         private void ToNextConsole()
         {
-            HideAllConsole();
-            CMStarterUnit nextConsole;
-            if (_consoleOrder.TryDequeue(out nextConsole)) nextConsole.StartConsole();
-            else ShowConsole(_defaultMode);
+            //HideAllConsole();
+            if (_currUnit != null) _currUnit.StopUnit(ToNextConsole); //Stop current unit
+            if (_consoleOrder.TryDequeue(out _currUnit)) _currUnit.StartUnit(ToNextConsole); //if there mode in queue start the lastest
+            else ForceShowMode(_defaultMode); //else force to default mode
         }
+        private void ToNextConsole(System.Object sender, EventArgs args) => ToNextConsole();
         #endregion
 
         #region UnityBasics
 
         private void Start()
         {
-            //_dialogMode = DialogModeController.Instance;
+            //Start with default mode
+            //_currentMode = _defaultMode;
 
-            _currentMode = _defaultMode;
             try
             {
-                _puzzleConsole = ComponentHelper.GetObjectWithType<PuzzleConsoleMaster>();
-                _dialogConsole = ComponentHelper.GetObjectWithType<DialogConsoleController>();
-                _questBarConsole = ComponentHelper.GetObjectWithType<QuestBarMaster>();
+                //_exploreMode = ComponentHelper.GetObjectWithType<ExploreModeController>();
+                _puzzleMode = ComponentHelper.GetObjectWithType<PuzzleModeController>();
+                _dialogMode = ComponentHelper.GetObjectWithType<DialogModeController>();
             }
             catch(FailToGetUnityObjectException fgo)
             {
@@ -102,12 +96,11 @@ namespace ConsoleGeneral
                 throw new System.Exception(fgo.Message);
             }
             Debug.Log("Console: init complete");
+            ConsoleModeController[] temp = { null, _puzzleMode, _dialogMode };
+            _modeControllers = temp;
             //set up
-            ShowConsole(_currentMode);
-            _questBarConsole.isShow = false;
-            //add sub controller listener
-            _puzzleConsole.ExcutionCalled += GetPuzzleResponse;
-            _dialogConsole.DialogConfirmation += ToNextConsole;
+            HideAllMode();
+            ForceShowMode(_defaultMode);
         }
         #endregion
     }
