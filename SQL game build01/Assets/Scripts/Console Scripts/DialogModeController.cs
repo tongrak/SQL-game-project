@@ -9,58 +9,61 @@ namespace ConsoleGeneral
 
     public class DialogModeStarter : CMStarterUnit
     {
-        private DialogConsoleController _dialogConsoleController;
+        public ConsoleMode mode => ConsoleMode.DialogMode;
+
+        private DialogModeController _dialogConsoleController;
         private string[] _rawDialogs;
         private string _confirmMessage = null;
 
-        public DialogModeStarter(DialogConsoleController dialogConsoleController, string[] rawDialogs, string confirmMessage)
+        public DialogModeStarter(DialogModeController dialogConsoleController, string[] rawDialogs, string confirmMessage)
         {
             _dialogConsoleController = dialogConsoleController;
             _rawDialogs = rawDialogs;
             _confirmMessage = confirmMessage;
         }
 
-        public void StartConsole()
+        public void StartUnit()
         {
-            if (string.IsNullOrEmpty(_confirmMessage)) _dialogConsoleController.ShowConsole(_rawDialogs);
-            else _dialogConsoleController.ShowConsole(_rawDialogs, _confirmMessage);
+            if (string.IsNullOrEmpty(_confirmMessage)) _dialogConsoleController.ShowMode(_rawDialogs);
+            else _dialogConsoleController.ShowMode(_rawDialogs, _confirmMessage);
         }
     }
 
     public class DialogModeController : ConsoleModeController
     {
         [SerializeField] private DialogConsoleController _consoleController;
-        //private event DialogConfirmationHandler _dialogConfirmed;
+        //Dynamic Variable
 
         public override void InitMode()
         {
-            _consoleController = ComponentHelper.GetObjectWithType<DialogConsoleController>();
+            if (_consoleController == null) 
+            {
+                try
+                {
+                    _consoleController = ComponentHelper.GetObjectWithType<DialogConsoleController>();
+                }
+                catch (System.Exception e)
+                {
+                    throw new System.Exception(e.Message);
+                }
+            } 
         }
 
-        public override void ShowMode()
-        {
+        #region Show Mode
+        public override void ShowMode() =>
             _consoleController.ShowConsole();
-        }
-
-        public void ShowMode(string[] rawDialogs)
-        {
+        public void ShowMode(string[] rawDialogs) =>
             _consoleController.ShowConsole(rawDialogs);
-        }
-
-        public void ShowMode(string[] rawDialogs, string confirmMessage)
-        {
+        public void ShowMode(string[] rawDialogs, string confirmMessage) => 
             _consoleController.ShowConsole(rawDialogs, confirmMessage);
-        }
+        #endregion
 
-        public override void HideMode()
-        {
+        public override void HideMode() => 
             _consoleController.isShow = false;
-        }
 
-        private void testFunction()
-        {
-            this.RaiseModeChanged(this);
-        }
+        public void ConfirmAct() =>
+            this.RaiseModeChange(this);
+
     }
 }
 

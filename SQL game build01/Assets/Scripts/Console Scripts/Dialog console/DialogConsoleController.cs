@@ -19,7 +19,6 @@ namespace ConsoleGeneral
         [SerializeField] private ConfirmButton _confirmButton;
         [Header("Display Variable")]
         [SerializeField] private string _dialogTitle = "//Title//";
-        //[SerializeField] private string _dialog = "//Dialog//";
         [SerializeField] private string _confirmText = "confirm";
         [Header("Configure Option")]
         [SerializeField] private bool _IsTyped = false;
@@ -56,14 +55,6 @@ namespace ConsoleGeneral
         public void ShowPreviousDialog()
         {
             if (!ChangeDialogBaseOnCurrIndex(-1)) Debug.LogWarning("No negetive indexed dialog existed");
-        }
-        public void ConfirmButtonAct()
-        {
-            ConfirmationCall();
-        }
-        public virtual void ConfirmationCall()
-        {
-            DialogConfirmation?.Invoke();
         }
         #endregion
 
