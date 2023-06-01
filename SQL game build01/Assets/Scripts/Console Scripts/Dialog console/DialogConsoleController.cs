@@ -24,7 +24,6 @@ namespace ConsoleGeneral
         [SerializeField] private bool _IsTyped = false;
         [SerializeField] private int _TypingSlowness = 1;
         //Dynamic fields
-        public event DialogConfirmationHandler DialogConfirmation;
         private string[] _rawDialogs = null; //combination of title and dialog
         private int _dialogIndex = 0;
 
@@ -129,5 +128,3 @@ namespace ConsoleGeneral
         #endregion
     }
 }
-
-

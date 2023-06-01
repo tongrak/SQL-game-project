@@ -1,4 +1,5 @@
 using GameHelper;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,10 +23,18 @@ namespace ConsoleGeneral
             _confirmMessage = confirmMessage;
         }
 
-        public void StartUnit()
+        public void StartUnit(EventHandler modeChangesHandler)
         {
-            if (string.IsNullOrEmpty(_confirmMessage)) _dialogConsoleController.ShowMode(_rawDialogs);
+            _dialogConsoleController.ConsoleModeChanged += modeChangesHandler;
+            if (_rawDialogs == null && string.IsNullOrEmpty(_confirmMessage)) _dialogConsoleController.ShowMode();
+            else if (string.IsNullOrEmpty(_confirmMessage)) _dialogConsoleController.ShowMode(_rawDialogs);
             else _dialogConsoleController.ShowMode(_rawDialogs, _confirmMessage);
+        }
+
+        public void StopUnit(EventHandler modeChangesHandler)
+        {
+            _dialogConsoleController.ConsoleModeChanged -= modeChangesHandler;
+            _dialogConsoleController.HideMode();
         }
     }
 
@@ -66,6 +75,3 @@ namespace ConsoleGeneral
 
     }
 }
-
-
-
