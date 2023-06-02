@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 
 
-namespace ConsoleGeneral
+namespace Gameplay.UI.Elements
 {
     public class QuestBarController : ConsoleBasic
     {

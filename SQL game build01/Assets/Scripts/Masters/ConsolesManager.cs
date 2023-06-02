@@ -1,16 +1,17 @@
-using GameHelper;
+using Gameplay.Helper;
+using Gameplay.UI;
+using Gameplay.UI.Mode;
 using Puzzle;
 using Puzzle.PuzzleController;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ConsoleGeneral
+namespace Gameplay.Manager
 {
     public class ConsolesManager : MonoBehaviour
     {
-        [SerializeField] private ConsoleMode _defaultMode = ConsoleMode.ExploreMode;
+        [SerializeField] private GameUIMode _defaultMode = GameUIMode.ExploreMode;
 
         private ExploreModeController _exploreMode;
         private PuzzleModeController _puzzleMode;
@@ -53,14 +54,14 @@ namespace ConsoleGeneral
         {
             foreach (ConsoleModeController cmc in _modeControllers) if (cmc != null) cmc.HideMode();
         }
-        private void ForceShowMode(ConsoleMode mode)
+        private void ForceShowMode(GameUIMode mode)
         {
             _consoleOrder.Clear();
            switch (mode)
            {
-                case ConsoleMode.ExploreMode: _consoleOrder.Enqueue(CMStarterFactory.CreateExploreMode()); break;
-                case ConsoleMode.PuzzleMode: _consoleOrder.Enqueue(CMStarterFactory.CreatePuzzleMode(_puzzleMode, GetPuzzleResponse)); break;
-                case ConsoleMode.DialogMode: _consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogMode, null, null)); break;
+                case GameUIMode.ExploreMode: _consoleOrder.Enqueue(CMStarterFactory.CreateExploreMode()); break;
+                case GameUIMode.PuzzleMode: _consoleOrder.Enqueue(CMStarterFactory.CreatePuzzleMode(_puzzleMode, GetPuzzleResponse)); break;
+                case GameUIMode.DialogMode: _consoleOrder.Enqueue(CMStarterFactory.CreateDialogMode(_dialogMode, null, null)); break;
            }
             ToNextConsole();
         }

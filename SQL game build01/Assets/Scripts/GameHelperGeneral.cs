@@ -1,6 +1,6 @@
 using System;
 
-namespace GameHelper
+namespace Gameplay.Helper
 {
     public class FailToGetUnityObjectException : System.Exception
     {

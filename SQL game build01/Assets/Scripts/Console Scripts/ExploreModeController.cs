@@ -1,14 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-
-namespace ConsoleGeneral
+namespace Gameplay.UI.Mode
 {
     public class ExploreModeStarter : CMStarterUnit
     {   
-        public ConsoleMode mode => throw new System.NotImplementedException();
+        public GameUIMode mode => throw new System.NotImplementedException();
 
         public void StartUnit()
         {

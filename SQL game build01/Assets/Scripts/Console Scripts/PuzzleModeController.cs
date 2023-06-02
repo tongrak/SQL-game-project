@@ -1,15 +1,14 @@
-
-using GameHelper;
+using Gameplay.Helper;
+using Gameplay.UI.Elements;
+using Gameplay.UI.Elements.Puzzle;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace ConsoleGeneral
+namespace Gameplay.UI.Mode
 {
     public class PuzzleModeStarter : CMStarterUnit
     {
-        public ConsoleMode mode => ConsoleMode.PuzzleMode;
+        public GameUIMode mode => GameUIMode.PuzzleMode;
 
         private PuzzleModeController _puzzleConsoleController;
         private ExcuteButtonHandler _exeHandler;

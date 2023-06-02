@@ -1,16 +1,15 @@
-using GameHelper;
+using Gameplay.Helper;
+using Gameplay.UI.Elements.Dialog;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace ConsoleGeneral 
+namespace Gameplay.UI.Mode 
 {
     public delegate void DialogConfirmationHandler();
 
     public class DialogModeStarter : CMStarterUnit
     {
-        public ConsoleMode mode => ConsoleMode.DialogMode;
+        public GameUIMode mode => GameUIMode.DialogMode;
 
         private DialogModeController _dialogConsoleController;
         private string[] _rawDialogs;
@@ -41,7 +40,6 @@ namespace ConsoleGeneral
     public class DialogModeController : ConsoleModeController
     {
         [SerializeField] private DialogConsoleController _consoleController;
-        //Dynamic Variable
 
         public override void InitMode()
         {
@@ -70,8 +68,9 @@ namespace ConsoleGeneral
         public override void HideMode() => 
             _consoleController.isShow = false;
 
+        #region External Button Function
         public void ConfirmAct() =>
             this.RaiseModeChange(this);
-
+        #endregion
     }
 }

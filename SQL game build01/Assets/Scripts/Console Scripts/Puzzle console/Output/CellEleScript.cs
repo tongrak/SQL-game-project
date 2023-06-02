@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PuzzleConsole
+namespace Gameplay.UI.Elements.Puzzle
 {
-    public class CellEleScript : OutputTableElement, CellElement
+    public class CellEleScript : UIElementBasic, CellElement
     {
         [Header("Cell's Object Elements")]
         [SerializeField] private TextMeshProUGUI _textElement;
@@ -18,7 +18,7 @@ namespace PuzzleConsole
         public void SetDisplayText(string inText)
         {
             _textElement.text = inText;
-            this.Show();
+            this.isShow = true;
         }
         #endregion
 

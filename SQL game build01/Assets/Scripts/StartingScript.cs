@@ -1,46 +1,44 @@
-using GameHelper;
-using System.Collections;
-using System.Collections.Generic;
+using Gameplay.Helper;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class StartingScript : MonoBehaviour
+namespace Gameplay
 {
-    //A list of scene to load before the room is self. Like Consoles, Player?, Music?, other.
-    [SerializeField] private string[] _passiveGameplayScenes;
-
-    private SceneLoadingHelper _SLH;
-
-    private GameObject _mastersObj;
-    private string _startingScene;
-
-    private void Awake()
+    public class StartingScript : MonoBehaviour
     {
-        _mastersObj = GameObject.Find("Masters");
-        _startingScene = this.gameObject.scene.name;
+        //A list of scene to load before the room is self. Like Consoles, Player?, Music?, other.
+        [SerializeField] private string[] _passiveGameplayScenes;
 
-        _SLH = FindAnyObjectByType<SceneLoadingHelper>();
+        private SceneLoadingHelper _SLH;
 
-        //Put Masters object to DontDestroyOnLoad Scene.
-        if (_mastersObj != null) DontDestroyOnLoad(_mastersObj);
-        else throw new MissingComponentException("Masters Object not detected");
+        private GameObject _mastersObj;
+        private string _startingScene;
 
-        //Loading every passive gameplay scenes.
-        foreach (string s in _passiveGameplayScenes)
+        private void Awake()
         {
-            try
+            _mastersObj = GameObject.Find("Masters");
+            _startingScene = this.gameObject.scene.name;
+
+            _SLH = FindAnyObjectByType<SceneLoadingHelper>();
+
+            //Put Masters object to DontDestroyOnLoad Scene.
+            if (_mastersObj != null) DontDestroyOnLoad(_mastersObj);
+            else throw new MissingComponentException("Masters Object not detected");
+
+            //Loading every passive gameplay scenes.
+            foreach (string s in _passiveGameplayScenes)
             {
-                Debug.Log("Trying to load scene: " + s);
-                _SLH.LoadSceneAdditively(s);
+                try
+                {
+                    Debug.Log("Trying to load scene: " + s);
+                    _SLH.LoadSceneAdditively(s);
+                }
+                catch (System.Exception e) { Debug.LogWarning("Starting scene err: " + e.Message); }
             }
-            catch (System.Exception e) { Debug.LogWarning("Starting scene err: " + e.Message); }
+        }
+
+        void Start()
+        {
+            _SLH.UnloadScene(_startingScene);
         }
     }
-
-    void Start()
-    {
-        _SLH.UnloadScene(_startingScene);
-    }
-    
-    
 }

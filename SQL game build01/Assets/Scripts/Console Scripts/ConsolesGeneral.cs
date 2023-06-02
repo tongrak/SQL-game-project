@@ -1,16 +1,9 @@
-﻿
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 
-namespace ConsoleGeneral
+namespace Gameplay.UI.Mode
 {
-    //direct delegate
-    public delegate void ExcuteButtonHandler(string playerInput);
-
-    public enum ConsoleMode { ExploreMode, PuzzleMode, DialogMode}
-
-    #region Console Mode Unit
     public static class CMStarterFactory
     {
         public static CMStarterUnit CreateExploreMode() => throw new NotImplementedException();
@@ -22,26 +15,25 @@ namespace ConsoleGeneral
 
     public interface CMStarterUnit
     {
-        public ConsoleMode mode { get; }
+        public GameUIMode mode { get; }
         public void StartUnit(EventHandler modeChangesHandler);
         public void StopUnit(EventHandler modeChangesHandler);
     }
-    #endregion
+}
+
+
+namespace Gameplay.UI
+{
+    //direct delegate
+    public delegate void ExcuteButtonHandler(string playerInput);
+
+    public enum GameUIMode { ExploreMode, PuzzleMode, DialogMode}
 
     #region Consoles abstracts & interfaces
     public abstract class ConsoleBasic : UIElementBasic
     {
         public abstract void ShowConsole();
     }
-
-    /*public class CModeChangesArgs : EventArgs
-    {
-        public int CMode { get; }
-    }
-    public class PuzzleModeArgs : CModeChangesArgs
-    {
-        public string playerRespond { get; }
-    }*/
 
     public abstract class ConsoleModeController : MonoBehaviour
     {

@@ -1,10 +1,9 @@
-using PuzzleConsole;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ConsoleGeneral
+namespace Gameplay.UI.Elements.Puzzle
 {
     public class PuzzleConsoleController : ConsoleBasic
     {

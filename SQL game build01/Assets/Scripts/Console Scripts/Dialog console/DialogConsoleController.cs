@@ -1,13 +1,11 @@
-using GameHelper;
+using Gameplay.Helper;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace ConsoleGeneral
+namespace Gameplay.UI.Elements.Dialog
 {
     public class DialogConsoleController : ConsoleBasic
     {

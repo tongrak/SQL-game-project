@@ -1,9 +1,8 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace PuzzleConsole
+namespace Gameplay.UI.Elements.Puzzle
 {
-    class ColumnEleScript : OutputTableElement, ColumnElement
+    class ColumnEleScript : UIElementBasic, ColumnElement
     {
         [SerializeField] private GameObject _cellElePreFabs;
 
@@ -16,15 +15,8 @@ namespace PuzzleConsole
                 if (cellEleRef != null) cellEleRef.SetDisplayText(text);
                 else Debug.LogWarning("Cann't connect to cell script");
             }
-            this.Show();
+            this.isShow = true;
         }
-
-        #region Unity Basic
-        private void Start()
-        {
-            
-        }
-        #endregion
     }
 
 }
