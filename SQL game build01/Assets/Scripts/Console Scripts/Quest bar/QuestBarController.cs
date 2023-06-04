@@ -21,7 +21,7 @@ namespace Gameplay.UI.Elements
         public void ShowConsole(string quest)
         {
             _displayingString = quest;
-            _displayElement.text = _displayingString;
+            _displayElement.text = ThaiFontAdjuster.Adjust(_displayingString);
             ShowConsole();
         }
     }

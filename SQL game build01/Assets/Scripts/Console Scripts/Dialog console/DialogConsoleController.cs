@@ -74,7 +74,7 @@ namespace Gameplay.UI.Elements.Dialog
         }
         private void DisplayTitle(bool showTitle)
         {
-            this._titleElement.text = (showTitle) ? _dialogTitle : string.Empty;
+            this._titleElement.text = (showTitle) ? ThaiFontAdjuster.Adjust( _dialogTitle ) : string.Empty;
         }
         private void UpdateTitle(string title)
         {
@@ -98,7 +98,7 @@ namespace Gameplay.UI.Elements.Dialog
             {
                 StopAllCoroutines();
                 StartCoroutine(TypeDialog(displayDialog));
-            }else _mainDialogElement.text = displayDialog;
+            }else _mainDialogElement.text = ThaiFontAdjuster.Adjust(displayDialog);
 
         }
         private IEnumerator TypeDialog(string dialog)
@@ -112,6 +112,8 @@ namespace Gameplay.UI.Elements.Dialog
                 float waitFrame = Time.deltaTime * _TypingSlowness;
                 yield return new WaitForSeconds(waitFrame);
             }
+            //Readjust thai charecters.
+            _mainDialogElement.text = ThaiFontAdjuster.Adjust(_mainDialogElement.text);
         }
         private void UpdateButtons()
         {
