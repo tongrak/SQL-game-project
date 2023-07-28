@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Puzzle.PuzzleController
 {
-    public class LockByKeyItemQueryPuzzleGetKeyItemController : MonoBehaviour, IPuzzleController, IQueryPuzzle
+    public class LockByKeyItemQueryPuzzleGetKeyItemController : MonoBehaviour, IPuzzleControllerOld, IQueryPuzzle
     {
         #region Interface's properties
         public PuzzleType PuzzleType { get; protected set; } = PuzzleType.LockByKeyItemQueryPuzzleGetKeyItem;

@@ -20,7 +20,7 @@ namespace ConsoleGeneral
         private DialogModeController _dialogMode;
 
         //Dynamic field
-        private IPuzzleController _currPuzzle;
+        private IPuzzleControllerOld _currPuzzle;
         private Queue<CMStarterUnit> _consoleOrder = new Queue<CMStarterUnit>();
 
         public void ShowConsole(ConsoleMode console)
@@ -33,7 +33,7 @@ namespace ConsoleGeneral
                 case ConsoleMode.DialogMode: _dialogConsole.isShow = true; break;
             }
         }
-        public void ShowConsoleFor(IPuzzleController pm)
+        public void ShowConsoleFor(IPuzzleControllerOld pm)
         {
             _currPuzzle = pm;
             //add into dialog 

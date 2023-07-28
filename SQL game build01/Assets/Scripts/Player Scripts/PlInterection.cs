@@ -4,13 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public delegate void InteractionHandler(IPuzzleController pm);
+public delegate void InteractionHandler(IPuzzleControllerOld pm);
 public delegate void RoomTraverseHandler(RoomDirection direction);
 
 public class PlInterection : MonoBehaviour
 {
     //Dynamic object
-    private IPuzzleController _interectedPM;
+    private IPuzzleControllerOld _interectedPM;
     private RoomChangingScript _interestedTraverseZone;
     //Event raiser
     public event InteractionHandler InteractionCalled;
@@ -34,7 +34,7 @@ public class PlInterection : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "I-Point":
-                _interectedPM = collision.gameObject.GetComponent<IPuzzleController>();
+                _interectedPM = collision.gameObject.GetComponent<IPuzzleControllerOld>();
                 if (_interectedPM == null) Debug.LogWarning("IPoint detected but cann't receive PuzzleMaster");
                 else _iPointDetected = true;
                 break;
