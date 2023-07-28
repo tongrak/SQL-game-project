@@ -36,11 +36,16 @@ namespace Assets.Scripts.Puzzle.PuzzleController
         }
 
         #region For awake method
-        public void Load_LockPuzzle()
+        private void Load_LockPuzzle()
         {
             leftLockKeyItem = LockKeyItem;
         }
         #endregion
+
+        void Awake()
+        {
+            Load_LockPuzzle();
+        }
 
         // Use this for initialization
         void Start()
