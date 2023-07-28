@@ -10,7 +10,7 @@ namespace Assets.Scripts.Puzzle.PuzzleController
 
         public void UnLock()
         {
-            IsLock = true;
+            IsLock = false;
         }
 
         // Use this for initialization
