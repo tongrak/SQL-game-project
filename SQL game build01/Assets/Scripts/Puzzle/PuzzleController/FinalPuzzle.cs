@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Puzzle.PuzzleController.Interface;
-using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts.Puzzle.PuzzleController

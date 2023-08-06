@@ -10,11 +10,13 @@ namespace Assets.Scripts.Puzzle.PuzzleController
     {
         [SerializeField] protected TextAsset puzzleFile;
         [SerializeField] protected DatabaseChapter databaseChapter;
-        [SerializeField] protected ScoreManager queryPScoreManager;
+
+        private ScoreManager scoreManager;
 
         private string DBPath { get; set; }
         private string AnswerQuery { get; set; }
         private Condition Condition { get; set; }
+
         public string[] Dialog { get; private set; }
         public string Question { get; private set; }
         public string[] ConditionMessage { get; private set; }
@@ -44,7 +46,7 @@ namespace Assets.Scripts.Puzzle.PuzzleController
                 BestPuzzleResult = latestPuzzleResult;
 
                 // Update puzzle score and total score in manager
-                queryPScoreManager.AddScore(latestScore - CurrScore);
+                scoreManager.AddScore(latestScore - CurrScore);
                 CurrScore = latestScore;
             }
         }
@@ -83,7 +85,7 @@ namespace Assets.Scripts.Puzzle.PuzzleController
         // Use this for initialization
         void Start()
         {
-
+            scoreManager = GetComponent<PuzzleController>().ScoreManager;
         }
 
         // Update is called once per frame

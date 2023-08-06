@@ -9,13 +9,13 @@ namespace Puzzle
     {
         private int totalScore = 0;
 
-        public event EventHandler<int> OnScoreUpdated;
+        public event EventHandler<int> OnTotalScoreUpdated;
 
         public void AddScore(int score)
         {
             totalScore += score;
 
-            OnScoreUpdated?.Invoke(this, totalScore);
+            OnTotalScoreUpdated?.Invoke(this, totalScore);
         }
 
         // Start is called before the first frame update

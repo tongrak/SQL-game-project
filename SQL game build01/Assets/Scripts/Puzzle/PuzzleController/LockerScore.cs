@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.Puzzle.PuzzleController.Interface;
+using Puzzle;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Puzzle.PuzzleController
@@ -7,12 +9,24 @@ namespace Assets.Scripts.Puzzle.PuzzleController
     {
         [field: SerializeField] public int ScoreUse { get; private set; }
 
+        private ScoreManager scoreManager;
+
         public bool IsLocked { get; private set; } = true;
 
         // Use this for initialization
         void Start()
         {
+            scoreManager = GetComponent<PuzzleController>().ScoreManager;
+            scoreManager.OnTotalScoreUpdated += CheckScore;
+        }
 
+        private void CheckScore(object sender, int totalScore)
+        {
+            if(totalScore >= ScoreUse)
+            {
+                // Unlock
+                IsLocked = false;
+            }
         }
 
         // Update is called once per frame
