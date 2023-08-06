@@ -648,6 +648,8 @@ GameObject:
   - component: {fileID: 1914590278}
   - component: {fileID: 1914590277}
   - component: {fileID: 1914590276}
+  - component: {fileID: 1914590280}
+  - component: {fileID: 1914590279}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -770,6 +772,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1914590274}
   m_CullTransparentMesh: 1
+--- !u!114 &1914590279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914590274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc128f206cd3f7e49a101b42b96bc8d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzleFile: {fileID: 4900000, guid: 31d4878d6aee0434daa4aa83ec44ad9d, type: 3}
+  databaseChapter: 0
+  queryPScoreManager: {fileID: 2082093808}
+--- !u!114 &1914590280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914590274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f32e0188e74c774419f83e30a882d8d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <PuzzleType>k__BackingField: 0
 --- !u!1 &2082093807
 GameObject:
   m_ObjectHideFlags: 0

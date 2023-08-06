@@ -10,7 +10,7 @@ namespace Puzzle.PuzzleController
     {
         [SerializeField] protected TextAsset puzzleFile;
         [SerializeField] protected DatabaseChapter databaseChapter;
-        [SerializeField] protected QueryPuzzleScoreManager queryPScoreManager;
+        [SerializeField] protected ScoreManager queryPScoreManager;
 
         protected string DBPath { get; set; }
         protected string AnswerQuery { get; set; }

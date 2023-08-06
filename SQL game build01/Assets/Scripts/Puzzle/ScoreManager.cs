@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Puzzle
 {
-    public class QueryPuzzleScoreManager : MonoBehaviour
+    public class ScoreManager : MonoBehaviour
     {
         private int totalScore = 0;
 
