@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ConsoleGeneral
+namespace Gameplay.UI.Elements.Dialog
 {
     public class ConfirmButton : TextBox
     {

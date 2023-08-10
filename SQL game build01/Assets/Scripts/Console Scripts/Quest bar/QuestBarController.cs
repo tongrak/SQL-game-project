@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 
 
-namespace ConsoleGeneral
+namespace Gameplay.UI.Elements
 {
-    public class QuestBarMaster : ConsoleBasic
+    public class QuestBarController : ConsoleBasic
     {
         [Header("Displaying element")]
         [SerializeField] private TextMeshProUGUI _displayElement;
@@ -21,13 +21,9 @@ namespace ConsoleGeneral
         public void ShowConsole(string quest)
         {
             _displayingString = quest;
-            _displayElement.text = _displayingString;
+            _displayElement.text = ThaiFontAdjuster.Adjust(_displayingString);
             ShowConsole();
         }
-
-        #region Unity Basics
-
-        #endregion
     }
 }
 

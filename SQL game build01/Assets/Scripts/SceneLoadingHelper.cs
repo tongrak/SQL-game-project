@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace GameHelper
+namespace Gameplay.Helper
 {
     public class SceneLoadingHelper : MonoBehaviour
     {

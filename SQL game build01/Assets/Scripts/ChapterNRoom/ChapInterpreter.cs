@@ -1,11 +1,9 @@
-
+using Gameplay.Helper;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using GameHelper;
 
-namespace ChapNRoom
+namespace Gameplay.ChaptersNRooms.Interpreter
 {
     public class ChapterInterpreter : ChapInterpreterInterface
     {

@@ -1,24 +1,22 @@
-
-using GameHelper;
-using MasterGeneral;
-using System;
-using System.Collections;
+using Gameplay;
+using Gameplay.ChaptersNRooms;
+using Gameplay.ChaptersNRooms.Interpreter;
+using Gameplay.Helper;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public delegate void RoomLoadedHandler(RoomSpawningDetail spawningDetail);
 
 /*
 Script to control a loading of active gameplay scene or room in short.
  */
-namespace ChapNRoom
+namespace Gameplay.Manager
 {
     public class ChaptersManager : MonoBehaviour
     {
         [Header("Configure value")]
-        [SerializeField] private string _chapterFolderName = "Chapters";
+        [SerializeField] private string _chapterFolderName = "ChaptersNRooms";
         [SerializeField] private int _firstChapterIndex = 0;
         //Dynamic object
         private ChapterInterpreter _ChapI = ChapterInterpreter.Instance;
