@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Puzzle.PuzzleController
 {
-    public class FinalPuzzle : MonoBehaviour, IFinalPuzzle
+    public class RequiredPuzzle : MonoBehaviour, IRequiredPuzzle
     {
         public bool IsLock { get; private set; } = true;
 

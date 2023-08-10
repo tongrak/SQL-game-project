@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Puzzle.PuzzleController.Interface
 {
-    public interface IFinalPuzzle
+    public interface IRequiredPuzzle
     {
         bool IsLock { get; }
 
