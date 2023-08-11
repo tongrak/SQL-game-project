@@ -1,8 +1,9 @@
-
 using System;
 
-namespace ChapNRoom
+namespace Gameplay.ChaptersNRooms
 {
+    public delegate void RoomTraverseHandler(RoomDirection direction);
+
     /// <summary>
     /// Room's neighbor. Direction base on 4-side clock wise direction.
     /// </summary>
@@ -61,17 +62,9 @@ namespace ChapNRoom
             return null;
         }
 
-        public RoomRef GetFirstRoom()
-        {
-            return _roomRefs[0];
-        }
+        public RoomRef GetFirstRoom() => _roomRefs[0];
 
-        public override string ToString()
-        {
-            return "Chapter(" + name + "):" + _roomRefs.ToString() + ";";
-        }
-
-
+        public override string ToString() => string.Format("Chapter({0})", _roomRefs.ToString());
     }
 
     /// <summary>

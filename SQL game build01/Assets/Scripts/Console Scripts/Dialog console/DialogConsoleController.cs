@@ -1,13 +1,11 @@
-using GameHelper;
+using Gameplay.Helper;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace ConsoleGeneral
+namespace Gameplay.UI.Elements.Dialog
 {
     public class DialogConsoleController : ConsoleBasic
     {
@@ -19,13 +17,11 @@ namespace ConsoleGeneral
         [SerializeField] private ConfirmButton _confirmButton;
         [Header("Display Variable")]
         [SerializeField] private string _dialogTitle = "//Title//";
-        //[SerializeField] private string _dialog = "//Dialog//";
         [SerializeField] private string _confirmText = "confirm";
         [Header("Configure Option")]
         [SerializeField] private bool _IsTyped = false;
         [SerializeField] private int _TypingSlowness = 1;
         //Dynamic fields
-        public event DialogConfirmationHandler DialogConfirmation;
         private string[] _rawDialogs = null; //combination of title and dialog
         private int _dialogIndex = 0;
 
@@ -57,14 +53,6 @@ namespace ConsoleGeneral
         {
             if (!ChangeDialogBaseOnCurrIndex(-1)) Debug.LogWarning("No negetive indexed dialog existed");
         }
-        public void ConfirmButtonAct()
-        {
-            ConfirmationCall();
-        }
-        public virtual void ConfirmationCall()
-        {
-            DialogConfirmation?.Invoke();
-        }
         #endregion
 
         #region private functions
@@ -86,7 +74,7 @@ namespace ConsoleGeneral
         }
         private void DisplayTitle(bool showTitle)
         {
-            this._titleElement.text = (showTitle) ? _dialogTitle : string.Empty;
+            this._titleElement.text = (showTitle) ? ThaiFontAdjuster.Adjust( _dialogTitle ) : string.Empty;
         }
         private void UpdateTitle(string title)
         {
@@ -110,7 +98,7 @@ namespace ConsoleGeneral
             {
                 StopAllCoroutines();
                 StartCoroutine(TypeDialog(displayDialog));
-            }else _mainDialogElement.text = displayDialog;
+            }else _mainDialogElement.text = ThaiFontAdjuster.Adjust(displayDialog);
 
         }
         private IEnumerator TypeDialog(string dialog)
@@ -124,6 +112,8 @@ namespace ConsoleGeneral
                 float waitFrame = Time.deltaTime * _TypingSlowness;
                 yield return new WaitForSeconds(waitFrame);
             }
+            //Readjust thai charecters.
+            _mainDialogElement.text = ThaiFontAdjuster.Adjust(_mainDialogElement.text);
         }
         private void UpdateButtons()
         {
@@ -138,5 +128,3 @@ namespace ConsoleGeneral
         #endregion
     }
 }
-
-

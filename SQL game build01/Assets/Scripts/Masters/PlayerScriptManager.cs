@@ -1,13 +1,11 @@
-using ChapNRoom;
-using ConsoleGeneral;
-using GameHelper;
+using Gameplay.ChaptersNRooms;
+using Gameplay.Helper;
+using Gameplay.Player;
 using Puzzle.PuzzleController;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace MasterGeneral
+namespace Gameplay.Manager
 {
     public class PlayerScriptManager : MonoBehaviour
     {
@@ -20,7 +18,6 @@ namespace MasterGeneral
         private PlInterection _interactionController;
         //Dynamic Var
         private GameObject _currPlayerObj;
-
 
         #region Listener Functions
         //to Consoles 

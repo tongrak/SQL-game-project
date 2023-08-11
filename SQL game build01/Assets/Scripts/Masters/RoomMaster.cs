@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ChapNRoom
+namespace Gameplay.ChaptersNRooms
 {
-    //public delegate Room
-
     public class RoomMaster : MonoBehaviour
     {
         [Header("Default Spawn Points")]
