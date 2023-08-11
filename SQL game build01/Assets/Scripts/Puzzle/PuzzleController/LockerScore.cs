@@ -13,6 +13,8 @@ namespace Assets.Scripts.Puzzle.PuzzleController
 
         public bool IsLocked { get; private set; } = true;
 
+        public event EventHandler OnUnlocked;
+
         // Use this for initialization
         void Start()
         {
@@ -26,6 +28,7 @@ namespace Assets.Scripts.Puzzle.PuzzleController
             {
                 // Unlock
                 IsLocked = false;
+                OnUnlocked?.Invoke(this, EventArgs.Empty);
             }
         }
 

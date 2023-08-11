@@ -17,6 +17,8 @@ namespace Assets.Scripts.Puzzle.PuzzleController
 
         public bool IsLocked { get; private set; } = true;
 
+        public event EventHandler OnUnlocked;
+
         public bool InsertKeyItem(KeyItem playerItem)
         {
             if (leftLockKeyItem.Contains(playerItem))
@@ -26,6 +28,7 @@ namespace Assets.Scripts.Puzzle.PuzzleController
                 {
                     // Unlock the puzzle.
                     IsLocked = true;
+                    OnUnlocked?.Invoke(this, EventArgs.Empty);
                 }
                 return true;
             }

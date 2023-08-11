@@ -24,10 +24,19 @@ namespace Assets.Scripts.Puzzle.PuzzleController
         public int ExecutedNum { get; private set; } = 0;
         public PuzzleResult BestPuzzleResult { get; private set; }
 
+        public event EventHandler OnQueryCorrect;
+
         public PuzzleResult AnswerPuzzle(string playerQuery)
         {
             ExecutedNum += 1;
             PuzzleResult latestPuzzleResult = PuzzleEvaluator.GetInstance().EvaluateQuery(DBPath, AnswerQuery, playerQuery, Condition, ExecutedNum);
+
+            // Invoke event when query correct
+            if (latestPuzzleResult.conditionResult[0] == true)
+            {
+                OnQueryCorrect?.Invoke(this, EventArgs.Empty);
+            }
+
             UpdateCurrPResultAndScore(latestPuzzleResult);
             return latestPuzzleResult;
         }
