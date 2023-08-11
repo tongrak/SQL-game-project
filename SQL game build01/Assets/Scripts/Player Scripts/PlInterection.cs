@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace Gameplay.Player
 {
-    public delegate void InteractionHandler(IPuzzleController pm);
+    public delegate void InteractionHandler(IPuzzleControllerOld pm);
 
     public class PlInterection : MonoBehaviour
     {
         //Dynamic object
-        private IPuzzleController _interectedPM;
+        private IPuzzleControllerOld _interectedPM;
         private RoomChangingScript _interestedTraverseZone;
         //Event raiser
         public event InteractionHandler InteractionCalled;
@@ -35,7 +35,7 @@ namespace Gameplay.Player
             switch (collision.gameObject.tag)
             {
                 case "I-Point":
-                    _interectedPM = collision.gameObject.GetComponent<IPuzzleController>();
+                    _interectedPM = collision.gameObject.GetComponent<IPuzzleControllerOld>();
                     if (_interectedPM == null) Debug.LogWarning("IPoint detected but cann't receive PuzzleMaster");
                     else _iPointDetected = true;
                     break;
