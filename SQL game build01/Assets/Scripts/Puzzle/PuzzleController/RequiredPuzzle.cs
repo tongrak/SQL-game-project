@@ -12,6 +12,11 @@ namespace Assets.Scripts.Puzzle.PuzzleController
             IsLock = false;
         }
 
+        private void Awake()
+        {
+            GetComponent<PuzzleController>().RequiredPuzzleManager.RequiredPuzzles.Add(this);
+        }
+
         // Use this for initialization
         void Start()
         {

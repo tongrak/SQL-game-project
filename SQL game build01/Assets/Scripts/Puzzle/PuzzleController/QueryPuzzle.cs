@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Puzzle.PuzzleController.Interface;
 using Puzzle;
 using System;
-using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts.Puzzle.PuzzleController

@@ -1,11 +1,7 @@
 ﻿using Assets.Scripts.Puzzle.PuzzleController.Interface;
 using Puzzle;
-using Puzzle.PuzzleController.Interface;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Puzzle.PuzzleController
@@ -14,6 +10,7 @@ namespace Assets.Scripts.Puzzle.PuzzleController
     {
         [field: SerializeField] public PuzzleType PuzzleType { get; private set; }
         [field: SerializeField] public ScoreManager ScoreManager { get; private set; }
+        [field: SerializeField] public RequiredPuzzleManager RequiredPuzzleManager { get; private set; }
 
         private QueryPuzzle queryPuzzle;
         private LockerItem lockerItem;
