@@ -34,7 +34,7 @@ namespace Assets.Scripts.Puzzle
 
         private void Start()
         {
-            Debug.Log(RequiredPuzzles.Count);
+
         }
     }
 }
