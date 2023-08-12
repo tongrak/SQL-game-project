@@ -7,7 +7,7 @@ namespace Assets.Scripts.Puzzle
 {
     public class RequiredPuzzleManager : MonoBehaviour
     {
-        public List<RequiredPuzzle> RequiredPuzzles { get; set; } = new List<RequiredPuzzle>();
+        public List<RequiredPuzzle> RequiredPuzzles { get; private set; } = new List<RequiredPuzzle>();
 
         private bool IsLocked { get; set; } = true;
 

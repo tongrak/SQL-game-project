@@ -17,30 +17,30 @@ namespace Assets.Scripts.Puzzle.PuzzleController
         private LockerScore lockerScore;
         private RequiredPuzzle requiredPuzzle;
 
-        private bool?[] IsLockdLockers; // [0] = query, [1] = Item, [2] = score 
+        private bool?[] IsLockedLockers; // [0] = query, [1] = Item, [2] = score 
 
         private void Initiate()
         {
-            IsLockdLockers = new bool?[3];
+            IsLockedLockers = new bool?[3];
 
             queryPuzzle = GetComponent<QueryPuzzle>();
             if(queryPuzzle != null ) 
             { 
-                IsLockdLockers[0] = true;
+                IsLockedLockers[0] = true;
                 queryPuzzle.OnQueryCorrect += UnlockQuery;
             }
 
             lockerItem = GetComponent<LockerItem>();
             if(lockerItem != null ) 
             { 
-                IsLockdLockers[1] = true;
+                IsLockedLockers[1] = true;
                 lockerItem.OnUnlocked += UnlockItem;
             }
 
             lockerScore = GetComponent<LockerScore>();
             if(lockerScore != null ) 
             { 
-                IsLockdLockers[2] = true;
+                IsLockedLockers[2] = true;
                 lockerScore.OnUnlocked += UnlockScore;   
             }
 
@@ -49,7 +49,7 @@ namespace Assets.Scripts.Puzzle.PuzzleController
 
         private void UnlockTheRequired()
         {
-            if( IsLockdLockers.Count(x => x == true) == 0 )
+            if( IsLockedLockers.Count(x => x == true) == 0 )
             {
                 requiredPuzzle?.UnLock();
             }
@@ -58,7 +58,7 @@ namespace Assets.Scripts.Puzzle.PuzzleController
         #region Method for events
         private void UnlockScore(object sender, EventArgs e)
         {
-            IsLockdLockers[2] = false;
+            IsLockedLockers[2] = false;
             lockerScore.OnUnlocked -= UnlockScore;
 
             UnlockTheRequired();
@@ -66,7 +66,7 @@ namespace Assets.Scripts.Puzzle.PuzzleController
 
         private void UnlockItem(object sender, EventArgs e)
         {
-            IsLockdLockers[1] = false;
+            IsLockedLockers[1] = false;
             lockerItem.OnUnlocked -= UnlockItem;
 
             UnlockTheRequired();
@@ -74,7 +74,7 @@ namespace Assets.Scripts.Puzzle.PuzzleController
 
         private void UnlockQuery(object sender, EventArgs e)
         {
-            IsLockdLockers[0] = false;
+            IsLockedLockers[0] = false;
             queryPuzzle.OnQueryCorrect -= UnlockQuery;
 
             UnlockTheRequired();
