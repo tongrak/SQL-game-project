@@ -44,13 +44,14 @@ namespace Gameplay.Player
         // TODO: Add end jump early if button ?
         // TODO: Coyote time
         //[SerializeField] private float _jumpForce = 300;
-        [SerializeField]private float _jumpHeight = 30;
-        [SerializeField]private float _jumpApexThreshold = 10f;
+        [SerializeField] private float _jumpHeight = 30;
+        [SerializeField] private float _jumpApexThreshold = 10f;
         //private float JUMP_BUFFER = 0.1f;
 
         private float _apexPoint;
-        private float _minFallSpeed = 80f;
-        private float _maxFallSpeed = 120f;
+        [SerializeField] private float _minFallSpeed = 80f;
+        [SerializeField] private float _maxFallSpeed = 120f;
+        [SerializeField] private float _fallCramp = 40f;
         private float _fallSpeed;
         private float _currVerticalSpeed;
         private void CalculateFallSpeed(){
@@ -81,13 +82,13 @@ namespace Gameplay.Player
             if (_collideOn.down && _currVerticalSpeed < 0) _currVerticalSpeed = 0;
             else { 
                 _currVerticalSpeed -= _fallSpeed * Time.deltaTime;
-                if (_currVerticalSpeed < -40f) _currVerticalSpeed = -40f;
+                if (_currVerticalSpeed < -_fallCramp) _currVerticalSpeed = -_fallCramp;
             }
         }
         #endregion
 
         #region Enforcer
-        private int FREE_COLLIDER_ITERATIONS = 10;
+        [SerializeField] private int _freeColliderIterations = 10;
         private void MoveCharacter(){
             var currPos = transform.position + _characterBounds.center;
             var rawMovementVector = new Vector3(_currHorizontalSpeed, _currVerticalSpeed);
@@ -101,8 +102,8 @@ namespace Gameplay.Player
             }
             //else slowly move till collide
             var posToMove = transform.position;
-            for (var i = 1; i < FREE_COLLIDER_ITERATIONS; i++) { 
-                var t = (float) i/ FREE_COLLIDER_ITERATIONS;
+            for (var i = 1; i < _freeColliderIterations; i++) { 
+                var t = (float) i/ _freeColliderIterations;
                 var posToTry = Vector2.Lerp(currPos, nextFramePos, t);
 
                 if(Physics2D.OverlapBox(posToTry, _characterBounds.size, 0, _platformLayer)) { 
@@ -115,13 +116,13 @@ namespace Gameplay.Player
         }
 
         #endregion
-        // TODO: Reconfig that bounds things...
+
         #region Collision
         [Header("Collision")]
         [SerializeField] private Bounds _characterBounds;
         [SerializeField] private LayerMask _platformLayer;
 
-        private const int DETECTION_COUNT = 3;
+        [SerializeField] private int _detectionCount = 3;
         [SerializeField] private float _rayBuffer = 0.1f;
         [SerializeField] private float _rayDetectionLength = 1.0f;
 
@@ -142,12 +143,13 @@ namespace Gameplay.Player
             _collideOn.left = CheckIfCollide(_rayOn.left);
         }
 
-        private bool CheckIfCollide(RayRange ray) => PredictRayPositions(ray).Any(p => Physics2D.Raycast(p, ray.Dir, _rayDetectionLength, this._platformLayer));
+        private bool CheckIfCollide(RayRange ray) => 
+            PredictRayPositions(ray).Any(p => Physics2D.Raycast(p, ray.Dir, _rayDetectionLength, this._platformLayer));
 
         private IEnumerable<Vector2> PredictRayPositions(RayRange range)
         {
-            for(var i = 0; i < DETECTION_COUNT; i++){
-                var t = (float) i / (DETECTION_COUNT - 1);
+            for(var i = 0; i < _detectionCount; i++){
+                var t = (float) i / (_detectionCount - 1);
                 yield return Vector2.Lerp(range.Start, range.End, t);
             }
         }
@@ -195,7 +197,7 @@ namespace Gameplay.Player
 
             MoveCharacter();
 
-            StatusLoging();
+            //StatusLoging();
         }
 
         private void StatusLoging()
