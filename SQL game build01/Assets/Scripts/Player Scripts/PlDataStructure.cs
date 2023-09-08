@@ -2,9 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using UnityEngine;
 
 namespace Gameplay
 {
+    class CommonVariable{
+        public readonly static Vector2[] defaultDirections = new Vector2[4] { Vector2.up, Vector2.right, Vector2.down, Vector2.left };
+    }
+
+    struct MovementInput{
+        public bool JumpPressDown;
+        public bool? JumpPressUp;
+        public float Horizontal;
+    }
+
     class FourDirections<T> : IEnumerable<T>
     {
         public T up; public T right; public T down; public T left;
@@ -31,6 +43,11 @@ namespace Gameplay
         public override string ToString()
         {
             return $"[up:{up}, right:{right}, down:{down}, left:{left}]";
+        }
+
+        public static FourDirections<T> Convert(IEnumerable<T> given){
+            if (given.Count() != 4) throw new ArgumentException("Cannot convert non 4 member IEnumerable");
+            return new FourDirections<T>(given.ElementAt(0), given.ElementAt(1), given.ElementAt(2), given.ElementAt(3));
         }
     }
 
@@ -65,13 +82,6 @@ namespace Gameplay
         public void Reset()
         {
             position = -1;
-        }
-    }
-    
-    class Logger
-    {
-        public static void LogIf(bool condition,  string message) {
-            if (condition) UnityEngine.Debug.Log(message);
         }
     }
 }
