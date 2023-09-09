@@ -23,16 +23,15 @@ namespace Gameplay.Player
         {
             if (xSignal < 0 && collidOnLeft || xSignal > 0 && collidOnRight) return;
             // TODO: when not grounded speed should be different
-            _rigidbody.velocity = new Vector2(xSignal * _walkSpeed, _rigidbody.velocity.y);
+            _rigidbody.velocity = new Vector2(xSignal * _walkSpeed, _rigidbody.velocity.y); // add horizontal velocity
+            _animateCtr.HorizontalAct(xSignal); // change animation to walk
         }
 
         private void MoveVertically(bool pressJump, bool grounded)
         {
-            if (!(pressJump && grounded)) return;
             // TODO: Add buffered jump
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpSpeed);
-
-            _animateCtr.ChangeAnimateState(PlCharState.JUMP);
+            if (pressJump && grounded) _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpSpeed); // add vertical velocity
+            _animateCtr.VerticalAct(grounded ? 0 : _rigidbody.velocity.y); // change animation 
         }
 
         #endregion
@@ -60,18 +59,6 @@ namespace Gameplay.Player
         {
         }
 
-        private void EnforceAnimation(MovementInput playerInput, FourDirections<bool> collideOn)
-        {
-            if (playerInput.Horizontal < 0 && collideOn.left ||
-                playerInput.Horizontal > 0 && collideOn.right)
-                _animateCtr.ChangeAnimateState(PlCharState.IDLE);
-            else
-            {
-                _animateCtr.HorizontalAct(playerInput.Horizontal);
-                _animateCtr.ChangeAnimateState(PlCharState.WALK);
-            }
-        }
-
         #endregion
 
         #region Unity Basic
@@ -96,7 +83,6 @@ namespace Gameplay.Player
             var collisions = getFourDirectionCollision();
 
             MoveCharacter(playerInput, collisions);
-            EnforceAnimation(playerInput, collisions);
 
             StatusLoging();
         }

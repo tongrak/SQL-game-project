@@ -99,16 +99,22 @@ namespace Gameplay
 
     enum PlCharState
     {
-        IDLE, WALK, JUMP
+        IDLE, WALK, JUMP, FALL
     }
 
     interface IPlAnimationCtr
     {
         /// <summary>
-        /// Handle charector sprite horizonal fliping
+        /// Handle charector horizontal state
         /// </summary>
-        /// <param name="xSignal">Player horizontal control signal</param>
+        /// <param name="xSignal">A changing of direction. Positive is right.</param>
         void HorizontalAct(float xSignal);
+
+        /// <summary>
+        /// Handle charector vertical state
+        /// </summary>
+        /// <param name="ySignal">A changing of direction. Positive is up</param>
+        void VerticalAct(float ySignal);
 
         /// <summary>
         /// Handle charector animation base on given state
