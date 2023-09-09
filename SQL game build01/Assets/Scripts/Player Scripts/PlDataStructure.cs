@@ -84,4 +84,13 @@ namespace Gameplay
             position = -1;
         }
     }
+    public abstract class GameplayBaseScript : MonoBehaviour
+    {
+        protected T MustGetComponent<T>()
+        {
+            var temp = GetComponent<T>();
+            if (temp != null) return temp;
+            throw new NullReferenceException($"Cannot find component with type: {typeof(T)}");
+        }
+    }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Gameplay.Player
 {
-    public class PlMovement : MonoBehaviour
+    public class PlMovement : GameplayBaseScript
     {
         #region Movement
         private Rigidbody2D _rigidbody;
@@ -56,8 +56,9 @@ namespace Gameplay.Player
 
         private void Start()
         {
-            _boxCollider = GetComponent<BoxCollider2D>();
-            _rigidbody = GetComponent<Rigidbody2D>();
+            // Init this global vars
+            _boxCollider = MustGetComponent<BoxCollider2D>();
+            _rigidbody = MustGetComponent<Rigidbody2D>();
         }
 
         void Update()
