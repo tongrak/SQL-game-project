@@ -1,93 +1,86 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using TarodevController;
 using UnityEngine;
 
 namespace Gameplay.Player
 {
     public class PlMovement : MonoBehaviour
     {
-        [Header("Basic ConFig")]
-        public Rigidbody2D rb2D;
+        #region Movement
+        private Rigidbody2D _rigidbody;
 
-        #region Horizontal movement
-        private float _currWalkSpeed;
-        [Header("Horizontal")]
-        [SerializeField] private float _acceleration = 1f;
-        [SerializeField] private float _deAcceleration = 60F;
-        [SerializeField] private float _maxClamp = 150;
-        void WalkCal()
+        [Header("Movement Config")]
+        [SerializeField][Range(0, 100f)] private float _walkSpeed = 10f;
+        [SerializeField] private float _jumpSpeed = 10f;
+
+        private void MoveCharacter(MovementInput mInput, FourDirections<bool> collideOn)
         {
-            float xInput = UnityEngine.Input.GetAxis("Horizontal");
-
-            if (xInput == 0)
-            {
-                _currWalkSpeed = Mathf.MoveTowards(_currWalkSpeed, 0, _deAcceleration * Time.deltaTime);
-            }
-            else
-            {
-                _currWalkSpeed = xInput * _acceleration * Time.deltaTime;
-                _currWalkSpeed = Mathf.Clamp(_currWalkSpeed, -_maxClamp, _maxClamp);
-            }
+            MoveVertically(mInput.JumpPressDown, collideOn.down);
+            MoveHorizontally(mInput.Horizontal, collideOn.left, collideOn.right);
         }
+
+        private void MoveHorizontally(float xSignal, bool collidOnLeft, bool collidOnRight)
+        {
+            if (xSignal < 0 && collidOnLeft || xSignal > 0 && collidOnRight) return;
+            // TODO: when not grounded speed should be different
+            _rigidbody.velocity = new Vector2(xSignal * _walkSpeed, _rigidbody.velocity.y);
+        }
+
+        private void MoveVertically(bool pressJump, bool grounded)
+        {
+            if (!(pressJump && grounded)) return;
+            // TODO: Add buffered jump
+
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpSpeed);
+        }
+
         #endregion
 
-        #region Vertical movement
+        #region Collision
+        private BoxCollider2D _boxCollider;
+        private Bounds _bounds => _boxCollider.bounds;
 
-        private bool _canJump = false;
-        private bool _bufferedJump = false;
-        [Header("Vertical")]
-        [SerializeField] private float _jumpForce = 300;
+        [Header("Collision")]
+        [SerializeField] private LayerMask _platformLayer;
 
-        private void OnCollisionExit2D(Collision2D collision)
-        {
-            if (collision.collider.tag == "Ground") _canJump = false;
-        }
-
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.collider.tag == "Ground" && _bufferedJump) Jump();
-            else _canJump = true;
-
-        }
-
-        private void OnCollisionStay2D(Collision2D collision)
-        {
-            if (collision.collider.tag == "Ground") _canJump = true;
-        }
-
-        void CheckJump()
-        {
-            bool yInput = UnityEngine.Input.GetButtonDown("Jump");
-            if (yInput)
-            {
-                if (_canJump) Jump();
-                else _bufferedJump = true;
-            }
-        }
-
-        void Jump()
-        {
-            rb2D.AddForce(transform.up * _jumpForce);
-            _canJump = false;
-            _bufferedJump = false;
-        }
-        #endregion
-
-        #region Enforcer
-        void Move()
-        {
-            transform.position += new Vector3(_currWalkSpeed, 0);
-        }
-
+        private FourDirections<bool> getFourDirectionCollision() =>
+            FourDirections<bool>.Convert(CommonVariable.defaultDirections.Select<Vector2, bool>(
+                dic => Physics2D.BoxCast(_bounds.center, _bounds.size, 0, dic, .1f, _platformLayer)
+                )
+            );
         #endregion
 
         #region Unity Basic
+
+        private void Start()
+        {
+            _boxCollider = GetComponent<BoxCollider2D>();
+            _rigidbody = GetComponent<Rigidbody2D>();
+        }
+
         void Update()
         {
-            CheckJump();
+            // Gathering Input
+            var playerInput = new MovementInput
+            {
+                JumpPressDown = UnityEngine.Input.GetButtonDown("Jump"),
+                Horizontal = UnityEngine.Input.GetAxisRaw("Horizontal"),
+            };
+            // Check collision
+            var collisions = getFourDirectionCollision();
 
-            WalkCal();
+            MoveCharacter(playerInput, collisions);
 
-            Move();
+            StatusLoging();
         }
+
+        private void StatusLoging()
+        {
+        }
+
+
         #endregion
     }
 }

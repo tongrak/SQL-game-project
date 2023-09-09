@@ -225,11 +225,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08897009f9af4b64a84151fa7c83f043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb2D: {fileID: 7268944720659136956}
   _acceleration: 10
   _deAcceleration: 60
   _maxClamp: 300
-  _jumpForce: 300
+  _jumpHeight: 30
+  _jumpApexThreshold: 10
+  _minFallSpeed: 80
+  _maxFallSpeed: 120
+  _fallCramp: 40
+  _freeColliderIterations: 10
+  _characterBoxCollider: {fileID: 0}
+  _platformLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _detectionCount: 3
+  _rayBuffer: 0.1
+  _xRayDetectionLength: 1
+  _yRayDetectionLength: 1
 --- !u!114 &1625371343312329361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _traverseWaitingTime: 1
   _interactionBufferTime: 0.5
+  _canInteract: 1
 --- !u!114 &7268944720659136934
 MonoBehaviour:
   m_ObjectHideFlags: 0
