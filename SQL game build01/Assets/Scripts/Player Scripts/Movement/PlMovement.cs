@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using TarodevController;
 using UnityEngine;
 
 namespace Gameplay.Player
@@ -32,8 +30,9 @@ namespace Gameplay.Player
         {
             if (!(pressJump && grounded)) return;
             // TODO: Add buffered jump
-
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpSpeed);
+
+            _animateCtr.ChangeAnimateState(PlCharState.JUMP);
         }
 
         #endregion
@@ -46,10 +45,33 @@ namespace Gameplay.Player
         [SerializeField] private LayerMask _platformLayer;
 
         private FourDirections<bool> getFourDirectionCollision() =>
-            FourDirections<bool>.Convert(CommonVariable.defaultDirections.Select<Vector2, bool>(
+            FourDirections<bool>.Convert(GameplayUtil.defaultDirections.Select<Vector2, bool>(
                 dic => Physics2D.BoxCast(_bounds.center, _bounds.size, 0, dic, .1f, _platformLayer)
                 )
             );
+        #endregion
+
+        #region Other
+
+        private IPlAnimationCtr _animateCtr;
+
+
+        private void StatusLoging()
+        {
+        }
+
+        private void EnforceAnimation(MovementInput playerInput, FourDirections<bool> collideOn)
+        {
+            if (playerInput.Horizontal < 0 && collideOn.left ||
+                playerInput.Horizontal > 0 && collideOn.right)
+                _animateCtr.ChangeAnimateState(PlCharState.IDLE);
+            else
+            {
+                _animateCtr.HorizontalAct(playerInput.Horizontal);
+                _animateCtr.ChangeAnimateState(PlCharState.WALK);
+            }
+        }
+
         #endregion
 
         #region Unity Basic
@@ -59,6 +81,7 @@ namespace Gameplay.Player
             // Init this global vars
             _boxCollider = MustGetComponent<BoxCollider2D>();
             _rigidbody = MustGetComponent<Rigidbody2D>();
+            _animateCtr = MustGetComponent<IPlAnimationCtr>();
         }
 
         void Update()
@@ -66,22 +89,17 @@ namespace Gameplay.Player
             // Gathering Input
             var playerInput = new MovementInput
             {
-                JumpPressDown = UnityEngine.Input.GetButtonDown("Jump"),
-                Horizontal = UnityEngine.Input.GetAxisRaw("Horizontal"),
+                JumpPressDown = Input.GetButtonDown("Jump"),
+                Horizontal = Input.GetAxisRaw("Horizontal"),
             };
             // Check collision
             var collisions = getFourDirectionCollision();
 
             MoveCharacter(playerInput, collisions);
+            EnforceAnimation(playerInput, collisions);
 
             StatusLoging();
         }
-
-        private void StatusLoging()
-        {
-        }
-
-
         #endregion
     }
 }

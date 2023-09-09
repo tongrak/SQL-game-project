@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 
 namespace Gameplay
 {
-    class CommonVariable{
+    class GameplayUtil
+    {
         public readonly static Vector2[] defaultDirections = new Vector2[4] { Vector2.up, Vector2.right, Vector2.down, Vector2.left };
+
     }
 
-    struct MovementInput{
+    struct MovementInput
+    {
         public bool JumpPressDown;
         public bool? JumpPressUp;
         public float Horizontal;
@@ -28,7 +30,7 @@ namespace Gameplay
             right = rightVal;
             down = downVal;
             left = leftVal;
-        }   
+        }
 
         public IEnumerator<T> GetEnumerator()
         {
@@ -45,7 +47,8 @@ namespace Gameplay
             return $"[up:{up}, right:{right}, down:{down}, left:{left}]";
         }
 
-        public static FourDirections<T> Convert(IEnumerable<T> given){
+        public static FourDirections<T> Convert(IEnumerable<T> given)
+        {
             if (given.Count() != 4) throw new ArgumentException("Cannot convert non 4 member IEnumerable");
             return new FourDirections<T>(given.ElementAt(0), given.ElementAt(1), given.ElementAt(2), given.ElementAt(3));
         }
@@ -58,13 +61,20 @@ namespace Gameplay
 
         public FourDirectionEnum(T[] fourDirectedVal) => _fourDirectedVal = fourDirectedVal;
 
-        public T Current { get {
-                try {
+        public T Current
+        {
+            get
+            {
+                try
+                {
                     return _fourDirectedVal[position];
-                } catch (IndexOutOfRangeException) {
+                }
+                catch (IndexOutOfRangeException)
+                {
                     throw new IndexOutOfRangeException();
                 }
-        } }
+            }
+        }
 
         object IEnumerator.Current => Current;
 
@@ -84,6 +94,36 @@ namespace Gameplay
             position = -1;
         }
     }
+
+    #region Animation
+
+    enum PlCharState
+    {
+        IDLE, WALK, JUMP
+    }
+
+    interface IPlAnimationCtr
+    {
+        /// <summary>
+        /// Handle charector sprite horizonal fliping
+        /// </summary>
+        /// <param name="xSignal">Player horizontal control signal</param>
+        void HorizontalAct(float xSignal);
+
+        /// <summary>
+        /// Handle charector animation base on given state
+        /// </summary>
+        /// <param name="currState"></param>
+        void ChangeAnimateState(PlCharState currState);
+
+    }
+
+    #endregion
+
+    #region Utility
+
+    #endregion
+
     public abstract class GameplayBaseScript : MonoBehaviour
     {
         protected T MustGetComponent<T>()
