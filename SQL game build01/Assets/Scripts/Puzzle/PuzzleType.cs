@@ -3,9 +3,9 @@ namespace Puzzle
     public enum PuzzleType
     {
         QueryPuzzle,
-        LockPuzzle,
-        LockQueryPuzzle,
+        LockByKeyItemPuzzle,
+        LockByKeyItemQueryPuzzle,
         QueryPuzzleGetKeyItem,
-        LockQueryPuzzleGetKeyItem
+        LockByKeyItemQueryPuzzleGetKeyItem
     }
 }

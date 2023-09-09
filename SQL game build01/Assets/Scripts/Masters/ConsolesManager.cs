@@ -19,11 +19,11 @@ namespace Gameplay.Manager
 
         //Dynamic field
         private ConsoleModeController[] _modeControllers;
-        private IPuzzleController _currPuzzle;
+        private IPuzzleControllerOld _currPuzzle;
         private Queue<CMStarterUnit> _consoleOrder = new Queue<CMStarterUnit>();
         private CMStarterUnit _currUnit;
 
-        public void ShowConsoleFor(IPuzzleController pm)
+        public void ShowConsoleFor(IPuzzleControllerOld pm)
         {
             _currPuzzle = pm;
             //add into dialog 

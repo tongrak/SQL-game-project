@@ -21,7 +21,7 @@ namespace Gameplay.Manager
 
         #region Listener Functions
         //to Consoles 
-        private void PassPMToConsole(IPuzzleController pm)
+        private void PassPMToConsole(IPuzzleControllerOld pm)
         {
             _interactionController.CanInteract = false;
             _consoleController.ShowConsoleFor(pm);

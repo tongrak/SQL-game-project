@@ -6,7 +6,7 @@ using Mono.Data.Sqlite;
 
 namespace Puzzle.PuzzleController
 {
-    public class QueryPuzzleController : MonoBehaviour, IPuzzleController, IQueryPuzzle
+    public class QueryPuzzleController : MonoBehaviour, IPuzzleControllerOld, IQueryPuzzle
     {
         #region Interface's properties
         public PuzzleType PuzzleType { get; protected set; } = PuzzleType.QueryPuzzle;

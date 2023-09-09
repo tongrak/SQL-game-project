@@ -10,7 +10,7 @@ namespace Puzzle.PuzzleController
     {
         [SerializeField] protected TextAsset puzzleFile;
         [SerializeField] protected DatabaseChapter databaseChapter;
-        [SerializeField] protected QueryPuzzleScoreManager queryPScoreManager;
+        [SerializeField] protected ScoreManager queryPScoreManager;
 
         protected string DBPath { get; set; }
         protected string AnswerQuery { get; set; }
@@ -99,7 +99,7 @@ namespace Puzzle.PuzzleController
     }
     
     [Serializable]
-    public class LockPuzzleControllerParent
+    public class LockByKeyItemPuzzleControllerParent
     {
         [SerializeField] protected string[] UnityPreDialog;
         [SerializeField] protected List<KeyItem> LockKeyItem;

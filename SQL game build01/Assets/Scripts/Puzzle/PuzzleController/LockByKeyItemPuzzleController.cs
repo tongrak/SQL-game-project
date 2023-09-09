@@ -5,10 +5,10 @@ using System;
 
 namespace Puzzle.PuzzleController
 {
-    public class LockPuzzleController : MonoBehaviour, IPuzzleController
+    public class LockByKeyItemPuzzleController : MonoBehaviour, IPuzzleControllerOld
     {
         #region Interface's properties
-        public PuzzleType PuzzleType { get; protected set; } = PuzzleType.LockPuzzle;
+        public PuzzleType PuzzleType { get; protected set; } = PuzzleType.LockByKeyItemPuzzle;
         public string[] PrePuzzleDialog { get; protected set; }
         public string[] PuzzleDialog { get; protected set; }
         public string QueryQuestion { get; protected set; }
@@ -17,7 +17,7 @@ namespace Puzzle.PuzzleController
         public bool IsLock { get; protected set; } = false;
         #endregion
 
-        [SerializeField] protected LockPuzzleControllerParent lockPControl = new LockPuzzleControllerParent();
+        [SerializeField] protected LockByKeyItemPuzzleControllerParent lockPControl = new LockByKeyItemPuzzleControllerParent();
 
         #region Interface's methods
         public PuzzleResult GetResult(string playerQuery)

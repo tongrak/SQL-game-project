@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Puzzle.PuzzleController
 {
-    public interface IPuzzleController
+    public interface IPuzzleControllerOld
     {
         #region Properties
         PuzzleType PuzzleType { get; }

@@ -5,7 +5,7 @@ using System;
 
 namespace Puzzle.PuzzleController
 {
-    public class QueryPuzzleGetKeyItemController : MonoBehaviour, IPuzzleController, IQueryPuzzle
+    public class QueryPuzzleGetKeyItemController : MonoBehaviour, IPuzzleControllerOld, IQueryPuzzle
     {
         #region Interface's properties
         public PuzzleType PuzzleType { get; protected set; } = PuzzleType.QueryPuzzleGetKeyItem;
